@@ -1,0 +1,7 @@
+# -*- coding: UTF-8 -*-
+# Filename  : test.py
+# authorby  : www.runoob.com
+# 随机生成 0 ~ 9 之间的一个数
+# 导入 random (随机数) 模块
+import random
+print(random.ranint(0,9))

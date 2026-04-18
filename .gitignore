@@ -1,0 +1,28 @@
+.DS_Store
+**/.DS_Store
+
+# TeX build artifacts
+*.aux
+*.bcf
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xref
+*-blx.bib
+*.hd
+
+# Generated documents
+*.pdf
+swuthesis-main.bib
+swuthesis-doctor-main.bib
