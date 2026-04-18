@@ -468,6 +468,22 @@
 \else\ifswu@bachelor
   \renewcommand\swu@doctype{本科毕业论文}
 \fi\fi\fi\fi
+\newcommand{\swuThesisTierZh}{研究生}
+\ifswu@doctor
+  \renewcommand{\swuThesisTierZh}{博士}
+\else\ifswu@master
+  \renewcommand{\swuThesisTierZh}{硕士}
+\else\ifswu@postdoc
+  \renewcommand{\swuThesisTierZh}{博士后}
+\else\ifswu@bachelor
+  \renewcommand{\swuThesisTierZh}{本科}
+\fi\fi\fi\fi
+\newcommand{\swuThesisEnDocRole}{graduate thesis}
+\ifswu@doctor
+  \renewcommand{\swuThesisEnDocRole}{doctoral dissertation}
+\else\ifswu@master
+  \renewcommand{\swuThesisEnDocRole}{master's thesis}
+\fi\fi
 \newcommand\swu@title{}
 \newcommand\swu@author{}
 \newcommand\swu@studentid{}
@@ -487,6 +503,65 @@
 \tl_new:N \l_swu_k_submit_year_tl
 \tl_new:N \l_swu_k_submit_month_tl
 \tl_new:N \l_swu_k_submit_day_tl
+\seq_new:N \l__swu_date_parse_seq
+\tl_new:N \l__swu_date_input_tl
+\tl_new:N \l__swu_thesis_label_sub_scratch_tl
+\cs_new_protected:Npn \__swu_date_from_yyyymmdd:nNNN #1#2#3#4
+{
+\tl_set:Nx \l__swu_date_input_tl { \tl_trim_spaces:n {#1} }
+\seq_set_split:NnV \l__swu_date_parse_seq { / } \l__swu_date_input_tl
+\int_compare:nNnTF { \seq_count:N \l__swu_date_parse_seq } = { 3 }
+{
+\tl_set:Nx #2
+{ \tl_trim_spaces:n { \seq_item:Nn \l__swu_date_parse_seq { 1 } } }
+\tl_set:Nx #3
+{
+\int_eval:n
+{ \tl_trim_spaces:n { \seq_item:Nn \l__swu_date_parse_seq { 2 } } }
+}
+\tl_set:Nx #4
+{
+\int_eval:n
+{ \tl_trim_spaces:n { \seq_item:Nn \l__swu_date_parse_seq { 3 } } }
+}
+}
+{
+\PackageError { swuthesis }
+{ Invalid~YYYY/MM/DD~date~`\tl_to_str:N \l__swu_date_input_tl'. }
+{ Dates~must~have~three~non-empty~parts~separated~by~slashes,~e.g.,~2026/3/15~or~2026/03/15. }
+}
+}
+\cs_new_protected:Npn \__swu_thesis_label_sub_normalise:N #1
+{
+\int_compare:nNnTF { \tl_count:N #1 } > { 2 }
+{
+\str_if_eq:eeTF { \tl_range:Nnn #1 { 1 } { 1 } } { （ }
+{
+\str_if_eq:eeTF { \tl_range:Nnn #1 { -1 } { -1 } } { ） }
+{ \tl_set:Nx #1 { \tl_range:Nnn #1 { 2 } { -2 } } }
+{ }
+}
+{ }
+}
+{ }
+}
+\cs_new_protected:Npn \__swu_degree_sub_en_line_strip_parens:N #1
+{
+\int_compare:nNnTF { \tl_count:N #1 } > { 2 }
+{
+\str_if_eq:eeTF { \tl_range:Nnn #1 { 1 } { 1 } } { ( }
+{
+\str_if_eq:eeTF { \tl_range:Nnn #1 { -1 } { -1 } } { ) }
+{ \tl_set:Nx #1 { \tl_range:Nnn #1 { 2 } { -2 } } }
+{ }
+}
+{ }
+}
+{ }
+}
+\seq_new:N \l__swu_degree_sub_en_lines_seq
+\tl_new:N \l__swu_degree_sub_en_line_tl
+\bool_new:N \l__swu_degree_sub_en_need_sep_bool
 \keys_define:nn { swu / setup }
 {
 title      .tl_set:N = \l_tmpa_tl,
@@ -513,9 +588,29 @@ defense-location-en .tl_set:N = \l_swu_k_defense_location_en_tl,
 submit-year  .tl_set:N = \l_swu_k_submit_year_tl,
 submit-month .tl_set:N = \l_swu_k_submit_month_tl,
 submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
+submit-date .code:n = {
+\__swu_date_from_yyyymmdd:nNNN {#1}
+\l_swu_k_submit_year_tl \l_swu_k_submit_month_tl \l_swu_k_submit_day_tl
+},
+defense-date .code:n = {
+\__swu_date_from_yyyymmdd:nNNN {#1} \l_tmph_tl \l_tmpi_tl \l_tmpj_tl
+},
+thesis-label .code:n = {
+  \tl_gset:Nx \g_swu_thesis_label_tl { \tl_trim_spaces:n { #1 } }
+},
+thesis-label-sub .code:n = {
+  \tl_set:Nx \l__swu_thesis_label_sub_scratch_tl { \tl_trim_spaces:n {#1} }
+  \__swu_thesis_label_sub_normalise:N \l__swu_thesis_label_sub_scratch_tl
+  \tl_gset_eq:NN \g_swu_thesis_label_sub_tl \l__swu_thesis_label_sub_scratch_tl
+},
+thesis-label-sub-en .code:n = {
+  \tl_gset:Nx \g_swu_thesis_label_sub_en_tl { \tl_trim_spaces:n {#1} }
+},
 }
 \NewDocumentCommand{\swusetup}{m}
 {
+\tl_gclear:N \g_swu_thesis_label_sub_tl
+\tl_gclear:N \g_swu_thesis_label_sub_en_tl
 \keys_set:nn { swu / setup } { #1 }
 \tl_gset_eq:NN \g_swu_title_tl      \l_tmpa_tl
 \tl_gset_eq:NN \g_swu_author_tl     \l_tmpb_tl
@@ -570,6 +665,62 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
 \tl_new:N \g_swu_submit_year_tl
 \tl_new:N \g_swu_submit_month_tl
 \tl_new:N \g_swu_submit_day_tl
+\tl_new:N \g_swu_thesis_label_tl
+\tl_new:N \g_swu_thesis_label_sub_tl
+\tl_new:N \g_swu_thesis_label_sub_en_tl
+\cs_new:Npn \swuCoverThesisLabelText
+  {
+    \tl_if_blank:VTF \g_swu_thesis_label_tl
+      { \swu@doctype }
+      { \tl_use:N \g_swu_thesis_label_tl }
+  }
+\cs_new:Npn \swuCoverThesisLabelSubText { \tl_use:N \g_swu_thesis_label_sub_tl }
+\cs_new:Npn \swuCoverThesisLabelSubEnText { \tl_use:N \g_swu_thesis_label_sub_en_tl }
+\cs_new_protected:Npn \__swu_degree_sub_en_display:
+{
+\seq_set_split:NnV \l__swu_degree_sub_en_lines_seq { \par } \g_swu_thesis_label_sub_en_tl
+\bool_set_false:N \l__swu_degree_sub_en_need_sep_bool
+\seq_map_inline:Nn \l__swu_degree_sub_en_lines_seq
+{
+\tl_set:Nx \l__swu_degree_sub_en_line_tl { \tl_trim_spaces:n {##1} }
+\tl_if_blank:VF \l__swu_degree_sub_en_line_tl
+{
+\bool_if:NT \l__swu_degree_sub_en_need_sep_bool { \par }
+\bool_set_true:N \l__swu_degree_sub_en_need_sep_bool
+\__swu_degree_sub_en_line_strip_parens:N \l__swu_degree_sub_en_line_tl
+(\tl_use:N \l__swu_degree_sub_en_line_tl)
+}
+}
+}
+\cs_new_protected:Npn \swu_graduate_degree_sub_en_maybe:
+{
+\tl_if_blank:VTF \g_swu_thesis_label_sub_en_tl
+{ }
+{
+\skip_vertical:n { 0.18 \baselineskip }
+\group_begin:
+\rmfamily \zihao{-4}
+\__swu_degree_sub_en_display:
+\group_end:
+\par
+}
+}
+\let \swu@graduate@maybe@degree@sub@en \swu_graduate_degree_sub_en_maybe:
+\cs_new_protected:Npn \swu_cover_graduate_thesis_lines:
+  {
+    {\youyuan\zihao{0}\bfseries \swuCJKStretchText{1.10}{\swuCoverThesisLabelText}\par}
+    \tl_if_blank:VTF \g_swu_thesis_label_sub_tl
+      { }
+      {
+\skip_vertical:n { 0.25 \baselineskip }
+{
+  \youyuan\zihao{1}\bfseries
+  \swuCJKStretchText{1.10}{（\swuCoverThesisLabelSubText）}
+  \par
+}
+      }
+  }
+\let\swu@cover@graduate@thesis@lines\swu_cover_graduate_thesis_lines:
 \cs_new:Npn \swuTitleText      { \tl_use:N \g_swu_title_tl }
 \cs_new:Npn \swuAuthorText     { \tl_use:N \g_swu_author_tl }
 \cs_new:Npn \swuSubtitleText   { \tl_use:N \g_swu_subtitle_tl }
@@ -626,7 +777,7 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
 {
   \tl_if_blank:VTF \g_swu_subtitle_tl
   { }
-  { \vspace{0.6\baselineskip}{\fangsong\zihao{-3}\swuSubtitleText\par} }
+  { \vspace{0.6\baselineskip}{\fangsong\zihao{-2}\swuSubtitleText\par} }
 }
 \seq_new:N \l_swu_stretch_chars_seq
 \clist_new:N \l_swu_stretch_punct_clist
@@ -636,9 +787,10 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
 \int_new:N \l_swu_stretch_slots_int
 \tl_new:N \l_swu_stretch_curr_tl
 \tl_new:N \l_swu_stretch_next_tl
+\tl_new:N \l_swu_stretch_source_tl
 \clist_set:Nn \l_swu_stretch_punct_clist
 {
-  ，, 。, 、, ；, ：, ！, ？, （, ）, 《, 》, 〈, 〉, 「, 」, 『, 』,
+  ，, 。, 、, ；, ：, ！, ？, 《, 》, 〈, 〉, 「, 」, 『, 』,
   “, ”, ‘, ’, —, …, ·, -, --, ---, _, ., ,, ;, :, !, ?, (, ), [, ], {, }, /, \\
 }
 \prg_new_conditional:Npnn \swu_stretch_if_punct:n #1 { TF }
@@ -649,8 +801,11 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
 }
 \cs_new_protected:Npn \swu_cjk_stretch:nn #1#2
 {
+  % 先 |x| 展开再按字拆分：若 |#2| 为单个宏（如 |\swuCoverThesisLabelText|），
+  % 直接 |map| 只会得到一项，字距拉伸永远不生效。
+  \tl_set:Nx \l_swu_stretch_source_tl { #2 }
   \seq_clear:N \l_swu_stretch_chars_seq
-  \tl_map_inline:nn { #2 }
+  \tl_map_inline:Nn \l_swu_stretch_source_tl
   {
     \tl_if_blank:nF { ##1 }
     {
@@ -680,7 +835,7 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
     }
     \int_compare:nNnTF { \l_swu_stretch_slots_int } > { 0 }
     {
-    \hbox_set:Nn \l_tmpa_box { #2 }
+    \hbox_set:Nn \l_tmpa_box { \tl_use:N \l_swu_stretch_source_tl }
     \dim_set:Nn \l_swu_stretch_skip_dim
     {
       \fp_to_dim:n
@@ -714,9 +869,9 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
       }
     }
     }
-    { #2 }
+    { \tl_use:N \l_swu_stretch_source_tl }
   }
-  { #2 }
+  { \tl_use:N \l_swu_stretch_source_tl }
 }
 \NewDocumentCommand{\swuCJKStretchText}{mm}{\swu_cjk_stretch:nn {#1} {#2}}
 \ExplSyntaxOff
@@ -750,7 +905,7 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
   \vspace{0.6em}%
 }
 \newcommand{\swu@zh@date@inline}[3]{#1年#2月#3日}
-\newcommand{\swu@doctor@cover@date@single}[2]{%
+\newcommand{\swu@graduate@cover@date@single}[2]{%
   \noindent
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
@@ -878,7 +1033,48 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
     \includegraphics[width=0.78\textwidth,height=0.7cm,keepaspectratio]{figures/swu-name.pdf}\par
   }{}%
 }
-\newcommand{\swu@maketitle@doctor@zh}{%
+\newcommand{\swu@ifprofessionaldoctorTF}[2]{%
+  \ifswu@doctor
+    \ifboolexpr{
+      test {\ifstrequal{\swuCoverThesisLabelText}{专业学位博士论文}}
+      or
+      test {\ifstrequal{\swuCoverThesisLabelSubText}{专业学位}}
+    }{#1}{#2}%
+  \else
+    #2%
+  \fi
+}
+\newcommand{\swu@graduate@major@label}{%
+  \swu@ifprofessionaldoctorTF{专业学位类别}{学科专业}%
+}
+\newcommand{\swu@graduate@research@label}{%
+  \swu@ifprofessionaldoctorTF{专业领域}{研究方向}%
+}
+\newcommand{\swu@graduate@major@value}{%
+  \swu@ifprofessionaldoctorTF
+    {\expandafter\ifstrempty\expandafter{\swuMajorText}{教育博士}{\swuMajorText}}
+    {\swuMajorText}%
+}
+\newcommand{\swu@graduate@maybe@research@field}{%
+  \swu@ifprofessionaldoctorTF
+    {\swuCoverField{\swu@graduate@research@label}{\swuResearchFieldText}}
+    {%
+      \expandafter\ifstrempty\expandafter{\swuCoverThesisLabelSubText}{%
+        \swuCoverField{\swu@graduate@research@label}{\swuResearchFieldText}%
+      }{%
+        \ifboolexpr{
+          test {\ifstrequal{\swuCoverThesisLabelSubText}{高校教师}}
+          or test {\ifstrequal{\swuCoverThesisLabelSubText}{同等学力}}
+          or test {\ifstrequal{\swuCoverThesisLabelSubText}{高校教师、同等学力}}
+          or test {\ifstrequal{\swuCoverThesisLabelSubText}{同等学力、高校教师}}
+        }{%
+        }{%
+          \swuCoverField{\swu@graduate@research@label}{\swuResearchFieldText}%
+        }%
+      }%
+    }%
+}
+\newcommand{\swu@maketitle@graduate@zh}{%
   \begingroup
   \songti
   \noindent
@@ -900,20 +1096,20 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
   \begin{center}
     \swu@cover@schoolname@graphics
 \vspace{-\baselineskip}
-    {\youyuan\zihao{0}\bfseries \swuCJKStretchText{1.10}{博士学位论文}\par}
+    \swu@cover@graduate@thesis@lines
 \vspace{1.2\baselineskip}
     {\zihao{2}\songti \swuTitleText\par}
     \swuSubtitleBlock
   \end{center}
-  \vspace{1.8\baselineskip}
+  \vspace{\baselineskip}
   {\centering\zihao{-3}\songti
     \swuCoverField{论文作者}{\swuAuthorText}
     \swuCoverField{指导教师}{\swuSupervisorText}
-    \swuCoverField{学科专业}{\swuMajorText}
-    \swuCoverField{研究方向}{\swuResearchFieldText}
-    \swu@doctor@cover@date@single{提交日期}{%
+    \swuCoverField{\swu@graduate@major@label}{\swu@graduate@major@value}
+    \swu@graduate@maybe@research@field
+    \swu@graduate@cover@date@single{提交日期}{%
       \swu@zh@date@inline{\swuSubmitYearText}{\swuSubmitMonthText}{\swuSubmitDayText}}%
-    \swu@doctor@cover@date@single{答辩日期}{%
+    \swu@graduate@cover@date@single{答辩日期}{%
       \swu@zh@date@inline{\swuDefenseYearText}{\swuDefenseMonthText}{\swuDefenseDayText}}%
     \noindent\makebox[5\ccwd][s]{\bfseries 授予单位}：%
     \underline{\makebox[16\ccwd][c]{\kaishu 西南大学}}\par
@@ -921,14 +1117,14 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
   }
   \vfill
   \begin{center}
-    {\zihao{3}\youyuan\swuCJKStretchText{1.15}{中国重庆}\par}%
+    {\zihao{3}\youyuan\swuCJKStretchText{1.15}{中国\textbullet 重庆}\par}%
     \vspace{0.55\baselineskip}%
     {\zihao{3}\youyuan \swuDefenseYearText 年 \swuDefenseMonthText 月\par}%
   \end{center}%
   \vfill
   \endgroup
 }
-\newcommand{\swu@maketitle@doctor@en}{%
+\newcommand{\swu@maketitle@graduate@en}{%
   \thispagestyle{empty}%
   \phantomsection
   \pdfbookmark[0]{英文题名页}{swu-title-en}%
@@ -953,6 +1149,7 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
     {\zihao{-4}For the degree of\par}%
     \vspace{0.2\baselineskip}%
     {\zihao{-4}\swuDegreeEnText\par}%
+    \swu@graduate@maybe@degree@sub@en
     \expandafter\ifstrempty\expandafter{\swuGraduateProgramEnText}{%
       \expandafter\ifstrempty\expandafter{\swuCollegeEnText}{}{%
         \vspace{0.48\baselineskip}%
@@ -1052,10 +1249,10 @@ submit-day   .tl_set:N = \l_swu_k_submit_day_tl,
   \clearpage
   \makeoriginalitystatement
 \else
-  \ifswu@doctor
-    \swu@maketitle@doctor@zh
+  \ifswu@gradthesis
+    \swu@maketitle@graduate@zh
     \clearpage
-    \swu@maketitle@doctor@en
+    \swu@maketitle@graduate@en
     \clearpage
     \makegraduateoriginalitystatement
   \else
