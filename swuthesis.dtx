@@ -89,8 +89,9 @@
 % makeindex -s gglo.ist -o swuthesis.gls swuthesis.glo
 % xelatex swuthesis.dtx
 % \end{verbatim}
-% 第一步会生成 \texttt{swuthesis.cls}、\texttt{swuthesis-main.tex}（本科示例）与
-% \texttt{swuthesis-graduate-main.tex}（研究生示例，|doctor|/|master| 共用）；
+% 第一步会生成 \texttt{swuthesis.cls}、\texttt{swuthesis-main.tex}（本科示例）、
+% \texttt{swuthesis-graduate-main.tex}（研究生示例，|doctor|/|master| 共用）与
+% \texttt{swuthesis-postdoc-main.tex}（|postdoc| 博士后研究报告示例）；
 % 第二步用于验证模板示例；后续步骤用于生成说明文档。
 % 由于文档中包含中文并依赖 \texttt{ctex}，示例文档和说明文档都应使用
 % \hologo{XeLaTeX} 编译。
@@ -225,8 +226,19 @@
 % \end{verbatim}
 %
 % \paragraph{博士后（\texttt{postdoc}）}
-% 目前走非研究生规范式封面（简化题名页），|thesis-label| 不用于博士后封面。
-% 建议至少填写：|title|、|author|、|supervisor|、|major|、|defense-*|；其余研究生英文题名页键可按需保留以便后续扩展。
+% 封面与题名页按全国博士后管委会《博士后研究报告编写规则》常见要素排版（分类号、UDC、密级、编号、
+% 流动站、专业、在站起止时间、报告提交日期等）；|thesis-label| 不用于博士后封面。
+% 除通用键外，建议填写：|postdoc-classification|、|postdoc-udc|、|postdoc-id|、|postdoc-confidentiality|、
+% |postdoc-station|、|postdoc-work-start|、|postdoc-work-end|、|postdoc-report-date|（或留空由 |defense-date| 年月兜底）；
+% 封面「工作完成日期」行对起止日期仅排至\textbf{年月}（自动去掉末尾「$\times$日」；题名页等仍用完整字符串）。
+% |postdoc-unit|（默认可为西南大学）；|postdoc-publisher|、|postdoc-publish-address| 为封面底部出版者与地址（可选）；
+% |postdoc-publisher| 留空时第一行默认为「西南大学（重庆）」；|postdoc-publish-address| 非空时在其下另起一行；
+% |postdoc-cover-bottom-date| 为封面最末「年月」行（留空则与 |postdoc-report-date| 兜底逻辑一致）；
+% |title-en| 用于题名页英文题名；|major| 用作专业（二级学科）名称。
+% 附录「永久通信地址」可选：|postdoc-mailing-postcode|、|postdoc-mailing-address|、|postdoc-mailing-phone|、|postdoc-mailing-email|；
+% 各项\textbf{留空}则仍为六位空方框与双行/单行下划线留白；\textbf{非空}时版式不变：邮编\textbf{逐格填入}方框（至多取前 6 个「项」），
+% 地址与电话、邮箱\textbf{写在横线位置上}（|\underline|）；地址可按 |\par| 或 |\\| 分成两行，首段上横线、其后各段合并排在第二横线。
+% 正文在 |\chapter{永久通信地址}| 后调用 |\swuPostdocPrintPermanentAddressSheet|。
 % \DescribeMacro{\swuCoverThesisLabelText}、\DescribeMacro{\swuCoverThesisLabelSubText}、\DescribeMacro{\swuCoverThesisLabelSubEnText}
 % |\swuCoverThesisLabelText| 为研究生封面主行：未设置 |thesis-label| 时等于 |\swu@doctype|；
 % 设置 |thesis-label| 时为所给主行文。|\swuCoverThesisLabelSubText| 为可选第二行「括号内」的纯文字（由 |thesis-label-sub| 写入，不含全角括号）；
@@ -261,6 +273,8 @@
 %
 % \DescribeMacro{\makeabstract}
 % 根据 |cnabstract|、|cnkeywords|、|enabstract|、|enkeywords| 环境已写入的内容，生成中英文摘要版面（须先写上述环境，再调用本命令）。
+% |postdoc| 模式下与本科/研究生不同：中文摘要、英文摘要各占独立起首页；中文标题为居中黑体三号 |\swuCJKStretchText{1.5}{内容摘要}|，英文标题为居中 Times New Roman 三号 |Abstract|；
+% 正文分别为宋体小四号、英文四号；不排题名页式的论文中英文题名与作者单位块。
 %
 % \DescribeMacro{\makegraduateoriginalitystatement}
 % 生成独创性声明与学位论文版权使用授权书（合排一页；题目行仿宋、行末横线拉至版心右端，多行时请在 |title| 中用 |\\| 断行）。
@@ -280,13 +294,34 @@
 % （相当于相邻两段在规范中各设半行段前、段后时之净距）。
 %
 % \DescribeEnv{resume}
-% 作者简介环境。
+% 个人简历/作者简介**正文区版式**（五号宋体、单倍行距、段首缩进两格）：须在 |\appendix| 下自行书写
+% |\chapter{个人简历}|（或博士后报告要求的附录题名）之后，于 |\begin{resume}| 与 |\end{resume}| 之间撰写。
+% 不宜再嵌套 |\chapter*|，以免与附录编号冲突。小标题用 |\swucvsubsection|（黑体小四号），
+% 说明性文字用 |\swucvnote|；经历类亦可采用 |booktabs| 三线表（见 |postdoc| 示例）。
+%
+% \DescribeMacro{\swucvsubsection}
+% |\swucvsubsection{小标题}|：个人简历内黑体小四号标题（如「一、基本信息」），上下已留适当空距。
+%
+% \DescribeMacro{\swucvdatedline}
+% |\swucvdatedline{起止时间}{叙述}|：教育经历、工作经历等常见「时段加粗 + 叙述」一行体例。
+%
+% \DescribeMacro{\swucvnote}
+% |\swucvnote{说明文字}|：个人简历内小号灰色说明（填写要求、脚注类提示），与正文主从分明。
+%
+% \DescribeMacro{\swuPostdocPermAddressZipBoxes}
+% 博士后「永久通信地址」附录用六位空方框（示意邮编位数）；另见 |\swuPostdocPermAddressTwoRules|、|\swuPostdocPermAddressOneRule|（下划线留白行）。
+%
+% \DescribeMacro{\swuPostdocPrintPermanentAddressSheet}
+% 排出博士后附录「永久通信地址」整页（居中身份行 + 三线表）；|postdoc-mailing-*| 为空则留白，非空则按「框内邮编 / 横线上地址与联系方式」填充。
+%
+% \DescribeMacro{\swuPostdocMailingPostcodeText} 等
+% |\swuPostdocMailingPostcodeText|、|\swuPostdocMailingAddressText|、|\swuPostdocMailingPhoneText|、|\swuPostdocMailingEmailText|
+% 分别展开为 |swusetup| 中所存通信字段（供自定义版式时引用）。
 %
 % \DescribeEnv{publications}
-% |在读期间取得的科研成果|：版式与 |acknowledgements| 相近（居中标题、五号宋体、目录收录），
-% 宜置于致谢之后、附录之前。条目中可用 |\swupublicationsubsection| 划分
-% 「已发表论文」「发明专利」「会议论文」「参与的科研项目」等，并用 |swupubenum| 环境
-% 产生 |[1]|、|[2]| 形式编号（各小节内独立编号）。
+% 居中标题、目录收录与 |acknowledgements| 相近；|postdoc| 下标题为「在站期间取得的科研成果」，
+% 其余学位为「在读期间取得的科研成果」。宜置于致谢之后、附录之前。条目中可用 |\swupublicationsubsection| 划分
+% 论文、专利、会议、项目等，并用 |swupubenum| 产生 |[1]|、|[2]| 形式编号（各小节内独立编号）。
 %
 % \DescribeMacro{\swupublicationsubsection}
 % |\swupublicationsubsection{小标题}|：在 |publications| 环境内插入一条加粗小标题
@@ -295,22 +330,14 @@
 % \DescribeEnv{swupubenum}
 % 编号列表环境，|enumerate| 的 |label| 为 |[1]|、|[2]|、\ldots，便于科研成果分条列举。
 %
-% \DescribeEnv{theorem}
-% \DescribeEnv{lemma}
-% \DescribeEnv{proposition}
-% \DescribeEnv{corollary}
-% \DescribeEnv{hypothesis}
-% \DescribeEnv{definition}
-% \DescribeEnv{example}
-% \DescribeEnv{remark}
-% \DescribeEnv{thm}
-% \DescribeEnv{lem}
-% \DescribeEnv{prop}
-% \DescribeEnv{cor}
-% \DescribeEnv{hyp}
-% \DescribeEnv{defn}
-% \DescribeEnv{ex}
-% \DescribeEnv{rmk}
+% \DescribeEnv{theorem / thm}
+% \DescribeEnv{lemma / lem}
+% \DescribeEnv{proposition / prop}
+% \DescribeEnv{corollary / cor}
+% \DescribeEnv{hypothesis / hyp}
+% \DescribeEnv{definition / defn}
+% \DescribeEnv{example / ex}
+% \DescribeEnv{remark / rmk}
 % 正文中的定理类环境由 \textsf{amsthm} 提供，按章编号并与式、图、表等共享递增序列。
 % 版式按常见中文规范：定理、定义、引理等\textbf{顶格}（相对版心左对齐起排），编号与正文之间
 % 空约一格宽；正文段落首行缩进两格，定理内若分段，自第二段起与正文相同缩进。
@@ -756,7 +783,7 @@
   \let\swu@oldtableofcontents\tableofcontents
   \renewcommand{\tableofcontents}{%
     \clearpage
-    \pagenumbering{Roman}%
+    \ifswu@postdoc\else\pagenumbering{Roman}\fi
     \begingroup
     \ifswu@gradthesis
       \setstretch{1.67}%
@@ -851,7 +878,9 @@
   \setlength{\parindent}{2\ccwd}%
 }
 % 封面、独创声明等：|\frontmatter| 沿用 \texttt{book}，|\pagenumbering{roman}|（小写 \texttt{i}、\texttt{ii}……）。
-% 目录及之后至 |\mainmatter| 前：见下面对 |\tableofcontents| 的改写（大写罗马数字 I、II……，自目录页重计）。
+% 研究生：目录及之后至 |\mainmatter| 前见下面对 |\tableofcontents| 的改写（大写罗马 I、II……，自目录页重计）。
+% 博士后（|postdoc|）：封面与题名页排小写罗马 |i、ii|（|\thispagestyle{plain}|）；自 |\makeabstract| 起大写罗马 |I、II| 并从 |I| 重计；
+% |\tableofcontents| 不再调用 |\pagenumbering|，以免打断摘要起的编号。
 \let\swuoldmainmatter\mainmatter
 \renewcommand{\mainmatter}{%
   \swuoldmainmatter
@@ -908,9 +937,26 @@
 \tl_new:N \l_swu_k_submit_year_tl
 \tl_new:N \l_swu_k_submit_month_tl
 \tl_new:N \l_swu_k_submit_day_tl
+\tl_new:N \l_swu_k_postdoc_classification_tl
+\tl_new:N \l_swu_k_postdoc_udc_tl
+\tl_new:N \l_swu_k_postdoc_id_tl
+\tl_new:N \l_swu_k_postdoc_confidentiality_tl
+\tl_new:N \l_swu_k_postdoc_station_tl
+\tl_new:N \l_swu_k_postdoc_unit_tl
+\tl_new:N \l_swu_k_postdoc_work_start_tl
+\tl_new:N \l_swu_k_postdoc_work_end_tl
+\tl_new:N \l_swu_k_postdoc_report_date_tl
+\tl_new:N \l_swu_k_postdoc_publisher_tl
+\tl_new:N \l_swu_k_postdoc_publish_address_tl
+\tl_new:N \l_swu_k_postdoc_cover_bottom_date_tl
+\tl_new:N \l_swu_k_postdoc_mailing_postcode_tl
+\tl_new:N \l_swu_k_postdoc_mailing_address_tl
+\tl_new:N \l_swu_k_postdoc_mailing_phone_tl
+\tl_new:N \l_swu_k_postdoc_mailing_email_tl
 \seq_new:N \l__swu_date_parse_seq
 \tl_new:N \l__swu_date_input_tl
 \tl_new:N \l__swu_thesis_label_sub_scratch_tl
+\tl_new:N \l__swu_postdoc_ym_scratch_tl
 \cs_new_protected:Npn \__swu_date_from_yyyymmdd:nNNN #1#2#3#4
 {
 	% 必须用专用 tl：|l_tmpa_tl| 与 |title| 等键共用，若在 |keys_set| 中覆盖会破坏其后复制的全局字段。
@@ -998,6 +1044,22 @@
 		\__swu_date_from_yyyymmdd:nNNN {#1}
 			\l_swu_k_submit_year_tl \l_swu_k_submit_month_tl \l_swu_k_submit_day_tl
 	},
+	postdoc-classification .tl_set:N = \l_swu_k_postdoc_classification_tl,
+	postdoc-udc .tl_set:N = \l_swu_k_postdoc_udc_tl,
+	postdoc-id .tl_set:N = \l_swu_k_postdoc_id_tl,
+	postdoc-confidentiality .tl_set:N = \l_swu_k_postdoc_confidentiality_tl,
+	postdoc-station .tl_set:N = \l_swu_k_postdoc_station_tl,
+	postdoc-unit .tl_set:N = \l_swu_k_postdoc_unit_tl,
+	postdoc-work-start .tl_set:N = \l_swu_k_postdoc_work_start_tl,
+	postdoc-work-end   .tl_set:N = \l_swu_k_postdoc_work_end_tl,
+	postdoc-report-date .tl_set:N = \l_swu_k_postdoc_report_date_tl,
+	postdoc-publisher .tl_set:N = \l_swu_k_postdoc_publisher_tl,
+	postdoc-publish-address .tl_set:N = \l_swu_k_postdoc_publish_address_tl,
+	postdoc-cover-bottom-date .tl_set:N = \l_swu_k_postdoc_cover_bottom_date_tl,
+	postdoc-mailing-postcode .tl_set:N = \l_swu_k_postdoc_mailing_postcode_tl,
+	postdoc-mailing-address  .tl_set:N = \l_swu_k_postdoc_mailing_address_tl,
+	postdoc-mailing-phone    .tl_set:N = \l_swu_k_postdoc_mailing_phone_tl,
+	postdoc-mailing-email    .tl_set:N = \l_swu_k_postdoc_mailing_email_tl,
 	defense-date .code:n = {
 		\__swu_date_from_yyyymmdd:nNNN {#1} \l_tmph_tl \l_tmpi_tl \l_tmpj_tl
 	},
@@ -1051,6 +1113,22 @@
 	\tl_gset_eq:NN \g_swu_submit_year_tl  \l_swu_k_submit_year_tl
 	\tl_gset_eq:NN \g_swu_submit_month_tl \l_swu_k_submit_month_tl
 	\tl_gset_eq:NN \g_swu_submit_day_tl   \l_swu_k_submit_day_tl
+	\tl_gset_eq:NN \g_swu_postdoc_classification_tl \l_swu_k_postdoc_classification_tl
+	\tl_gset_eq:NN \g_swu_postdoc_udc_tl  \l_swu_k_postdoc_udc_tl
+	\tl_gset_eq:NN \g_swu_postdoc_id_tl   \l_swu_k_postdoc_id_tl
+	\tl_gset_eq:NN \g_swu_postdoc_confidentiality_tl \l_swu_k_postdoc_confidentiality_tl
+	\tl_gset_eq:NN \g_swu_postdoc_station_tl \l_swu_k_postdoc_station_tl
+	\tl_gset_eq:NN \g_swu_postdoc_unit_tl \l_swu_k_postdoc_unit_tl
+	\tl_gset_eq:NN \g_swu_postdoc_work_start_tl \l_swu_k_postdoc_work_start_tl
+	\tl_gset_eq:NN \g_swu_postdoc_work_end_tl \l_swu_k_postdoc_work_end_tl
+	\tl_gset_eq:NN \g_swu_postdoc_report_date_tl \l_swu_k_postdoc_report_date_tl
+	\tl_gset_eq:NN \g_swu_postdoc_publisher_tl \l_swu_k_postdoc_publisher_tl
+	\tl_gset_eq:NN \g_swu_postdoc_publish_address_tl \l_swu_k_postdoc_publish_address_tl
+	\tl_gset_eq:NN \g_swu_postdoc_cover_bottom_date_tl \l_swu_k_postdoc_cover_bottom_date_tl
+	\tl_gset_eq:NN \g_swu_postdoc_mailing_postcode_tl \l_swu_k_postdoc_mailing_postcode_tl
+	\tl_gset_eq:NN \g_swu_postdoc_mailing_address_tl \l_swu_k_postdoc_mailing_address_tl
+	\tl_gset_eq:NN \g_swu_postdoc_mailing_phone_tl \l_swu_k_postdoc_mailing_phone_tl
+	\tl_gset_eq:NN \g_swu_postdoc_mailing_email_tl \l_swu_k_postdoc_mailing_email_tl
 }
 \tl_new:N \g_swu_title_tl
 \tl_new:N \g_swu_author_tl
@@ -1080,6 +1158,22 @@
 \tl_new:N \g_swu_submit_year_tl
 \tl_new:N \g_swu_submit_month_tl
 \tl_new:N \g_swu_submit_day_tl
+\tl_new:N \g_swu_postdoc_classification_tl
+\tl_new:N \g_swu_postdoc_udc_tl
+\tl_new:N \g_swu_postdoc_id_tl
+\tl_new:N \g_swu_postdoc_confidentiality_tl
+\tl_new:N \g_swu_postdoc_station_tl
+\tl_new:N \g_swu_postdoc_unit_tl
+\tl_new:N \g_swu_postdoc_work_start_tl
+\tl_new:N \g_swu_postdoc_work_end_tl
+\tl_new:N \g_swu_postdoc_report_date_tl
+\tl_new:N \g_swu_postdoc_publisher_tl
+\tl_new:N \g_swu_postdoc_publish_address_tl
+\tl_new:N \g_swu_postdoc_cover_bottom_date_tl
+\tl_new:N \g_swu_postdoc_mailing_postcode_tl
+\tl_new:N \g_swu_postdoc_mailing_address_tl
+\tl_new:N \g_swu_postdoc_mailing_phone_tl
+\tl_new:N \g_swu_postdoc_mailing_email_tl
 \tl_new:N \g_swu_thesis_label_tl
 \tl_new:N \g_swu_thesis_label_sub_tl
 \tl_new:N \g_swu_thesis_label_sub_en_tl
@@ -1091,6 +1185,52 @@
   }
 \cs_new:Npn \swuCoverThesisLabelSubText { \tl_use:N \g_swu_thesis_label_sub_tl }
 \cs_new:Npn \swuCoverThesisLabelSubEnText { \tl_use:N \g_swu_thesis_label_sub_en_tl }
+\cs_new:Npn \swuPostdocClassificationText { \tl_use:N \g_swu_postdoc_classification_tl }
+\cs_new:Npn \swuPostdocUDCText { \tl_use:N \g_swu_postdoc_udc_tl }
+\cs_new:Npn \swuPostdocIdText { \tl_use:N \g_swu_postdoc_id_tl }
+\cs_new:Npn \swuPostdocConfidentialityText { \tl_use:N \g_swu_postdoc_confidentiality_tl }
+\cs_new:Npn \swuPostdocStationText { \tl_use:N \g_swu_postdoc_station_tl }
+\cs_new:Npn \swuPostdocUnitText {
+  \tl_if_blank:VTF \g_swu_postdoc_unit_tl {西南大学} { \tl_use:N \g_swu_postdoc_unit_tl }
+}
+\cs_new:Npn \swuPostdocWorkStartText { \tl_use:N \g_swu_postdoc_work_start_tl }
+\cs_new:Npn \swuPostdocWorkEndText { \tl_use:N \g_swu_postdoc_work_end_tl }
+% 封面「工作完成日期」行：仅显示至「年月」，去掉常见中文日期末尾「$\times$日」。
+\cs_new_protected:Npn \__swu_postdoc_cover_year_month_from:N #1
+{
+  \tl_set:Nx \l__swu_postdoc_ym_scratch_tl { \tl_trim_spaces:V #1 }
+  \regex_replace_once:nnN { (月)\d{1,2}日\z } { \1 } \l__swu_postdoc_ym_scratch_tl
+  \tl_use:N \l__swu_postdoc_ym_scratch_tl
+}
+\cs_new_protected:Npn \swuPostdocWorkStartYearMonthText
+{
+  \__swu_postdoc_cover_year_month_from:N \g_swu_postdoc_work_start_tl
+}
+\cs_new_protected:Npn \swuPostdocWorkEndYearMonthText
+{
+  \__swu_postdoc_cover_year_month_from:N \g_swu_postdoc_work_end_tl
+}
+\cs_new:Npn \swuPostdocReportDateText {
+  \tl_if_blank:VTF \g_swu_postdoc_report_date_tl
+  { \swuDefenseYearText 年\swuDefenseMonthText 月 }
+  { \tl_use:N \g_swu_postdoc_report_date_tl }
+}
+\cs_new:Npn \swuPostdocPublisherText { \tl_use:N \g_swu_postdoc_publisher_tl }
+\cs_new:Npn \swuPostdocPublishAddressText { \tl_use:N \g_swu_postdoc_publish_address_tl }
+\cs_new:Npn \swuPostdocPublisherLineText {
+  \tl_if_blank:VTF \g_swu_postdoc_publisher_tl
+    {西南大学\ （重庆）}
+    { \tl_use:N \g_swu_postdoc_publisher_tl }
+}
+\cs_new:Npn \swuPostdocCoverBottomYearMonthText {
+  \tl_if_blank:VTF \g_swu_postdoc_cover_bottom_date_tl
+    { \swuPostdocReportDateText }
+    { \tl_use:N \g_swu_postdoc_cover_bottom_date_tl }
+}
+\cs_new:Npn \swuPostdocMailingPostcodeText { \tl_use:N \g_swu_postdoc_mailing_postcode_tl }
+\cs_new:Npn \swuPostdocMailingAddressText { \tl_use:N \g_swu_postdoc_mailing_address_tl }
+\cs_new:Npn \swuPostdocMailingPhoneText { \tl_use:N \g_swu_postdoc_mailing_phone_tl }
+\cs_new:Npn \swuPostdocMailingEmailText { \tl_use:N \g_swu_postdoc_mailing_email_tl }
 \cs_new_protected:Npn \__swu_degree_sub_en_display:
 {
 	\seq_set_split:NnV \l__swu_degree_sub_en_lines_seq { \par } \g_swu_thesis_label_sub_en_tl
@@ -1327,6 +1467,14 @@
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
   \vspace{0.6em}%
+}
+% 博士后研究报告题名页：标签如「流动站（一级学科）名称」远长于研究生封面的 |5\ccwd|，
+% 若仍用 |\swuCoverField| 会 |[s]| 拉散字距且与 |16\ccwd| 槽不配；故单独加宽标签列（右对齐）与填写槽。
+\newcommand{\swuPostdocTitleCoverField}[2]{%
+  \noindent
+  \makebox[10\ccwd][s]{#1}：%
+  \makebox[9\ccwd][c]{\kaishu #2}\par
+  \vspace{1em}%
 }
 % 研究生中文封面：提交/答辩日期为「标签 + 一条统一下划线」，与 |\swuCoverField| 同为 |6\ccwd| 标签 + |16\ccwd| 槽，两行对齐。
 % |#1年#2月#3日| 由 |submit-*| 或 |defense-*| 填入；未填时相应位置为空。
@@ -1619,6 +1767,118 @@
   \end{center}%
   \endgroup
 }
+\newcommand{\swu@maketitle@postdoc@cover}{%
+  \begingroup
+  \songti
+  \noindent
+  \begin{minipage}[t]{0.5\textwidth}
+    \vspace{\baselineskip}
+    {\zihao{4}
+      \makebox[3\ccwd][s]{分类号}\underline{\makebox[7.5\ccwd][c]{\swuPostdocClassificationText}}\par
+      \vspace{0.5\baselineskip}
+      \makebox[3\ccwd][s]{U D C}\underline{\makebox[7.5\ccwd][c]{\swuPostdocUDCText}}\par
+    }
+  \end{minipage}
+  \begin{minipage}[t]{0.5\textwidth}
+    \vspace{\baselineskip}
+    \begin{flushright}
+      {\zihao{4}
+      \makebox[2\ccwd][s]{密级}\underline{\makebox[7.5\ccwd][c]{\swuPostdocConfidentialityText}}\par
+      \vspace{0.5\baselineskip}
+      \makebox[2\ccwd][s]{编号}\underline{\makebox[7.5\ccwd][c]{\swuPostdocIdText}}\par
+      }
+    \end{flushright}
+  \end{minipage}\par
+  \vspace{4\baselineskip}
+  \begin{center}
+    {\heiti\zihao{-2}\bfseries\swuCJKStretchText{1.08}{\swuPostdocUnitText}\par}
+    \vspace{0.5\baselineskip}
+    {\heiti\zihao{-2}\bfseries\swuCJKStretchText{1.5}{博士后研究工作报告}\par}
+    \vspace{2\baselineskip}
+    {\zihao{4}%
+      \underline{\parbox[c]{8.11cm}{%
+          \centering\linespread{1.12}\selectfont\swuTitleText\strut\par}}%
+    \par}%
+    \expandafter\ifstrempty\expandafter{\swuSubtitleText}{}{%
+      \vspace{\baselineskip}%
+      {\zihao{-4}%
+        \underline{\parbox[c]{8.11cm}{%
+            \centering\linespread{1.12}\selectfont\swuSubtitleText\strut\par}}%
+      \par}%
+    }%
+    \vspace{2\baselineskip}
+    {\zihao{-4}\swuAuthorText\par}
+  \end{center}
+  \vfill
+  {\centering\zihao{-4}%
+    \setlength{\tabcolsep}{0pt}%
+    \makebox[\textwidth][c]{%
+    \renewcommand{\arraystretch}{2}
+      \begin{tabular}{@{}r@{\hspace{0.5\ccwd}}c@{}}%
+        \makebox[7\ccwd][s]{工作完成日期} &
+          \underline{\makebox[12\ccwd][c]{\swuPostdocWorkStartYearMonthText\ --\ \swuPostdocWorkEndYearMonthText}}\\
+        \makebox[7\ccwd][s]{报告提交日期} &
+          \underline{\makebox[12\ccwd][c]{\swuPostdocReportDateText}} \\
+      \end{tabular}%
+    }\par
+  }%
+  \vfill
+  \begin{center}
+    {\zihao{-4}%
+      \swuPostdocPublisherLineText\par
+      \expandafter\ifstrempty\expandafter{\swuPostdocPublishAddressText}{}{%
+        \vspace{0.55\baselineskip}%
+        \swuPostdocPublishAddressText\par
+      }%
+      \vspace{0.45\baselineskip}%
+      \swuPostdocCoverBottomYearMonthText\par
+    }%
+    \vfill
+  \end{center}%
+  \endgroup
+}
+\newcommand{\swu@maketitle@postdoc@title}{%
+  \begingroup
+  \thispagestyle{plain}%
+  \songti
+  \vspace{2\baselineskip}
+  \phantomsection
+  \pdfbookmark[0]{题名页}{swu-postdoc-title}
+  \begin{center}
+    {\zihao{3} \swuTitleText\par}
+    \expandafter\ifstrempty\expandafter{\swuSubtitleText}{}{%
+      \vspace{\baselineskip}%
+      {\zihao{4}%
+            \centering\linespread{1.12}\selectfont\swuSubtitleText\strut\par}}%
+    \vspace{2\baselineskip}
+    {\zihao{4} \swuTitleEnText\par}
+  \end{center}
+  \vspace{3\baselineskip}
+  {\zihao{4}
+  \centering
+    \swuPostdocTitleCoverField{博士后姓名}{\swuAuthorText}
+    \swuPostdocTitleCoverField{流动站（一级学科）名称}{\swuPostdocStationText}
+    \swuPostdocTitleCoverField{专业（二级学科）名称}{\swuMajorText}
+    \vspace{4\baselineskip}
+    \swuPostdocTitleCoverField{研究工作起始时间}{\swuPostdocWorkStartText}
+    \swuPostdocTitleCoverField{研究工作期满时间}{\swuPostdocWorkEndText}
+  }
+  \vfill
+  \begin{center}
+    {\zihao{-4}%
+      \swuPostdocPublisherLineText\par
+      \expandafter\ifstrempty\expandafter{\swuPostdocPublishAddressText}{}{%
+        \vspace{0.55\baselineskip}%
+        \swuPostdocPublishAddressText\par
+      }%
+      \vspace{0.45\baselineskip}%
+      \zihao{5}\swuPostdocCoverBottomYearMonthText\par
+    }%
+    \vfill
+  \end{center}%
+  \vfill
+  \endgroup
+}
 \newcommand{\makegraduateoriginalitystatement}{%
   \begingroup
   \songti\zihao{4}%
@@ -1650,7 +1910,7 @@
 }
 %
 \NewDocumentCommand{\maketitlepage}{}{
-	\thispagestyle{empty}
+	\ifswu@postdoc\thispagestyle{plain}\else\thispagestyle{empty}\fi
 	\phantomsection
 	\pdfbookmark[0]{封面}{swu-cover}
 	\ifswu@bachelor
@@ -1701,20 +1961,26 @@
 	    \clearpage
 	    \makegraduateoriginalitystatement
 	  \else
-	    \begin{center}
-		    {\zihao{2}\bfseries 西南大学\swu@doctype\par}
-		    \vspace{2cm}
-		    {\zihao{2}\bfseries \swuTitleText\par}
-		    \swuSubtitleBlock
-		    \vspace{1.5cm}
-		    {\zihao{4}作者：\swuAuthorText\par}
-		    \vspace{0.5cm}
-		    {\zihao{4}指导教师：\swuSupervisorText\par}
-		    \vspace{0.5cm}
-		    {\zihao{4}专业：\swuMajorText\par}
-		    \vfill
-		    {\zihao{4}\today\par}
-	    \end{center}
+      \ifswu@postdoc
+        \swu@maketitle@postdoc@cover
+        \clearpage
+        \swu@maketitle@postdoc@title
+      \else
+	      \begin{center}
+		      {\zihao{2}\bfseries 西南大学\swu@doctype\par}
+		      \vspace{2cm}
+		      {\zihao{2}\bfseries \swuTitleText\par}
+		      \swuSubtitleBlock
+		      \vspace{1.5cm}
+		      {\zihao{4}作者：\swuAuthorText\par}
+		      \vspace{0.5cm}
+		      {\zihao{4}指导教师：\swuSupervisorText\par}
+		      \vspace{0.5cm}
+		      {\zihao{4}专业：\swuMajorText\par}
+		      \vfill
+		      {\zihao{4}\today\par}
+	      \end{center}
+      \fi
 	  \fi
 	\fi
 	\clearpage
@@ -1722,12 +1988,47 @@
 % \texttt{book} 已定义 |\maketitle|（简易题名页）；本模板改为与 |\maketitlepage| 同义。
 \renewcommand{\maketitle}{\maketitlepage}
 %
+% 博士后中文摘要标题：字距用 |\swuCJKStretchText|（与封面等一致）；若须固定栏宽也可用
+% |\makebox[宽度][s]{\heiti\bfseries\zihao{3}内容摘要}|。
+\newcommand{\swu@makeabstract@postdoc}{%
+	\phantomsection
+	\addcontentsline{toc}{chapter}{摘要}%
+	\begingroup
+	\songti
+	\begin{center}
+	  {\heiti\bfseries\zihao{3}\swuCJKStretchText{1.5}{内容摘要}\par}%
+	\end{center}%
+	\vspace{1.2\baselineskip}%
+	{\zihao{-4}\setlength{\parindent}{2\ccwd}%
+	  \swuAbstractCnText\par
+	  \vspace{\baselineskip}%
+	  \noindent\textbf{关键词：}\swuKeywordsCnText\par}%
+	\endgroup
+	\clearpage
+	\phantomsection
+	\addcontentsline{toc}{chapter}{Abstract}%
+	\begingroup
+	\begin{center}
+	  {\rmfamily\zihao{3}Abstract\par}%
+	\end{center}%
+	\vspace{1.2\baselineskip}%
+	{\rmfamily\zihao{4}\setlength{\parindent}{2em}%
+	  \swuAbstractEnText\par
+	  \vspace{\baselineskip}%
+	  \noindent\textbf{Key words: }\swuKeywordsEnText\par}%
+	\endgroup
+}
 \NewDocumentCommand{\makeabstract}{}{
 	\clearpage
 	\ifswu@gradthesis
 	  \pagestyle{swugraduate}%
 	  \thispagestyle{swugraduate}%
 	\fi
+	\ifswu@postdoc
+	  \pagenumbering{Roman}%
+	  \setcounter{page}{1}%
+	  \swu@makeabstract@postdoc
+	\else
 	\phantomsection
 	\addcontentsline{toc}{chapter}{摘要}
 	\begin{center}
@@ -1758,6 +2059,7 @@
 	\vspace{\baselineskip}
 	{\rmfamily\zihao{5}\noindent\textbf{Abstract: } \swuAbstractEnText\par}
 	{\rmfamily\zihao{5}\noindent\textbf{Key words: } \swuKeywordsEnText\par}
+	\fi
 }
 %
 \NewDocumentEnvironment{acknowledgements}{}{
@@ -1778,20 +2080,49 @@
 }{\par\vspace{0.5\baselineskip}\endgroup}
 %
 \NewDocumentEnvironment{resume}{}{
-	\chapter*{作者简介}
-}{ }
+	\begingroup
+	\songti
+	\setstretch{1}%
+	\setlength{\parindent}{2\ccwd}%
+	\setlength{\parskip}{0.5\baselineskip plus 0.2pt minus 0.2pt}%
+	\zihao{5}%
+}{\par\vspace{0.5\baselineskip}\endgroup}
+\newcommand{\swucvsubsection}[1]{%
+	\par\vspace{\baselineskip}%
+	\noindent
+	{\heiti\zihao{-4}#1\par}%
+	\vspace{0.35\baselineskip}%
+}
+\newcommand{\swucvdatedline}[2]{%
+	\par\noindent
+	{\songti\bfseries #1}\hspace{0.75em}{\songti #2}\par
+}
+\newcommand{\swucvnote}[1]{%
+	\vspace{0.15\baselineskip}%
+	\noindent
+	{\songti\zihao{6}\color{black!55}#1\par}%
+	\vspace{0.4\baselineskip}%
+}
+% 科研成果页居中标题及目录项；|postdoc| 用「在站」以别于学位论文「在读」。
+\newcommand{\swuPublicationsHeading}{%
+	\ifswu@postdoc
+	  在站期间取得的科研成果%
+	\else
+	  在读期间取得的科研成果%
+	\fi
+}
 %
 \NewDocumentEnvironment{publications}{}{
 	\clearpage
 	\phantomsection
-	\addcontentsline{toc}{chapter}{在读期间取得的科研成果}
+	\addcontentsline{toc}{chapter}{\swuPublicationsHeading}
 	\begingroup
 	\songti
 	\setstretch{1}%
 	\setlength{\parindent}{2\ccwd}%
 	\setlength{\parskip}{0.5\baselineskip plus 0.2pt minus 0.2pt}%
 	\begin{center}
-	  {\songti\bfseries\zihao{-4}在读期间取得的科研成果\par}
+	  {\songti\bfseries\zihao{-4}\swuPublicationsHeading\par}
 	\end{center}
 	\vspace{0.5\baselineskip}%
 	\zihao{5}%
@@ -1820,6 +2151,168 @@
     title={参考文献}]%
 }
 \newcommand{\swuprintbibliography}{\swu@defaultprintbibliography}
+% 博士后附录「永久通信地址」：六位邮编方框、通信地址双行下划线及电话/邮箱留白。
+\newcommand{\swuPostdocPermAddressZipBoxes}{%
+	\begingroup
+	\setlength{\fboxsep}{2.15pt}%
+	\setlength{\fboxrule}{0.4pt}%
+	\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+	\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+	\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+	\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+	\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+	\framebox[1.08em][c]{\rule{0pt}{1.05em}}%
+	\endgroup
+}
+\newcommand{\swuPostdocPermAddressTwoRules}{%
+	\begin{minipage}[t]{\hsize}%
+		\raggedright
+		\setlength{\parindent}{0pt}%
+		\noindent\hrulefill\par
+		\vspace{0.55\baselineskip}%
+		\noindent\hrulefill
+	\end{minipage}%
+}
+\newcommand{\swuPostdocPermAddressOneRule}{%
+	\begin{minipage}[t]{\hsize}%
+		\raggedright
+		\setlength{\parindent}{0pt}%
+		\noindent\hrulefill
+	\end{minipage}%
+}
+% 有内容时：与留白版式同宽，文字落在「横线」上（|\underline| + |\parbox|，允许多行及 |\\|）。
+\newcommand{\swuPostdocPermAddressTwoRulesWithText}[2]{%
+	\begin{minipage}[t]{\hsize}%
+		\raggedright
+		\setlength{\parindent}{0pt}%
+		\noindent\underline{%
+			\parbox[t]{\linewidth}{\raggedright\strut #1\strut}}\par
+		\vspace{0.55\baselineskip}%
+		\noindent\underline{%
+			\parbox[t]{\linewidth}{\raggedright\strut #2\strut}}%
+	\end{minipage}%
+}
+\newcommand{\swuPostdocPermAddressOneRuleWithText}[1]{%
+	\begin{minipage}[t]{\hsize}%
+		\raggedright
+		\setlength{\parindent}{0pt}%
+		\noindent\underline{%
+			\parbox[t]{\linewidth}{\raggedright\strut #1\strut}}%
+	\end{minipage}%
+}
+\ExplSyntaxOn
+\seq_new:N \l__swu_postdoc_addr_seq
+\cs_new_protected:Npn \swu_postdoc_zip_boxes_filled:N #1
+{
+	\begingroup
+	\setlength { \fboxsep } { 2.15pt }
+	\setlength { \fboxrule } { 0.4pt }
+	\tl_set:Nx \l_tmpa_tl { \tl_trim_spaces:V #1 }
+	\int_step_inline:nn { 6 }
+	{
+		\tl_set:Nx \l_tmpb_tl { \tl_item:Nn \l_tmpa_tl { ##1 } }
+		\framebox[1.08em][c]{\rule{0pt}{1.05em}\tl_use:N \l_tmpb_tl}
+		\int_compare:nNnT { ##1 } < { 6 } { \hspace{0.22em} }
+	}
+	\endgroup
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_postcode_cell:
+{
+	\tl_if_blank:VTF \g_swu_postdoc_mailing_postcode_tl
+		{ \swuPostdocPermAddressZipBoxes }
+		{ \swu_postdoc_zip_boxes_filled:N \g_swu_postdoc_mailing_postcode_tl }
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_address_cell:
+{
+	\tl_if_blank:VTF \g_swu_postdoc_mailing_address_tl
+		{ \swuPostdocPermAddressTwoRules }
+		{
+			\tl_set_eq:NN \l_tmpa_tl \g_swu_postdoc_mailing_address_tl
+			\seq_set_split:NnV \l__swu_postdoc_addr_seq { \\ } \l_tmpa_tl
+			\int_compare:nNnT { \seq_count:N \l__swu_postdoc_addr_seq } = { 1 }
+				{
+					\seq_set_split:NnV \l__swu_postdoc_addr_seq { \par }
+						\l_tmpa_tl
+				}
+			\tl_set:Nx \l_tmpa_tl { \seq_item:Nn \l__swu_postdoc_addr_seq { 1 } }
+			\tl_trim_spaces:N \l_tmpa_tl
+			\tl_clear:N \l_tmpb_tl
+			\int_compare:nNnT { \seq_count:N \l__swu_postdoc_addr_seq } > { 1 }
+			{
+				\int_step_inline:nnn { 2 } { \seq_count:N \l__swu_postdoc_addr_seq }
+				{
+					\tl_put_right:Nx \l_tmpb_tl
+						{
+							\exp_args:Ne \tl_trim_spaces:n
+								{ \seq_item:Nn \l__swu_postdoc_addr_seq { ##1 } }
+						}
+					\int_compare:nNnT { ##1 } < { \seq_count:N \l__swu_postdoc_addr_seq }
+						{ \tl_put_right:Nn \l_tmpb_tl { \par } }
+				}
+			}
+			\use:e
+			{
+				\exp_not:N \swuPostdocPermAddressTwoRulesWithText
+					{ \exp_not:o \l_tmpa_tl }
+					{ \exp_not:o \l_tmpb_tl }
+			}
+		}
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_phone_cell:
+{
+	\tl_if_blank:VTF \g_swu_postdoc_mailing_phone_tl
+		{ \swuPostdocPermAddressOneRule }
+		{
+			\tl_set:Nx \l_tmpa_tl { \tl_use:N \g_swu_postdoc_mailing_phone_tl }
+			\use:e
+			{
+				\exp_not:N \swuPostdocPermAddressOneRuleWithText
+					{ \exp_not:o \l_tmpa_tl }
+			}
+		}
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_email_cell:
+{
+	\tl_if_blank:VTF \g_swu_postdoc_mailing_email_tl
+		{ \swuPostdocPermAddressOneRule }
+		{
+			\tl_set:Nx \l_tmpa_tl { \tl_use:N \g_swu_postdoc_mailing_email_tl }
+			\use:e
+			{
+				\exp_not:N \swuPostdocPermAddressOneRuleWithText
+					{ \exp_not:o \l_tmpa_tl }
+			}
+		}
+}
+\cs_new_protected:Npn \swu_postdoc_print_permanent_address_sheet:
+{
+	\begingroup
+	\songti
+	\zihao { 5 }
+	\setlength { \parindent } { 0pt }
+	\setstretch { 1.08 }
+	\vspace{1.2\baselineskip}
+	\begin{center}
+		{\bfseries 博士后研究人员：}\swuAuthorText
+	\end{center}
+	\vspace{1.8\baselineskip}
+	\noindent
+	\setlength{\tabcolsep}{0pt}
+	\renewcommand{\arraystretch}{2.05}
+	\begin{tabular*}{\linewidth}{@{}>{\bfseries}p{6\ccwd}@{\hspace{1.1em}}p{\dimexpr\linewidth-6\ccwd-1.1em}@{}}%
+		\toprule
+		邮政编码 & \swu_postdoc_typeset_postcode_cell: \\
+		通信地址 & \swu_postdoc_typeset_address_cell: \\
+		联系电话 & \swu_postdoc_typeset_phone_cell: \\
+		电子信箱 & \swu_postdoc_typeset_email_cell: \\
+		\bottomrule
+	\end{tabular*}%
+	\par\vspace{1.5\baselineskip}
+	\endgroup
+}
+\NewDocumentCommand{\swuPostdocPrintPermanentAddressSheet}{}
+	{ \swu_postdoc_print_permanent_address_sheet: }
+\ExplSyntaxOff
 \makeatother
 %</class>
 %    \end{macrocode}
@@ -1886,23 +2379,24 @@
 %         |\swusetup| 增加 |research-field|、|degree-en|、|supervisor-en| 等键。
 %         若研究生院修订表格文本，请直接修改 |swuthesis.dtx| 中 |\makegraduateoriginalitystatement| 对应段落。
 %   \item[master / postdoc] |\maketitlepage| 中非本科分支仍为\textbf{占位式}题名页
-%         （居中标题、作者、导师、专业、|\today|）；|\makeabstract| 目前与各学位共用同一摘要版式，
-%         若规范要求分学位调整，宜拆分为内部命令再对外保留 |\makeabstract|。
+%         （居中标题、作者、导师、专业、|\today|）；|\makeabstract| 在 |postdoc| 下为独立页的中英文摘要版式（见手册 |\makeabstract| 说明），其余学位共用本科/研究生摘要版式。
 %   \item[选项组合] 互斥选项（四选一）尚未在代码层强制校验；若同时传入多个布尔选项，可能得到
 %         意料之外的 |\swu@doctype| 与分支结果。后续可约定「仅允许一个学位选项」或「默认本科、
 %         显式指定研究生」等规则，并在 |\ProcessKeyvalOptions| 之后用
 %         |\PackageWarning|/|\PackageError| 提示。
 % \end{description}
-% 环境 |publications| 标题为「在读期间取得的科研成果」，博士后或外校规范若需改标题，
-% 可在后续版本增加键值选项；小标题与分条编号见 |\swupublicationsubsection| 与 |swupubenum|。
+% 环境 |publications| 的章题：|postdoc| 为「在站期间取得的科研成果」，其余为「在读期间取得的科研成果」；
+% 若须完全自定义，可在后续版本增加键值选项。小标题与分条编号见 |\swupublicationsubsection| 与 |swupubenum|。
+% 附录「个人简历」见 |resume| 环境与 |\swucvsubsection|、|\swucvdatedline|。
 %
 % 若模板后续复杂度提高，可在 \texttt{.dtx} 中使用多个 guard，例如
 % \texttt{<*class>}、\texttt{<*cfg>}、\texttt{<*example>}，从而抽取多个文件。
 
 % \subsection{示例文档抽取}
 %
-% 运行 \texttt{latex swuthesis.ins} 除抽取类文件外，还会生成本科示例 \path{swuthesis-main.tex} 与
-% 研究生示例 \path{swuthesis-graduate-main.tex}（由 \texttt{graduate} 抽取块生成；维护时请编辑 \path{swuthesis.dtx} 中对应段落）。
+% 运行 \texttt{latex swuthesis.ins} 除抽取类文件外，还会生成本科示例 \path{swuthesis-main.tex}、
+% 研究生示例 \path{swuthesis-graduate-main.tex}（|graduate| 抽取块）与
+% 博士后示例 \path{swuthesis-postdoc-main.tex}（|postdoc| 抽取块；维护时请编辑 \path{swuthesis.dtx} 中对应段落）。
 %
 % 示例中的 \texttt{swuthesis-main.bib} 由 \verb|filecontents*| 生成；条目著录与公开书目一致，
 % 并覆盖国标、西文专著、\texttt{CTeX} 手册、中文专著与期刊（可在 CNKI 等检索）、
@@ -3162,30 +3656,34 @@ arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017atten
 \end{acknowledgements}
 
 \begin{publications}
-以下条目为版式示意，正式提交时请按学院要求增删并核对编号、日期与授权号等字段。
+以下条目为\textbf{虚构示例}，仅演示著录要素与排版；定稿请按学院/研究生院当年表格替换为本人真实成果，
+并核对卷期页码、DOI、专利号、项目编号与起止年月。
 
 \swupublicationsubsection{已发表论文：}
 \begin{swupubenum}
-  \item 某某. 关于人工智能在学位授予工作中的应用. 人工智能国际研讨会论文集，2023年12月.
-  \item 某某. 中国科学技术大学研究生学位论文撰写规范. 中国科学技术大学学报，2024年第1期.
+  \item 张三, 李四. 完备黎曼流形上 Ricci 孤子的稳定性估计. 数学学报, 2025, 68(2): 201--218.
+  \item Zhang S, Li S, Wang W. A note on gradient estimates for harmonic maps from surfaces.
+    Results in Mathematics, 2024, 79(3): Article 112. DOI: 10.1007/s00025-024-00000-0.
+  \item 张三, 王五, 李四. 微分几何课程思政教学案例一则. 大学数学, 2023, 39(4): 45--48.
 \end{swupubenum}
 
 \swupublicationsubsection{发明专利：}
 \begin{swupubenum}
-  \item 某某. 一种温热外敷药制备方案. 授权号：CN123456789B，2023-08-12.
-  \item （第二条专利条目示意，撰写时替换为真实信息.）
+  \item 李四, 张三. 一种基于曲率流形的网格简化方法及装置. 中国: CN115000000A, 2023-08-15.
+  \item 张三, 李四. 一种教学用三维曲面演示教具. 中国: CN116000000U, 2024-01-20.
 \end{swupubenum}
 
 \swupublicationsubsection{会议论文：}
 \begin{swupubenum}
-  \item 某某. 关于人工智能在学位授予工作的应用，人工智能国际研讨会，2023年12月.
-  \item （第二条会议论文示意.）
+  \item Zhang S, Li S. On the convergence of discrete harmonic maps. In: Proceedings of the 2024 Annual Conference
+    on Geometric Analysis, Chongqing, China, 2024: 156--162.
+  \item 张三, 李四. 研究生学位论文 \LaTeX{} 模板规范化实践. 见: 全国高校数学教育研讨会论文集. 重庆: 西南大学出版社, 2023: 88--93.
 \end{swupubenum}
 
 \swupublicationsubsection{参与的科研项目：}
 \begin{swupubenum}
-  \item 智能计算板卡与整机，科技委重点项目—课题，2018--2020.
-  \item （第二条项目示意.）
+  \item 国家自然科学基金青年科学基金项目「××流形上××方程的××性」（编号 12xxxxxx），2023--2025，主研（排序 3/7）.
+  \item 重庆市研究生教育教学改革研究项目「××」（编号 yjgxxxxxx），2022--2024，参研.
 \end{swupubenum}
 \end{publications}
 
@@ -3349,6 +3847,570 @@ Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；\
 
 \end{document}
 %</graduate>
+%    \end{macrocode}
+%
+% 博士后研究报告示例主文档（由 \texttt{latex swuthesis.ins} 抽取为 \path{swuthesis-postdoc-main.tex}）。
+%    \begin{macrocode}
+%<*postdoc>
+%%
+%% 博士后研究报告（\texttt{postdoc}）示例：演示封面与题名页字段、摘要、目录、正文、致谢、参考文献、
+%% 科研成果及附录中「个人简历」「永久通信地址」等常见结构。装订顺序以全国博士后管委会
+%% 《博士后研究报告编写规则》为准；本示例中章节顺序为示意，定稿前请与流动站/设站单位最新要求核对。
+%%
+\begin{filecontents*}[overwrite]{swuthesis-postdoc-main.bib}
+@standard{gbt7714,
+  title        = {信息与文献 参考文献著录规则},
+  organization = {国家市场监督管理总局、国家标准化管理委员会},
+  number       = {GB/T 7714---2025},
+  year         = {2025},
+  address      = {北京},
+  publisher    = {中国标准出版社}
+}
+
+@book{knuth1984texbook,
+  author    = {Donald E. Knuth},
+  title     = {The {\TeX}book},
+  volume    = {A},
+  series    = {Computers and Typesetting},
+  publisher = {Addison-Wesley},
+  year      = {1984},
+  address   = {Reading, MA}
+}
+
+@manual{ctex2022,
+  title        = {{CTeX} 宏集手册},
+  author       = {{CTeX-org}},
+  organization = {CTeX-org},
+  year         = {2022},
+  note         = {CTAN: https://ctan.org/pkg/ctex. 引用日期: 2026-04-18.},
+  langid       = {chinese}
+}
+
+@online{swufe2025postdocworkflow,
+  title        = {博士后研究人员进站、在站、出站等工作流程},
+  author       = {{西南财经大学人事处（党委教师工作部）}},
+  url          = {https://rsc.swufe.edu.cn/info/1401/2292.htm},
+  urldate      = {2026-04-18},
+  note         = {业务流程网页；非本校设站单位读者可对照参考.}
+}
+
+@online{tsinghua2021postdocrulesdoc,
+  title        = {博士后研究报告编写规则},
+  author       = {{全国博士后管理委员会办公室}},
+  organization = {北京图书馆学位学术论文收藏中心、全国博士后管理委员会办公室},
+  url          = {https://postdoctor.tsinghua.edu.cn/upload_files/file/20210918/1631956760110012458.doc},
+  urldate      = {2026-04-18},
+  note         = {清华大学博士后网站转发的 Word 版（请以制定单位正式印发件为准）.}
+}
+\end{filecontents*}
+
+\documentclass[postdoc,fontset=macnew,punct=banjiao]{swuthesis}
+
+\usepackage{subcaption}
+\usepackage{mwe}
+\usepackage{listings}
+\usepackage{enumitem}
+\lstdefinestyle{swupostdocrules}{%
+  basicstyle   = \small\songti,
+  columns      = fullflexible,
+  keepspaces   = true,
+  breaklines   = true,
+  tabsize      = 2,
+  frame        = none,
+  aboveskip    = 0.6\baselineskip,
+  belowskip    = 0.6\baselineskip
+}
+
+\swusetup{
+  title          = {新型有机非线性光学材料的探索},
+  subtitle       = {---从分子到晶体到材料化学过程},
+  title-en       = {THE EXPLORATION FOR NEW ORGANIC NLO\\—MATERIALS TIIE MATERIALS CIIEMISTRY PROCESS\\--FROM MOLECULES TO CRYSTALS},
+  college        = {数学与统计学院},
+  college-en     = {School of Mathematics and Statistics},
+  major          = {基础数学},
+  author         = {张三},
+  author-en      = {San Zhang},
+  supervisor     = {李四\ 教授},
+  defense-date   = {2026/6/18},
+  postdoc-classification = {O17},
+  postdoc-udc            = {530.1},
+  postdoc-id             = {26xxxx},
+  postdoc-confidentiality = {公开},
+  postdoc-station        = {数学},
+  postdoc-unit           = {西南大学},
+  postdoc-work-start     = {2023年9月1日},
+  postdoc-work-end       = {2026年6月30日},
+  postdoc-report-date    = {2026年6月},
+  % postdoc-publisher / postdoc-publish-address 留空时，封面底部出版者一行默认为「西南大学（重庆）」
+  % 永久通信地址（附录 B）：四项均留空则六位邮编方框 + 下划线；填写则排版文字（地址可用 \par 换行）。
+   postdoc-mailing-postcode = {400715},
+   postdoc-mailing-address  = {重庆市北碚区天生路2号\\ 西南大学数学与统计学院},
+   postdoc-mailing-phone    = {023-12345678},
+   postdoc-mailing-email    = {zhangsan@swu.edu.cn},
+}
+
+\addbibresource{swuthesis-postdoc-main.bib}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\begin{cnabstract}
+本文在分析设计过程、用户需求、典型程序及相应的计算机环境的基础上，以框架简力墙为例，研究了在现代计算机软硬件环境下，房屋结构的计算机模型建造技术提出了新的模型概念和相应的计算机技术，并在此基础上开发了一体化的软件FSWB。
+
+本文的主要结论是：
+\begin{enumerate}
+\item 将一个模型划分成用户模型，核心模型和过程模型是将复杂的框架简力墙结构化为计算机模型的最有效途径。
+\item 命令结构，程序结构与数据结构的一致性是计算机模拟人工设计过程的最佳方式。
+\item 面向对象（object-oriented）的数据结构提高了复杂房屋结构在计算机里的建模效率。
+\item 核心模型的标准化实现了计算机模型的多用户共享。可用于联网条件下的计算机环境，同时也便于用户进行多种方案的分析比较。
+\item 用户标志、计算机标志的使用，便于用户具有更大的选择性，使他可以采用自己习惯的方式来定义任意部件。
+\item FSWB服务器的使用，大大简化了应用程序的开发工作量。
+\item FSWB接口实现了进程之间的通讯。在没有并行计算机的情况下这是一种较好的工作方式。
+\end{enumerate}
+\end{cnabstract}
+\begin{cnkeywords}
+结构；模型；用户界面；对象；结构分析
+\end{cnkeywords}
+\begin{enabstract}
+Based on the analysis of the design process, the user requirements, the standard programs developed on the old computers and the facilities offered by the current hardware and software equipment, new concepts of modelling of Frame-Shear-Wall Buildings on computers are presented in this thesis. To examine the new concepts an integrated modelling package FSWB is implemented. Solutions presented in this thesis can be summarized as follows:
+
+\begin{itemize}
+\item Seperation of a model into user model, core model and processor model to map a complex Frame-Wall building into the computer.
+\item Achievement of the arbitrary sequence of solution steps for the user so that the design process is simulated.
+\item Implementation of an object-oriented data model.
+\item Management of inputs in a multi-window computer environment.
+\item Programming of dynamic storage allocation.
+\item Achievement of identifying of objects in the user preference.
+\end{itemize}
+\end{enabstract}
+\begin{enkeywords}
+Structure; model; user surface; object; structural analysis
+\end{enkeywords}
+\makeabstract
+\tableofcontents
+
+\mainmatter
+\chapter{博士后示例说明}\label{ch:postdoc-guide}
+
+本章说明本示例的定位与编译方式。博士后模式不使用研究生规范式封面与独创性声明页；
+\texttt{\string\maketitle} 会依次排出\textbf{封面}与\textbf{题名页}。元信息请在导言区用 \texttt{\string\swusetup} 集中填写，
+其中 \texttt{postdoc-*} 键对应《博士后研究报告编写规则》封面与题名页常见字段；\texttt{postdoc-report-date} 留空时，
+封面与题名页上的报告提交日期可由 \texttt{defense-date} 的年、月字段兜底。
+
+正文为中文并依赖 \texttt{ctex}，须使用 \hologo{XeLaTeX} 编译；参考文献使用 \texttt{biblatex}，须运行 \hologo{biber}。
+工程根目录可执行 \texttt{make postdoc}（与 \texttt{make graduate} 相同流程）。
+
+按规则附录所列装订顺序，致谢一般在参考文献之前；本示例采用
+「致谢 $\rightarrow$ 参考文献 $\rightarrow$ 科研成果 $\rightarrow$ 附录（个人简历、永久通信地址）」，
+便于与模板已有 \texttt{acknowledgements}、\texttt{publications} 环境对接；
+\texttt{publications} 在 |postdoc| 下章题为「在站期间取得的科研成果」（学位论文仍为「在读期间取得的科研成果」）。
+附录中的个人简历正文置于 \texttt{resume} 环境内，并用 \texttt{\string\swucvsubsection}、\texttt{\string\swucvdatedline} 分栏小标题与经历条。
+
+\chapter{正文与引用示例}\label{ch:postdoc-body}
+
+\section{插图示意}\label{sec:postdoc-figures}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{example-image-a}
+  \caption{单幅插图示例（\texttt{example-image-a}）}
+  \label{fig:postdoc-single}
+\end{figure}
+
+\section{参考文献标注}\label{sec:postdoc-bib}
+
+\begingroup\sloppy
+\noindent 正文引用示例：工具链说明见 \cite{ctex2022}，著录规则见 \cite{gbt7714}，西文专著示例见 \cite{knuth1984texbook}。
+进出站工作流程网页示例见 \cite{swufe2025postdocworkflow}。
+《博士后研究报告编写规则》院校转发文档见 \cite{tsinghua2021postdocrulesdoc}；规则全文纯文本见附录 \ref{app:postdoc-rules}。\par
+\endgroup
+
+\begin{acknowledgements}
+岁月不居，时节如流。余自入站以来，倏忽数载，今将出站，感怀良多。
+
+\par\medskip
+{\centering\bfseries 师恩深重\par}
+\medskip
+
+蒙导师不弃，收余于门下。先生学贯中西，德馨业精，于学术之途，循循善诱；于为人之道，言传身教。每遇疑难，必悉心指授；偶得微进，辄嘉勉有加。师恩如海，衔环难报。
+
+\par\medskip
+{\centering\bfseries 同侪之谊\par}
+\medskip
+
+同窗诸子，皆一时之选。或切磋于案牍之侧，或辩难于灯火之下。疑义相析，奇文共赏。虽性情各异，然志同道合，相与有成。此段光阴，弥足珍贵。
+
+\par\medskip
+{\centering\bfseries 家人之助\par}
+\medskip
+
+椿萱之恩，未敢或忘。双亲劬劳，抚育成人，使余无后顾之忧，得以专心向学。拙荆贤淑，持家有方，于余困顿之际，温言慰藉，默默支持。稚子绕膝，亦为余之慰藉与动力。
+
+\par\medskip
+{\centering\bfseries 机构之惠\par}
+\medskip
+
+幸得设站单位鼎力扶持，实验之资、图书之便、交流之机，皆赖于此。诸行政同仁，事务繁杂，而应对有方，使余得以潜心研究，免受杂务之扰。
+
+\par\medskip
+{\centering\bfseries 结语\par}
+\medskip
+
+学问之道，漫漫修远。博士后之阶段，不过其中一程。今虽暂告段落，然深知学无止境，前路尚长。愿以此阶段为基，益加奋勉，不负诸君之望，不负平生之志。
+
+\vspace{2em}
+
+\begin{flushright}
+    某某某\ 谨识\\
+    岁在丙午\ 孟夏\\
+    于某某大学
+\end{flushright}
+\end{acknowledgements}
+
+\backmatter
+\printbibliography[heading=bibintoc,title={参考文献}]
+
+\begin{publications}
+以下条目为\textbf{虚构示例}，与示例论文题目「新型有机非线性光学材料」大致同领域，仅演示常见著录要素；
+定稿请按《博士后研究报告编写规则》及流动站当年要求替换为本人真实成果（含接收函、卷期、DOI、专利号等）。
+
+\swupublicationsubsection{博士生期间发表的学术论文、专著：}
+\begin{swupubenum}
+  \item 张三, 李四. 极化分子晶体二阶非线性光学系数的温度依赖. 中国科学: 化学, 2022, 52(6): 901--912.
+  \item Zhang S, Li S, Chen X. Polymorphism and second-harmonic generation in an organic acentric crystal.
+    CrystEngComm, 2023, 25(11): 1523--1531.
+  \item 张三. 有机非线性光学材料研究进展. 见: 全国光化学学术讨论会论文摘要集. 合肥, 2021: 45.
+\end{swupubenum}
+
+\swupublicationsubsection{博士后期间发表的学术论文、专著：}
+\begin{swupubenum}
+  \item 张三, 李四, 赵六. 氢键调控下有机晶体二次谐波效率的实验与理论. 光学学报, 2026, 46(4): 0400001-1--8.
+    （示例：已录用待刊时可写「已录用，拟发表于××年第×期」并附编辑部证明.）
+  \item Zhang S, Li S. Solution-processed molecular glasses for nonlinear optics: a mini-review.
+    Frontiers of Chemistry (invited), 2025, 13: Article 000. DOI: 10.1007/s00000-000-00000-0.
+\end{swupubenum}
+
+\swupublicationsubsection{获授权专利与软件著作权（如有）：}
+\begin{swupubenum}
+  \item 李四, 张三. 一种有机非线性光学单晶的生长装置及方法. 中国: CN118000000B, 2025-02-01.
+  \item 张三. 晶体非线性光学参数计算软件 V1.0. 登记号: 2025SR0000000, 2025-03-01.
+\end{swupubenum}
+
+\swupublicationsubsection{主持或参加的科研项目（在站及进站前与本报告相关者）：}
+\begin{swupubenum}
+  \item 中国博士后科学基金面上资助「××有机晶体××性能研究」（编号 2024M7xxxxx），2024--2026，主持.
+  \item 国家自然科学基金面上项目「××材料××机理」（编号 12xxxxxx），2022--2025，参加（排序 4/9）.
+\end{swupubenum}
+\end{publications}
+
+\appendix
+\chapter{博士后个人简历}\label{app:postdoc-cv}
+\begin{resume}
+% 以下为「基本信息 / 教育经历 / 工作经历 / 科研工作」四段式表格化版式（对称四栏、三线表、小号灰色说明），
+% 流动站或设站单位另有 Word 制式表时，以当年通知为准。
+
+\swucvsubsection{一、基本信息}
+\noindent
+\begingroup
+\setlength{\tabcolsep}{0.55em}%
+\renewcommand{\arraystretch}{1.22}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}>{\bfseries}p{6\ccwd}p{10.5\ccwd}>{\bfseries}p{4.5\ccwd}p{10.5\ccwd}@{}}%
+\toprule
+姓名 & \swuAuthorText & 性别 & 男（据实填写） \\
+\midrule
+民族 & 汉族（据实填写） & 出生年月 & 19××年×月 \\
+\midrule
+籍贯 & ××省××市（县） & 政治面貌 & 中共党员（据实填写） \\
+\midrule
+\multicolumn{4}{@{}l@{}}%
+  {\textbf{最后学历学位:~} ××学博士（据实填写）} \\
+\bottomrule
+\end{tabular*}%
+\endgroup
+
+\swucvsubsection{二、教育经历}
+\swucvnote{（按时间倒序书写：自最高学历写至本科。）}
+\noindent
+\begingroup
+\setlength{\tabcolsep}{0.5em}%
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.28\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}%
+\toprule
+\textbf{起止年月} & \textbf{学校} & \textbf{专业} & \textbf{所获学位} \\
+\midrule
+20××年9月—20××年7月 & ××大学 & ××专业 & ××学博士学位 \\
+\midrule
+20××年9月—20××年7月 & ××大学 & ××专业 & ××学硕士学位 \\
+\midrule
+20××年9月—20××年7月 & ××大学 & ××专业 & 学士学位 \\
+\bottomrule
+\end{tabular*}%
+\endgroup
+
+\swucvsubsection{三、工作经历（含博士后）}
+\swucvnote{（按时间倒序书写：含在站博士后、以往工作单位及职务。）}
+\noindent
+\begingroup
+\setlength{\tabcolsep}{0.45em}%
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.3\linewidth}p{0.15\linewidth}p{0.26\linewidth}p{0.28\linewidth}@{}}%
+\toprule
+\textbf{起止年月} & \textbf{工作单位} & \textbf{职务/职称} & \textbf{备注} \\
+\midrule
+20××年×月—至今 & 西南大学\swuPostdocStationText 博士后流动站 & 博士后研究人员 & 合作导师：\swuSupervisorText \\
+\midrule
+20××年×月—20××年×月 & ××单位 & ××（职务、职称据实填写） & \\
+\bottomrule
+\end{tabular*}%
+\endgroup \par
+\swucvnote{注：出国（境）学习、合作研究可并入本条或单列。}
+
+\swucvsubsection{四、与本研究报告相关的主要科研工作}
+简要综述在站期间与本研究报告直接相关的研究方向、任务来源、主要结论与创新点；若无单独要求，可与「在站期间取得的科研成果」部分呼应，避免大段重复粘贴。
+
+\end{resume}
+
+\chapter{永久通信地址}\label{app:postdoc-address}
+\swuPostdocPrintPermanentAddressSheet
+
+\chapter{博士后研究报告编写规则（全文参考）}\label{app:postdoc-rules}
+\phantomsection
+\begingroup
+{\small
+\noindent
+下列条文据《博士后研究报告编写规则》整理录入；定稿请以设站单位及全国博士后管理委员会办公室印发的最新版为准。
+清华大学博士后网站曾转发相关 Word 文档（参考文献表 \texttt{tsinghua2021postdocrulesdoc}）；
+西南财经大学人事处网站载有进出站工作流程说明（参考文献表 \texttt{swufe2025postdocworkflow}），供对照。\par
+\vspace{\baselineskip}
+}
+研究报告是描述一项科学技术研究的结果或进展；或一项技术研制试验和评价的结果；或是论述某项科学技术问题的现状和发展的文件。
+
+研究报告是为了呈送科学技术工作主管机构或科学基金会等组织或主持研究的人等。研究报告中一般应该提供系统的或按工作进程的充分信息，可以包括正反两方面的结果和经验，以便有关人员和读者判断和评价，以及对报告中的结论和建议提出修正意见。
+
+研究报告的质量不仅取决于它的内容，而且有赖于它的书写质量和编辑水平。本规则是为了建立和统一我国博士后研究报告（以下简称报告）的撰写和编辑的格式，以便于信息系统的收集与存储、开发与利用，开展国际交流与合作而制定的。
+
+本规则是根据GB7713-87《科学技术报告、学位论文和学术论文的编写格式》的原则，并结合我国博士后工作的具体情况制定的。
+
+\section{研究报告的结构}
+
+一份正式的研究报告，其基本结构应包括以下几部分：前置部分（篇前部分）、主体部分（正文部分）、参考文献部分、附录部分和结尾部分。
+
+\subsection{前置部分（篇前部分）}
+
+前置部分一般包括以下项目：封面、封二，题名页，摘要，关键词，目次页，插图和附表清单，符号、标志、缩略词、首字母缩写、单位、术语、名词等对照表。
+
+\subsubsection{封面}
+
+封面是报告的外表面，提供应有的信息，并起保护作用。它应包括下列内容：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] \textbf{分类号}：在左上角注明分类号，便于信息交换和处理。一般应注明《中国图书资料分类法》的类号，同时应尽可能注明《国际十进制分类法UDC》的类号。
+    \item[b.] \textbf{本单位编号}：一般标注在右上角。
+    \item[c.] \textbf{密级}：报告的内容，按国家规定的保密条例，在右上角注明密级。如系公开发行，不注密级。
+    \item[d.] \textbf{题名和副题名或分册题名}：用大号字标注于明显地位。
+    \item[e.] \textbf{责任者姓名}：责任者即报告作者。必要时可注明个人责任者的职务、职称、学位、所在单位名称及地址。如责任者姓名有必要附注汉语拼音时，必须遵照国家规定，即姓在名前，名连成一词，不加连字符，不缩写。
+    \item[f.] \textbf{工作完成日期}：包括报告、工作起始和完成日期。
+\end{itemize}
+
+（以上请见报告的封面标准格式和范例1）。
+
+\subsubsection{封二}
+
+报告的封二可标注送发方式，包括免费赠送或价购，以及送发单位和个人；版权规定；其他应注明事项。
+
+\subsubsection{题名页}
+
+题名页是对报告进行著录的重要依据。必须包括以下项目：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] \textbf{中英文题名}
+    
+    研究报告的题名必须以最恰当、最简明的词语反映报告中最重要的特定内容的逻辑组合。题名所用每一词语必须考虑到有助于选定关键词和编制题录、索引等二次文献可以提供检索的特定实用信息。题名应该避免使用不常见的缩略词、首字母缩写字、字符、代号和公式等。题名一般不宜超过20字。英文题名一般不宜超过10个实词。
+    
+    题名词意未尽，用副题名补充说明报告中的特定内容，例如：新型有机非线性光学材料的探索：从分子到晶体的材料化学过程；报告分册出版，或是一系列工作分几篇报道，或是分阶段的研究成果，各用不同副题名区别其特定内容；其他有必要用副题名作为引伸或说明者。题名在整本报告中不同地方出现时，应完全相同。
+    
+    \item[b.] 博士后研究人员姓名；亦可列出职务、职称
+    \item[c.] 专业名称（或研究领域）
+    \item[d.] 流动站名称（一级学科）
+    \item[e.] 研究工作（做博士后）起始时间
+    \item[f.] 研究工作（完成博士后研究工作）期满时间
+    \item[g.] 单位名称
+    \item[h.] 报告提交日期
+\end{itemize}
+
+另外，报告如分装两册以上，每一分册均应各有其题名页。在题名页上注明分册名称和序号。题名页置于封二和衬页之后，成为另页的右页。（见题名页标准格式和范例2）
+
+\subsubsection{中英文摘要}
+
+摘要是报告的内容不加注释和评论的简短陈述。摘要的编写应遵循以下原则：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 摘要应具有独立性和自含性，即不阅读报告全文，就能获得必要的信息。
+    \item[b.] 摘要的内容应包含与报告同等量的主要信息，供读者确定有无必要阅读全文，也供文摘第二次文献采用。
+    \item[c.] 摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。
+    \item[d.] 中文摘要一般不宜超过400～500字，如果研究报告是用外国语文撰写的，中文摘要应不少于600～800字；外文摘要不宜超过300个实词。如遇特殊需要字数可以略多。
+    \item[e.] 摘要中不要用图、表、化学结构式、非公知公用的符号和术语。
+    \item[f.] 报告摘要用另页置于题名页之后。（见范例3、4）
+\end{itemize}
+
+\subsubsection{关键词}
+
+关键词是为了文献标引工作从报告中选取出来用以表示全文主题内容信息款目的单词或术语。每篇报告选取3～8个词作为关键词，以显著的字符另起一行，排在摘要的左下方，中文关键词如有可能，尽量用《汉语主题词表》等词表提供的规范词，并应标注与中文对应的英文关键词。（见范例3、4）
+
+\subsubsection{目次页}
+
+目次页是由报告篇、章、条、款、项、附录、题录等的序号和名称依报告论述的次序而排列的一览表。另页排在摘要之后。整套报告分卷编制时，每一分卷均应有全部报告内容的目次页。
+
+目次页中的标题必须与正文内的标题一致，表示篇、章、节的数字用阿拉伯数字。（见范例5）
+
+\subsubsection{插图和附表清单}
+
+报告中如图表较多，可以分别列出清单置于目次页之后。图的清单应有序号、图题和页码。表的清单应有序号、表题和页码。符号、标志、缩略词、首字母缩写、计量单位、名词、术语等的注释说明汇集表，应置于图表清单之后。（见范例6）
+
+\subsection{主体部分（正文部分）}
+
+一般研究报告皆以引言（或绪论）开始，以结论或讨论结束。主体部分必须由另页右页开始。每一篇（或部分）必须另页起。全部报告的每一章、条、款、项的格式和版面安排，要求统一，层次清楚。
+
+\subsubsection{引言（或绪论）}
+
+引言（或绪论）简要说明研究工作的目的、范围、相关领域的前人工作和知识空白、理论基础和分析、研究设想、研究方法和实验设计、预期结果和意义等。应言简意赅，不要与摘要雷同，不要成为摘要的注释。一般教科书中有的知识，在引言中不必赘述。
+
+\subsubsection{正文}
+
+报告的正文是核心部分，占主要篇幅，可以包括：调查对象、实验和观测方法、仪器设备、材料原料、实验和观测结果、计算方法和编程原理、数据材料、经过加工整理的图表、形成的论点和导出的结论等。由于研究工作涉及的学科、选题、研究方法、工作进程、结果表达式等有很大的差异。对正文内容不能作统一的规定。但是，必须实事求是，客观真切，准确完备，合乎逻辑，层次分明，简练可读。语句通顺、标点使用正确、不得生造词汇，尽量不使用缩略和简称。
+
+\subsubsection{序号}
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 如报告在一个总题下装为两卷（或分册）以上，或分为两篇（或部分）以上，各卷或篇应有序号。可以写成：第一卷，第二分册，第一篇，第二部分等。用外文撰写的报告，其卷（分册）和篇（部分）的序号，用罗马数字编码。
+    \item[b.] 报告的图、表、附注、参考文献、公式、算式等，一律用阿拉伯数字分别依序连续编排号。序号可以就全篇报告统一按出现先后顺序编码，长篇报告也可以分章依序编码。其标注形式应便于相互区别，可以分别为：图1、图2.1；表2、表3.2；附注1）；文献[4]；式（5）、式（3.5）等。
+    \item[c.] 报告一律用阿拉伯数字连续编页码。页码应由引言首页开始作为第一页，并为右页另页。封面、封二、封三和封底不编入页码。可以将题名页、序、目次页等前置部分单独编排页码。页码必须标注在每页的右下角，便于识别。如在一个总题下装成两册以上，应连续编页码。如各册有副题名，则可分别独立编页码。
+\end{itemize}
+
+\subsubsection{图}
+
+图包括曲线图、构造图、示意图、图解、框图、流程图、记录图、布置图、地图、照片、图版等。要求：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 图应具有``自明性''，即只看图、图题和图例，不阅读正文，就可理解图意。图应编排序号。
+    \item[b.] 每一图应有简短确切的题名，连同图号置于图下。必要时，应将图上的符号、标记、代码，以及实验条件等，用最简练的文字横排于图题下方，作为图例说明。
+    \item[c.] 曲线图的纵横坐标必须标注``量、标准规定符号、单位''。此三者只有在不必要标明（如无量纲等）的情况下方可省略。坐标上标注的量的符号和缩略词必须与正文中一致。
+    \item[d.] 照片图要求主题和主要显示部分的轮廓鲜明，便于制版。如用放大缩小的复制品，必须清晰，反差适中。照片上应该有表示目的物尺寸的标度。
+\end{itemize}
+
+\subsubsection{表}
+
+表的编排，一般是内容和测试项目由左至右横读，数据依序竖排。表应有自明性。要求：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 表应编排序号。
+    \item[b.] 每一表应有简短确切的题名，连同表号置于表上居中。必要时，应将表中的符号、标记、代码，以及需要说明事项，以最简练的文字横排于表下，作为表注。表内附注的序号宜用小号阿拉伯数字并加圆括号置于被标注对象的右上角，如：×××$^{(1)}$，不宜用星号``*''，以免与数学上共轭和物质转移的符号相混。
+    \item[c.] 表的各栏均应标明``量或测试项目、标准规定符号、单位''，只有在无必要标注的情况下方可省略。表中的缩略词和符号，必须与正文一致。
+    \item[d.] 表内同一栏的数字必须上下对齐。表内不宜用``同上''、``同左''、``"''和类似词，一律填入具体数字或文字。表内``空白''代表未测或无此项，``—''或``…''（因``—''可能与代表阴性反应相混）代表未发现，``0''代表实测结果确为零。
+\end{itemize}
+
+\subsubsection{数学、物理和化学式}
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 正文中的公式、算式或方程式等应编排序号，序号标注于该式所在行（当有续行时，应标注于最后一行）的最右边。
+    \item[b.] 较长的式，另行居中横排。如式必须转行时，只能在+，—，×，÷，$<$，$>$处转行。上下式尽可能在等号``=''处对齐。
+\end{itemize}
+
+小数点用``.''表示。大于999的整数和多于三位数的小数，一律用半个阿拉伯数字符的小间隔分开，不用千位撇。小于1的数应将0列于小数点之前。
+
+如例：应该写成94\ 652.023\ 567；\qquad 0.314\ 325
+
+不应写成94，652.023，567；\qquad 0.314，425
+
+应注意区别各种字符，如：拉丁文、希腊文、俄文、德文花体、草体；罗马数字和阿拉伯数字；字符的正斜体、黑白体、大小写、上下角标（特别是多层次，如``三踏步''）、上下偏差等。
+
+例如：I，l，1，i；C，c；K，k；O，o，0。
+
+\subsubsection{计量单位}
+
+报告必须采用1984年2月27日国务院发布的《中华人民共和国法定计量单位》，并遵照《中华人民共和国法定计量单位使用方法》执行。使用各种量、单位和符号，必须遵照国家标准的规定执行。单位名称和符号的书写方式一律采用国际通用符号。
+
+\subsubsection{符号和缩略词}
+
+符号和缩略词应遵照国家标准的有关规定执行。如无标准可循，可采纳本学科或本专业的权威性机构或学术团体所公布的规定；也可采用全国自然科学名词审定委员会编印的各学科词汇的用词。如不得不引用某些不是公知公用的、且又不易为同行读者所理解的、或系作者自定的符号、记号、缩略词、首字母缩写字等时，均应一一在第一次出现时加以说明，给以明确的定义。
+
+\subsubsection{结论}
+
+报告的结论是最终的、总体的结论，不是正文中各段的小结的简单重复。结论应该准确、完整、明确、精练。如果不可能导出应有的结论，也可以没有结论而进行必要的讨论。可以在结论或讨论中提出建议、研究设想、仪器设备改进意见、尚待解决的问题等。
+
+\subsubsection{致谢}
+
+可以在正文后对下列方面致谢：
+
+国家科学基金、资助研究工作的奖学金基金、合同单位、资助或支持的企业、组织或个人；协助完成研究工作和提供便利条件的组织或个人；在研究工作中提出建议和提供帮助的人；给予转载和引用权的资料、图片、文献、研究思想和设想的所有者；其他应感谢的组织或个人。
+
+\subsection{参考文献部分}
+
+参考文献部分在研究报告中具有重要作用，表明该报告参考了某些有关资料，从而作为评价该报告的依据之一。
+
+参考文献部分必须另页右页开始，并标明顺序号。参考文献的书写格式请按GB/T 7714-1987《文后参考文献著录规则》的规定执行。（见本规则的附录A）
+
+\subsection{附录}
+
+附录是作为报告主体的补充项目，并不是必需的。下列内容可以作为附录编于报告后，也可以另编成册：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 为了使整篇报告材料更加完整，但编入正文又有损于编排的条理和逻辑性，且这一类材料包括比正文更详尽的信息、研究方法和技术更深入的叙述，建议可以阅读的参考文献题录，对了解正文内容有用的补充信息等；
+    \item[b.] 由于篇幅过大或取材于复制品而不便于编入正文的材料；
+    \item[c.] 不便于编入正文的罕见珍贵资料；
+    \item[d.] 对于一般读者并非必要阅读，但对本专业同行有参考价值的资料；
+    \item[e.] 某些重要的原始数据、数学推导、计算程序、框图、结构图、注释、统计表、计算机打印输出件等。
+\end{itemize}
+
+附录与正文连续编页码。每一附录的各种序号的编排，依序用大写正体A,B,C…编序号。如附图A。附录中的图、表、式、参考文献等另行编序号，与正文分开，也一律用阿拉伯数字编码，但在数码前冠以附录序码，如图A1；表B2；式（B3）；文献[A5]等。每一附录均另页起。如报告分装几册，凡属于某一册的附录应置于该册正文之后。
+
+\subsection{结尾部分}
+
+结尾部分主要包括以下内容：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 博士后个人简历
+    \item[b.] 博士生期间发表的学术论文、专著、重要科研成果
+    \item[c.] 博士后期间发表的学术论文、专著、重要科研成果
+    \item[d.] 永久通信地址
+    \item[e.] 书脊厚度大于或等于5mm的研究报告，应将题名及作者设计在书脊上，书脊名称应与其封面、书名页上的题名作者一致。
+    \item[f.] 封三、封底（包括版权页）
+\end{itemize}
+
+\section{研究报告的编写要求}
+
+\begin{itemize}[leftmargin=2em]
+    \item[2.1] 报告的中英文稿必须用白色纸单面打字
+    \item[2.2] 报告宜用A4（210×297mm）标准大小的白纸，应便于阅读、复制和拍摄缩微制品。
+    \item[2.3] 报告在打字或印刷时，要求纸的四周留足空白边缘，以便装订、复制和读者批注。每一面的上方（天头）留30mm，左侧（订口）留边35mm以上，下方（地脚）应留25mm，右侧（切口）应留边20mm以上。
+    \item[2.4] 报告的正文一般采用4号宋体字，中文题名、篇题、章题可适当增大并采用黑体。
+    \item[2.5] 封面、书名页的字应采用黑体字。
+    \item[2.6] 报告的装订顺序参考本规则的附录C。
+\end{itemize}
+
+\vspace{2em}
+
+\begin{center}
+    \textbf{附录A\quad GB7714-87《文后参考文献著录规则》}
+
+    \textbf{附录B\quad GB6447-87《文摘编写规则》}
+
+    \textbf{附录C\quad 博士后研究报告装订顺序}
+\end{center}
+
+\vspace{1em}
+
+\begin{flushright}
+    \textbf{说明}
+
+    本规则是由北京图书馆学位学术论文收藏中心、全国博士后管委会办公室共同制定。
+\end{flushright}
+\endgroup
+
+\end{document}
+%</postdoc>
 %    \end{macrocode}
 
 %

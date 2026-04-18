@@ -3,13 +3,13 @@ DOCLATEX := xelatex
 STRIPLATEX := latex
 INDEX := makeindex
 
-.PHONY: all cls main graduate doc clean distclean
+.PHONY: all cls main graduate postdoc doc clean distclean
 
-all: cls main doc graduate
+all: cls main doc graduate postdoc
 
-cls: swuthesis.cls swuthesis-main.tex swuthesis-graduate-main.tex
+cls: swuthesis.cls swuthesis-main.tex swuthesis-graduate-main.tex swuthesis-postdoc-main.tex
 
-swuthesis.cls swuthesis-main.tex swuthesis-graduate-main.tex: swuthesis.dtx swuthesis.ins
+swuthesis.cls swuthesis-main.tex swuthesis-graduate-main.tex swuthesis-postdoc-main.tex: swuthesis.dtx swuthesis.ins
 	$(STRIPLATEX) swuthesis.ins
 
 main: cls
@@ -23,6 +23,12 @@ graduate: cls
 	biber swuthesis-graduate-main
 	$(LATEX) swuthesis-graduate-main.tex
 	$(LATEX) swuthesis-graduate-main.tex
+
+postdoc: cls
+	$(LATEX) swuthesis-postdoc-main.tex
+	biber swuthesis-postdoc-main
+	$(LATEX) swuthesis-postdoc-main.tex
+	$(LATEX) swuthesis-postdoc-main.tex
 
 doc: swuthesis.dtx
 	$(DOCLATEX) -jobname=swuthesis-doc swuthesis.dtx

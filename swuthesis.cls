@@ -361,7 +361,7 @@
   \let\swu@oldtableofcontents\tableofcontents
   \renewcommand{\tableofcontents}{%
     \clearpage
-    \pagenumbering{Roman}%
+    \ifswu@postdoc\else\pagenumbering{Roman}\fi
     \begingroup
     \ifswu@gradthesis
       \setstretch{1.67}%
@@ -503,9 +503,26 @@
 \tl_new:N \l_swu_k_submit_year_tl
 \tl_new:N \l_swu_k_submit_month_tl
 \tl_new:N \l_swu_k_submit_day_tl
+\tl_new:N \l_swu_k_postdoc_classification_tl
+\tl_new:N \l_swu_k_postdoc_udc_tl
+\tl_new:N \l_swu_k_postdoc_id_tl
+\tl_new:N \l_swu_k_postdoc_confidentiality_tl
+\tl_new:N \l_swu_k_postdoc_station_tl
+\tl_new:N \l_swu_k_postdoc_unit_tl
+\tl_new:N \l_swu_k_postdoc_work_start_tl
+\tl_new:N \l_swu_k_postdoc_work_end_tl
+\tl_new:N \l_swu_k_postdoc_report_date_tl
+\tl_new:N \l_swu_k_postdoc_publisher_tl
+\tl_new:N \l_swu_k_postdoc_publish_address_tl
+\tl_new:N \l_swu_k_postdoc_cover_bottom_date_tl
+\tl_new:N \l_swu_k_postdoc_mailing_postcode_tl
+\tl_new:N \l_swu_k_postdoc_mailing_address_tl
+\tl_new:N \l_swu_k_postdoc_mailing_phone_tl
+\tl_new:N \l_swu_k_postdoc_mailing_email_tl
 \seq_new:N \l__swu_date_parse_seq
 \tl_new:N \l__swu_date_input_tl
 \tl_new:N \l__swu_thesis_label_sub_scratch_tl
+\tl_new:N \l__swu_postdoc_ym_scratch_tl
 \cs_new_protected:Npn \__swu_date_from_yyyymmdd:nNNN #1#2#3#4
 {
 \tl_set:Nx \l__swu_date_input_tl { \tl_trim_spaces:n {#1} }
@@ -592,6 +609,22 @@ submit-date .code:n = {
 \__swu_date_from_yyyymmdd:nNNN {#1}
 \l_swu_k_submit_year_tl \l_swu_k_submit_month_tl \l_swu_k_submit_day_tl
 },
+postdoc-classification .tl_set:N = \l_swu_k_postdoc_classification_tl,
+postdoc-udc .tl_set:N = \l_swu_k_postdoc_udc_tl,
+postdoc-id .tl_set:N = \l_swu_k_postdoc_id_tl,
+postdoc-confidentiality .tl_set:N = \l_swu_k_postdoc_confidentiality_tl,
+postdoc-station .tl_set:N = \l_swu_k_postdoc_station_tl,
+postdoc-unit .tl_set:N = \l_swu_k_postdoc_unit_tl,
+postdoc-work-start .tl_set:N = \l_swu_k_postdoc_work_start_tl,
+postdoc-work-end   .tl_set:N = \l_swu_k_postdoc_work_end_tl,
+postdoc-report-date .tl_set:N = \l_swu_k_postdoc_report_date_tl,
+postdoc-publisher .tl_set:N = \l_swu_k_postdoc_publisher_tl,
+postdoc-publish-address .tl_set:N = \l_swu_k_postdoc_publish_address_tl,
+postdoc-cover-bottom-date .tl_set:N = \l_swu_k_postdoc_cover_bottom_date_tl,
+postdoc-mailing-postcode .tl_set:N = \l_swu_k_postdoc_mailing_postcode_tl,
+postdoc-mailing-address  .tl_set:N = \l_swu_k_postdoc_mailing_address_tl,
+postdoc-mailing-phone    .tl_set:N = \l_swu_k_postdoc_mailing_phone_tl,
+postdoc-mailing-email    .tl_set:N = \l_swu_k_postdoc_mailing_email_tl,
 defense-date .code:n = {
 \__swu_date_from_yyyymmdd:nNNN {#1} \l_tmph_tl \l_tmpi_tl \l_tmpj_tl
 },
@@ -636,6 +669,22 @@ thesis-label-sub-en .code:n = {
 \tl_gset_eq:NN \g_swu_submit_year_tl  \l_swu_k_submit_year_tl
 \tl_gset_eq:NN \g_swu_submit_month_tl \l_swu_k_submit_month_tl
 \tl_gset_eq:NN \g_swu_submit_day_tl   \l_swu_k_submit_day_tl
+\tl_gset_eq:NN \g_swu_postdoc_classification_tl \l_swu_k_postdoc_classification_tl
+\tl_gset_eq:NN \g_swu_postdoc_udc_tl  \l_swu_k_postdoc_udc_tl
+\tl_gset_eq:NN \g_swu_postdoc_id_tl   \l_swu_k_postdoc_id_tl
+\tl_gset_eq:NN \g_swu_postdoc_confidentiality_tl \l_swu_k_postdoc_confidentiality_tl
+\tl_gset_eq:NN \g_swu_postdoc_station_tl \l_swu_k_postdoc_station_tl
+\tl_gset_eq:NN \g_swu_postdoc_unit_tl \l_swu_k_postdoc_unit_tl
+\tl_gset_eq:NN \g_swu_postdoc_work_start_tl \l_swu_k_postdoc_work_start_tl
+\tl_gset_eq:NN \g_swu_postdoc_work_end_tl \l_swu_k_postdoc_work_end_tl
+\tl_gset_eq:NN \g_swu_postdoc_report_date_tl \l_swu_k_postdoc_report_date_tl
+\tl_gset_eq:NN \g_swu_postdoc_publisher_tl \l_swu_k_postdoc_publisher_tl
+\tl_gset_eq:NN \g_swu_postdoc_publish_address_tl \l_swu_k_postdoc_publish_address_tl
+\tl_gset_eq:NN \g_swu_postdoc_cover_bottom_date_tl \l_swu_k_postdoc_cover_bottom_date_tl
+\tl_gset_eq:NN \g_swu_postdoc_mailing_postcode_tl \l_swu_k_postdoc_mailing_postcode_tl
+\tl_gset_eq:NN \g_swu_postdoc_mailing_address_tl \l_swu_k_postdoc_mailing_address_tl
+\tl_gset_eq:NN \g_swu_postdoc_mailing_phone_tl \l_swu_k_postdoc_mailing_phone_tl
+\tl_gset_eq:NN \g_swu_postdoc_mailing_email_tl \l_swu_k_postdoc_mailing_email_tl
 }
 \tl_new:N \g_swu_title_tl
 \tl_new:N \g_swu_author_tl
@@ -665,6 +714,22 @@ thesis-label-sub-en .code:n = {
 \tl_new:N \g_swu_submit_year_tl
 \tl_new:N \g_swu_submit_month_tl
 \tl_new:N \g_swu_submit_day_tl
+\tl_new:N \g_swu_postdoc_classification_tl
+\tl_new:N \g_swu_postdoc_udc_tl
+\tl_new:N \g_swu_postdoc_id_tl
+\tl_new:N \g_swu_postdoc_confidentiality_tl
+\tl_new:N \g_swu_postdoc_station_tl
+\tl_new:N \g_swu_postdoc_unit_tl
+\tl_new:N \g_swu_postdoc_work_start_tl
+\tl_new:N \g_swu_postdoc_work_end_tl
+\tl_new:N \g_swu_postdoc_report_date_tl
+\tl_new:N \g_swu_postdoc_publisher_tl
+\tl_new:N \g_swu_postdoc_publish_address_tl
+\tl_new:N \g_swu_postdoc_cover_bottom_date_tl
+\tl_new:N \g_swu_postdoc_mailing_postcode_tl
+\tl_new:N \g_swu_postdoc_mailing_address_tl
+\tl_new:N \g_swu_postdoc_mailing_phone_tl
+\tl_new:N \g_swu_postdoc_mailing_email_tl
 \tl_new:N \g_swu_thesis_label_tl
 \tl_new:N \g_swu_thesis_label_sub_tl
 \tl_new:N \g_swu_thesis_label_sub_en_tl
@@ -676,6 +741,51 @@ thesis-label-sub-en .code:n = {
   }
 \cs_new:Npn \swuCoverThesisLabelSubText { \tl_use:N \g_swu_thesis_label_sub_tl }
 \cs_new:Npn \swuCoverThesisLabelSubEnText { \tl_use:N \g_swu_thesis_label_sub_en_tl }
+\cs_new:Npn \swuPostdocClassificationText { \tl_use:N \g_swu_postdoc_classification_tl }
+\cs_new:Npn \swuPostdocUDCText { \tl_use:N \g_swu_postdoc_udc_tl }
+\cs_new:Npn \swuPostdocIdText { \tl_use:N \g_swu_postdoc_id_tl }
+\cs_new:Npn \swuPostdocConfidentialityText { \tl_use:N \g_swu_postdoc_confidentiality_tl }
+\cs_new:Npn \swuPostdocStationText { \tl_use:N \g_swu_postdoc_station_tl }
+\cs_new:Npn \swuPostdocUnitText {
+  \tl_if_blank:VTF \g_swu_postdoc_unit_tl {西南大学} { \tl_use:N \g_swu_postdoc_unit_tl }
+}
+\cs_new:Npn \swuPostdocWorkStartText { \tl_use:N \g_swu_postdoc_work_start_tl }
+\cs_new:Npn \swuPostdocWorkEndText { \tl_use:N \g_swu_postdoc_work_end_tl }
+\cs_new_protected:Npn \__swu_postdoc_cover_year_month_from:N #1
+{
+  \tl_set:Nx \l__swu_postdoc_ym_scratch_tl { \tl_trim_spaces:V #1 }
+  \regex_replace_once:nnN { (月)\d{1,2}日\z } { \1 } \l__swu_postdoc_ym_scratch_tl
+  \tl_use:N \l__swu_postdoc_ym_scratch_tl
+}
+\cs_new_protected:Npn \swuPostdocWorkStartYearMonthText
+{
+  \__swu_postdoc_cover_year_month_from:N \g_swu_postdoc_work_start_tl
+}
+\cs_new_protected:Npn \swuPostdocWorkEndYearMonthText
+{
+  \__swu_postdoc_cover_year_month_from:N \g_swu_postdoc_work_end_tl
+}
+\cs_new:Npn \swuPostdocReportDateText {
+  \tl_if_blank:VTF \g_swu_postdoc_report_date_tl
+  { \swuDefenseYearText 年\swuDefenseMonthText 月 }
+  { \tl_use:N \g_swu_postdoc_report_date_tl }
+}
+\cs_new:Npn \swuPostdocPublisherText { \tl_use:N \g_swu_postdoc_publisher_tl }
+\cs_new:Npn \swuPostdocPublishAddressText { \tl_use:N \g_swu_postdoc_publish_address_tl }
+\cs_new:Npn \swuPostdocPublisherLineText {
+  \tl_if_blank:VTF \g_swu_postdoc_publisher_tl
+    {西南大学\ （重庆）}
+    { \tl_use:N \g_swu_postdoc_publisher_tl }
+}
+\cs_new:Npn \swuPostdocCoverBottomYearMonthText {
+  \tl_if_blank:VTF \g_swu_postdoc_cover_bottom_date_tl
+    { \swuPostdocReportDateText }
+    { \tl_use:N \g_swu_postdoc_cover_bottom_date_tl }
+}
+\cs_new:Npn \swuPostdocMailingPostcodeText { \tl_use:N \g_swu_postdoc_mailing_postcode_tl }
+\cs_new:Npn \swuPostdocMailingAddressText { \tl_use:N \g_swu_postdoc_mailing_address_tl }
+\cs_new:Npn \swuPostdocMailingPhoneText { \tl_use:N \g_swu_postdoc_mailing_phone_tl }
+\cs_new:Npn \swuPostdocMailingEmailText { \tl_use:N \g_swu_postdoc_mailing_email_tl }
 \cs_new_protected:Npn \__swu_degree_sub_en_display:
 {
 \seq_set_split:NnV \l__swu_degree_sub_en_lines_seq { \par } \g_swu_thesis_label_sub_en_tl
@@ -903,6 +1013,12 @@ thesis-label-sub-en .code:n = {
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
   \vspace{0.6em}%
+}
+\newcommand{\swuPostdocTitleCoverField}[2]{%
+  \noindent
+  \makebox[10\ccwd][s]{#1}：%
+  \makebox[9\ccwd][c]{\kaishu #2}\par
+  \vspace{1em}%
 }
 \newcommand{\swu@zh@date@inline}[3]{#1年#2月#3日}
 \newcommand{\swu@graduate@cover@date@single}[2]{%
@@ -1175,6 +1291,118 @@ thesis-label-sub-en .code:n = {
   \end{center}%
   \endgroup
 }
+\newcommand{\swu@maketitle@postdoc@cover}{%
+  \begingroup
+  \songti
+  \noindent
+  \begin{minipage}[t]{0.5\textwidth}
+    \vspace{\baselineskip}
+    {\zihao{4}
+      \makebox[3\ccwd][s]{分类号}\underline{\makebox[7.5\ccwd][c]{\swuPostdocClassificationText}}\par
+      \vspace{0.5\baselineskip}
+      \makebox[3\ccwd][s]{U D C}\underline{\makebox[7.5\ccwd][c]{\swuPostdocUDCText}}\par
+    }
+  \end{minipage}
+  \begin{minipage}[t]{0.5\textwidth}
+    \vspace{\baselineskip}
+    \begin{flushright}
+      {\zihao{4}
+      \makebox[2\ccwd][s]{密级}\underline{\makebox[7.5\ccwd][c]{\swuPostdocConfidentialityText}}\par
+      \vspace{0.5\baselineskip}
+      \makebox[2\ccwd][s]{编号}\underline{\makebox[7.5\ccwd][c]{\swuPostdocIdText}}\par
+      }
+    \end{flushright}
+  \end{minipage}\par
+  \vspace{4\baselineskip}
+  \begin{center}
+    {\heiti\zihao{-2}\bfseries\swuCJKStretchText{1.08}{\swuPostdocUnitText}\par}
+    \vspace{0.5\baselineskip}
+    {\heiti\zihao{-2}\bfseries\swuCJKStretchText{1.5}{博士后研究工作报告}\par}
+    \vspace{2\baselineskip}
+    {\zihao{4}%
+      \underline{\parbox[c]{8.11cm}{%
+          \centering\linespread{1.12}\selectfont\swuTitleText\strut\par}}%
+    \par}%
+    \expandafter\ifstrempty\expandafter{\swuSubtitleText}{}{%
+      \vspace{\baselineskip}%
+      {\zihao{-4}%
+        \underline{\parbox[c]{8.11cm}{%
+            \centering\linespread{1.12}\selectfont\swuSubtitleText\strut\par}}%
+      \par}%
+    }%
+    \vspace{2\baselineskip}
+    {\zihao{-4}\swuAuthorText\par}
+  \end{center}
+  \vfill
+  {\centering\zihao{-4}%
+    \setlength{\tabcolsep}{0pt}%
+    \makebox[\textwidth][c]{%
+    \renewcommand{\arraystretch}{2}
+      \begin{tabular}{@{}r@{\hspace{0.5\ccwd}}c@{}}%
+        \makebox[7\ccwd][s]{工作完成日期} &
+          \underline{\makebox[12\ccwd][c]{\swuPostdocWorkStartYearMonthText\ --\ \swuPostdocWorkEndYearMonthText}}\\
+        \makebox[7\ccwd][s]{报告提交日期} &
+          \underline{\makebox[12\ccwd][c]{\swuPostdocReportDateText}} \\
+      \end{tabular}%
+    }\par
+  }%
+  \vfill
+  \begin{center}
+    {\zihao{-4}%
+      \swuPostdocPublisherLineText\par
+      \expandafter\ifstrempty\expandafter{\swuPostdocPublishAddressText}{}{%
+        \vspace{0.55\baselineskip}%
+        \swuPostdocPublishAddressText\par
+      }%
+      \vspace{0.45\baselineskip}%
+      \swuPostdocCoverBottomYearMonthText\par
+    }%
+    \vfill
+  \end{center}%
+  \endgroup
+}
+\newcommand{\swu@maketitle@postdoc@title}{%
+  \begingroup
+  \thispagestyle{plain}%
+  \songti
+  \vspace{2\baselineskip}
+  \phantomsection
+  \pdfbookmark[0]{题名页}{swu-postdoc-title}
+  \begin{center}
+    {\zihao{3} \swuTitleText\par}
+    \expandafter\ifstrempty\expandafter{\swuSubtitleText}{}{%
+      \vspace{\baselineskip}%
+      {\zihao{4}%
+            \centering\linespread{1.12}\selectfont\swuSubtitleText\strut\par}}%
+    \vspace{2\baselineskip}
+    {\zihao{4} \swuTitleEnText\par}
+  \end{center}
+  \vspace{3\baselineskip}
+  {\zihao{4}
+  \centering
+    \swuPostdocTitleCoverField{博士后姓名}{\swuAuthorText}
+    \swuPostdocTitleCoverField{流动站（一级学科）名称}{\swuPostdocStationText}
+    \swuPostdocTitleCoverField{专业（二级学科）名称}{\swuMajorText}
+    \vspace{4\baselineskip}
+    \swuPostdocTitleCoverField{研究工作起始时间}{\swuPostdocWorkStartText}
+    \swuPostdocTitleCoverField{研究工作期满时间}{\swuPostdocWorkEndText}
+  }
+  \vfill
+  \begin{center}
+    {\zihao{-4}%
+      \swuPostdocPublisherLineText\par
+      \expandafter\ifstrempty\expandafter{\swuPostdocPublishAddressText}{}{%
+        \vspace{0.55\baselineskip}%
+        \swuPostdocPublishAddressText\par
+      }%
+      \vspace{0.45\baselineskip}%
+      \zihao{5}\swuPostdocCoverBottomYearMonthText\par
+    }%
+    \vfill
+  \end{center}%
+  \vfill
+  \endgroup
+}
 \newcommand{\makegraduateoriginalitystatement}{%
   \begingroup
   \songti\zihao{4}%
@@ -1205,7 +1433,7 @@ thesis-label-sub-en .code:n = {
   \clearpage
 }
 \NewDocumentCommand{\maketitlepage}{}{
-\thispagestyle{empty}
+\ifswu@postdoc\thispagestyle{plain}\else\thispagestyle{empty}\fi
 \phantomsection
 \pdfbookmark[0]{封面}{swu-cover}
 \ifswu@bachelor
@@ -1256,31 +1484,70 @@ thesis-label-sub-en .code:n = {
     \clearpage
     \makegraduateoriginalitystatement
   \else
-    \begin{center}
-    {\zihao{2}\bfseries 西南大学\swu@doctype\par}
-    \vspace{2cm}
-    {\zihao{2}\bfseries \swuTitleText\par}
-    \swuSubtitleBlock
-    \vspace{1.5cm}
-    {\zihao{4}作者：\swuAuthorText\par}
-    \vspace{0.5cm}
-    {\zihao{4}指导教师：\swuSupervisorText\par}
-    \vspace{0.5cm}
-    {\zihao{4}专业：\swuMajorText\par}
-    \vfill
-    {\zihao{4}\today\par}
-    \end{center}
+      \ifswu@postdoc
+        \swu@maketitle@postdoc@cover
+        \clearpage
+        \swu@maketitle@postdoc@title
+      \else
+      \begin{center}
+      {\zihao{2}\bfseries 西南大学\swu@doctype\par}
+      \vspace{2cm}
+      {\zihao{2}\bfseries \swuTitleText\par}
+      \swuSubtitleBlock
+      \vspace{1.5cm}
+      {\zihao{4}作者：\swuAuthorText\par}
+      \vspace{0.5cm}
+      {\zihao{4}指导教师：\swuSupervisorText\par}
+      \vspace{0.5cm}
+      {\zihao{4}专业：\swuMajorText\par}
+      \vfill
+      {\zihao{4}\today\par}
+      \end{center}
+      \fi
   \fi
 \fi
 \clearpage
 }
 \renewcommand{\maketitle}{\maketitlepage}
+\newcommand{\swu@makeabstract@postdoc}{%
+\phantomsection
+\addcontentsline{toc}{chapter}{摘要}%
+\begingroup
+\songti
+\begin{center}
+  {\heiti\bfseries\zihao{3}\swuCJKStretchText{1.5}{内容摘要}\par}%
+\end{center}%
+\vspace{1.2\baselineskip}%
+{\zihao{-4}\setlength{\parindent}{2\ccwd}%
+  \swuAbstractCnText\par
+  \vspace{\baselineskip}%
+  \noindent\textbf{关键词：}\swuKeywordsCnText\par}%
+\endgroup
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}%
+\begingroup
+\begin{center}
+  {\rmfamily\zihao{3}Abstract\par}%
+\end{center}%
+\vspace{1.2\baselineskip}%
+{\rmfamily\zihao{4}\setlength{\parindent}{2em}%
+  \swuAbstractEnText\par
+  \vspace{\baselineskip}%
+  \noindent\textbf{Key words: }\swuKeywordsEnText\par}%
+\endgroup
+}
 \NewDocumentCommand{\makeabstract}{}{
 \clearpage
 \ifswu@gradthesis
   \pagestyle{swugraduate}%
   \thispagestyle{swugraduate}%
 \fi
+\ifswu@postdoc
+  \pagenumbering{Roman}%
+  \setcounter{page}{1}%
+  \swu@makeabstract@postdoc
+\else
 \phantomsection
 \addcontentsline{toc}{chapter}{摘要}
 \begin{center}
@@ -1311,6 +1578,7 @@ thesis-label-sub-en .code:n = {
 \vspace{\baselineskip}
 {\rmfamily\zihao{5}\noindent\textbf{Abstract: } \swuAbstractEnText\par}
 {\rmfamily\zihao{5}\noindent\textbf{Key words: } \swuKeywordsEnText\par}
+\fi
 }
 \NewDocumentEnvironment{acknowledgements}{}{
 \clearpage
@@ -1329,19 +1597,47 @@ thesis-label-sub-en .code:n = {
 \hspace{2\ccwd}\ignorespaces
 }{\par\vspace{0.5\baselineskip}\endgroup}
 \NewDocumentEnvironment{resume}{}{
-\chapter*{作者简介}
-}{ }
+\begingroup
+\songti
+\setstretch{1}%
+\setlength{\parindent}{2\ccwd}%
+\setlength{\parskip}{0.5\baselineskip plus 0.2pt minus 0.2pt}%
+\zihao{5}%
+}{\par\vspace{0.5\baselineskip}\endgroup}
+\newcommand{\swucvsubsection}[1]{%
+\par\vspace{\baselineskip}%
+\noindent
+{\heiti\zihao{-4}#1\par}%
+\vspace{0.35\baselineskip}%
+}
+\newcommand{\swucvdatedline}[2]{%
+\par\noindent
+{\songti\bfseries #1}\hspace{0.75em}{\songti #2}\par
+}
+\newcommand{\swucvnote}[1]{%
+\vspace{0.15\baselineskip}%
+\noindent
+{\songti\zihao{6}\color{black!55}#1\par}%
+\vspace{0.4\baselineskip}%
+}
+\newcommand{\swuPublicationsHeading}{%
+\ifswu@postdoc
+  在站期间取得的科研成果%
+\else
+  在读期间取得的科研成果%
+\fi
+}
 \NewDocumentEnvironment{publications}{}{
 \clearpage
 \phantomsection
-\addcontentsline{toc}{chapter}{在读期间取得的科研成果}
+\addcontentsline{toc}{chapter}{\swuPublicationsHeading}
 \begingroup
 \songti
 \setstretch{1}%
 \setlength{\parindent}{2\ccwd}%
 \setlength{\parskip}{0.5\baselineskip plus 0.2pt minus 0.2pt}%
 \begin{center}
-  {\songti\bfseries\zihao{-4}在读期间取得的科研成果\par}
+  {\songti\bfseries\zihao{-4}\swuPublicationsHeading\par}
 \end{center}
 \vspace{0.5\baselineskip}%
 \zihao{5}%
@@ -1370,6 +1666,166 @@ topsep=0.2\baselineskip
     title={参考文献}]%
 }
 \newcommand{\swuprintbibliography}{\swu@defaultprintbibliography}
+\newcommand{\swuPostdocPermAddressZipBoxes}{%
+\begingroup
+\setlength{\fboxsep}{2.15pt}%
+\setlength{\fboxrule}{0.4pt}%
+\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+\framebox[1.08em][c]{\rule{0pt}{1.05em}}\hspace{0.22em}%
+\framebox[1.08em][c]{\rule{0pt}{1.05em}}%
+\endgroup
+}
+\newcommand{\swuPostdocPermAddressTwoRules}{%
+\begin{minipage}[t]{\hsize}%
+\raggedright
+\setlength{\parindent}{0pt}%
+\noindent\hrulefill\par
+\vspace{0.55\baselineskip}%
+\noindent\hrulefill
+\end{minipage}%
+}
+\newcommand{\swuPostdocPermAddressOneRule}{%
+\begin{minipage}[t]{\hsize}%
+\raggedright
+\setlength{\parindent}{0pt}%
+\noindent\hrulefill
+\end{minipage}%
+}
+\newcommand{\swuPostdocPermAddressTwoRulesWithText}[2]{%
+\begin{minipage}[t]{\hsize}%
+\raggedright
+\setlength{\parindent}{0pt}%
+\noindent\underline{%
+\parbox[t]{\linewidth}{\raggedright\strut #1\strut}}\par
+\vspace{0.55\baselineskip}%
+\noindent\underline{%
+\parbox[t]{\linewidth}{\raggedright\strut #2\strut}}%
+\end{minipage}%
+}
+\newcommand{\swuPostdocPermAddressOneRuleWithText}[1]{%
+\begin{minipage}[t]{\hsize}%
+\raggedright
+\setlength{\parindent}{0pt}%
+\noindent\underline{%
+\parbox[t]{\linewidth}{\raggedright\strut #1\strut}}%
+\end{minipage}%
+}
+\ExplSyntaxOn
+\seq_new:N \l__swu_postdoc_addr_seq
+\cs_new_protected:Npn \swu_postdoc_zip_boxes_filled:N #1
+{
+\begingroup
+\setlength { \fboxsep } { 2.15pt }
+\setlength { \fboxrule } { 0.4pt }
+\tl_set:Nx \l_tmpa_tl { \tl_trim_spaces:V #1 }
+\int_step_inline:nn { 6 }
+{
+\tl_set:Nx \l_tmpb_tl { \tl_item:Nn \l_tmpa_tl { ##1 } }
+\framebox[1.08em][c]{\rule{0pt}{1.05em}\tl_use:N \l_tmpb_tl}
+\int_compare:nNnT { ##1 } < { 6 } { \hspace{0.22em} }
+}
+\endgroup
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_postcode_cell:
+{
+\tl_if_blank:VTF \g_swu_postdoc_mailing_postcode_tl
+{ \swuPostdocPermAddressZipBoxes }
+{ \swu_postdoc_zip_boxes_filled:N \g_swu_postdoc_mailing_postcode_tl }
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_address_cell:
+{
+\tl_if_blank:VTF \g_swu_postdoc_mailing_address_tl
+{ \swuPostdocPermAddressTwoRules }
+{
+\tl_set_eq:NN \l_tmpa_tl \g_swu_postdoc_mailing_address_tl
+\seq_set_split:NnV \l__swu_postdoc_addr_seq { \\ } \l_tmpa_tl
+\int_compare:nNnT { \seq_count:N \l__swu_postdoc_addr_seq } = { 1 }
+{
+\seq_set_split:NnV \l__swu_postdoc_addr_seq { \par }
+\l_tmpa_tl
+}
+\tl_set:Nx \l_tmpa_tl { \seq_item:Nn \l__swu_postdoc_addr_seq { 1 } }
+\tl_trim_spaces:N \l_tmpa_tl
+\tl_clear:N \l_tmpb_tl
+\int_compare:nNnT { \seq_count:N \l__swu_postdoc_addr_seq } > { 1 }
+{
+\int_step_inline:nnn { 2 } { \seq_count:N \l__swu_postdoc_addr_seq }
+{
+\tl_put_right:Nx \l_tmpb_tl
+{
+\exp_args:Ne \tl_trim_spaces:n
+{ \seq_item:Nn \l__swu_postdoc_addr_seq { ##1 } }
+}
+\int_compare:nNnT { ##1 } < { \seq_count:N \l__swu_postdoc_addr_seq }
+{ \tl_put_right:Nn \l_tmpb_tl { \par } }
+}
+}
+\use:e
+{
+\exp_not:N \swuPostdocPermAddressTwoRulesWithText
+{ \exp_not:o \l_tmpa_tl }
+{ \exp_not:o \l_tmpb_tl }
+}
+}
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_phone_cell:
+{
+\tl_if_blank:VTF \g_swu_postdoc_mailing_phone_tl
+{ \swuPostdocPermAddressOneRule }
+{
+\tl_set:Nx \l_tmpa_tl { \tl_use:N \g_swu_postdoc_mailing_phone_tl }
+\use:e
+{
+\exp_not:N \swuPostdocPermAddressOneRuleWithText
+{ \exp_not:o \l_tmpa_tl }
+}
+}
+}
+\cs_new_protected:Npn \swu_postdoc_typeset_email_cell:
+{
+\tl_if_blank:VTF \g_swu_postdoc_mailing_email_tl
+{ \swuPostdocPermAddressOneRule }
+{
+\tl_set:Nx \l_tmpa_tl { \tl_use:N \g_swu_postdoc_mailing_email_tl }
+\use:e
+{
+\exp_not:N \swuPostdocPermAddressOneRuleWithText
+{ \exp_not:o \l_tmpa_tl }
+}
+}
+}
+\cs_new_protected:Npn \swu_postdoc_print_permanent_address_sheet:
+{
+\begingroup
+\songti
+\zihao { 5 }
+\setlength { \parindent } { 0pt }
+\setstretch { 1.08 }
+\vspace{1.2\baselineskip}
+\begin{center}
+{\bfseries 博士后研究人员：}\swuAuthorText
+\end{center}
+\vspace{1.8\baselineskip}
+\noindent
+\setlength{\tabcolsep}{0pt}
+\renewcommand{\arraystretch}{2.05}
+\begin{tabular*}{\linewidth}{@{}>{\bfseries}p{6\ccwd}@{\hspace{1.1em}}p{\dimexpr\linewidth-6\ccwd-1.1em}@{}}%
+\toprule
+邮政编码 & \swu_postdoc_typeset_postcode_cell: \\
+通信地址 & \swu_postdoc_typeset_address_cell: \\
+联系电话 & \swu_postdoc_typeset_phone_cell: \\
+电子信箱 & \swu_postdoc_typeset_email_cell: \\
+\bottomrule
+\end{tabular*}%
+\par\vspace{1.5\baselineskip}
+\endgroup
+}
+\NewDocumentCommand{\swuPostdocPrintPermanentAddressSheet}{}
+{ \swu_postdoc_print_permanent_address_sheet: }
+\ExplSyntaxOff
 \makeatother
 
 

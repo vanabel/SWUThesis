@@ -1,0 +1,571 @@
+%%
+%% This is file `swuthesis-postdoc-main.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% swuthesis.dtx  (with options: `postdoc')
+%% This is a generated file.
+%% 
+%% It was extracted from swuthesis.dtx.
+
+%%
+%% 博士后研究报告（\texttt{postdoc}）示例：演示封面与题名页字段、摘要、目录、正文、致谢、参考文献、
+%% 科研成果及附录中「个人简历」「永久通信地址」等常见结构。装订顺序以全国博士后管委会
+%% 《博士后研究报告编写规则》为准；本示例中章节顺序为示意，定稿前请与流动站/设站单位最新要求核对。
+%%
+\begin{filecontents*}[overwrite]{swuthesis-postdoc-main.bib}
+@standard{gbt7714,
+  title        = {信息与文献 参考文献著录规则},
+  organization = {国家市场监督管理总局、国家标准化管理委员会},
+  number       = {GB/T 7714---2025},
+  year         = {2025},
+  address      = {北京},
+  publisher    = {中国标准出版社}
+}
+
+@book{knuth1984texbook,
+  author    = {Donald E. Knuth},
+  title     = {The {\TeX}book},
+  volume    = {A},
+  series    = {Computers and Typesetting},
+  publisher = {Addison-Wesley},
+  year      = {1984},
+  address   = {Reading, MA}
+}
+
+@manual{ctex2022,
+  title        = {{CTeX} 宏集手册},
+  author       = {{CTeX-org}},
+  organization = {CTeX-org},
+  year         = {2022},
+  note         = {CTAN: https://ctan.org/pkg/ctex. 引用日期: 2026-04-18.},
+  langid       = {chinese}
+}
+
+@online{swufe2025postdocworkflow,
+  title        = {博士后研究人员进站、在站、出站等工作流程},
+  author       = {{西南财经大学人事处（党委教师工作部）}},
+  url          = {https://rsc.swufe.edu.cn/info/1401/2292.htm},
+  urldate      = {2026-04-18},
+  note         = {业务流程网页；非本校设站单位读者可对照参考.}
+}
+
+@online{tsinghua2021postdocrulesdoc,
+  title        = {博士后研究报告编写规则},
+  author       = {{全国博士后管理委员会办公室}},
+  organization = {北京图书馆学位学术论文收藏中心、全国博士后管理委员会办公室},
+  url          = {https://postdoctor.tsinghua.edu.cn/upload_files/file/20210918/1631956760110012458.doc},
+  urldate      = {2026-04-18},
+  note         = {清华大学博士后网站转发的 Word 版（请以制定单位正式印发件为准）.}
+}
+\end{filecontents*}
+
+\documentclass[postdoc,fontset=macnew,punct=banjiao]{swuthesis}
+
+\usepackage{subcaption}
+\usepackage{mwe}
+\usepackage{listings}
+\usepackage{enumitem}
+\lstdefinestyle{swupostdocrules}{%
+  basicstyle   = \small\songti,
+  columns      = fullflexible,
+  keepspaces   = true,
+  breaklines   = true,
+  tabsize      = 2,
+  frame        = none,
+  aboveskip    = 0.6\baselineskip,
+  belowskip    = 0.6\baselineskip
+}
+
+\swusetup{
+  title          = {新型有机非线性光学材料的探索},
+  subtitle       = {---从分子到晶体到材料化学过程},
+  title-en       = {THE EXPLORATION FOR NEW ORGANIC NLO\\—MATERIALS TIIE MATERIALS CIIEMISTRY PROCESS\\--FROM MOLECULES TO CRYSTALS},
+  college        = {数学与统计学院},
+  college-en     = {School of Mathematics and Statistics},
+  major          = {基础数学},
+  author         = {张三},
+  author-en      = {San Zhang},
+  supervisor     = {李四\ 教授},
+  defense-date   = {2026/6/18},
+  postdoc-classification = {O17},
+  postdoc-udc            = {530.1},
+  postdoc-id             = {26xxxx},
+  postdoc-confidentiality = {公开},
+  postdoc-station        = {数学},
+  postdoc-unit           = {西南大学},
+  postdoc-work-start     = {2023年9月1日},
+  postdoc-work-end       = {2026年6月30日},
+  postdoc-report-date    = {2026年6月},
+  % postdoc-publisher / postdoc-publish-address 留空时，封面底部出版者一行默认为「西南大学（重庆）」
+  % 永久通信地址（附录 B）：四项均留空则六位邮编方框 + 下划线；填写则排版文字（地址可用 \par 换行）。
+   postdoc-mailing-postcode = {400715},
+   postdoc-mailing-address  = {重庆市北碚区天生路2号\\ 西南大学数学与统计学院},
+   postdoc-mailing-phone    = {023-12345678},
+   postdoc-mailing-email    = {zhangsan@swu.edu.cn},
+}
+
+\addbibresource{swuthesis-postdoc-main.bib}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\begin{cnabstract}
+本文在分析设计过程、用户需求、典型程序及相应的计算机环境的基础上，以框架简力墙为例，研究了在现代计算机软硬件环境下，房屋结构的计算机模型建造技术提出了新的模型概念和相应的计算机技术，并在此基础上开发了一体化的软件FSWB。
+
+本文的主要结论是：
+\begin{enumerate}
+\item 将一个模型划分成用户模型，核心模型和过程模型是将复杂的框架简力墙结构化为计算机模型的最有效途径。
+\item 命令结构，程序结构与数据结构的一致性是计算机模拟人工设计过程的最佳方式。
+\item 面向对象（object-oriented）的数据结构提高了复杂房屋结构在计算机里的建模效率。
+\item 核心模型的标准化实现了计算机模型的多用户共享。可用于联网条件下的计算机环境，同时也便于用户进行多种方案的分析比较。
+\item 用户标志、计算机标志的使用，便于用户具有更大的选择性，使他可以采用自己习惯的方式来定义任意部件。
+\item FSWB服务器的使用，大大简化了应用程序的开发工作量。
+\item FSWB接口实现了进程之间的通讯。在没有并行计算机的情况下这是一种较好的工作方式。
+\end{enumerate}
+\end{cnabstract}
+\begin{cnkeywords}
+结构；模型；用户界面；对象；结构分析
+\end{cnkeywords}
+\begin{enabstract}
+Based on the analysis of the design process, the user requirements, the standard programs developed on the old computers and the facilities offered by the current hardware and software equipment, new concepts of modelling of Frame-Shear-Wall Buildings on computers are presented in this thesis. To examine the new concepts an integrated modelling package FSWB is implemented. Solutions presented in this thesis can be summarized as follows:
+
+\begin{itemize}
+\item Seperation of a model into user model, core model and processor model to map a complex Frame-Wall building into the computer.
+\item Achievement of the arbitrary sequence of solution steps for the user so that the design process is simulated.
+\item Implementation of an object-oriented data model.
+\item Management of inputs in a multi-window computer environment.
+\item Programming of dynamic storage allocation.
+\item Achievement of identifying of objects in the user preference.
+\end{itemize}
+\end{enabstract}
+\begin{enkeywords}
+Structure; model; user surface; object; structural analysis
+\end{enkeywords}
+\makeabstract
+\tableofcontents
+
+\mainmatter
+\chapter{博士后示例说明}\label{ch:postdoc-guide}
+
+本章说明本示例的定位与编译方式。博士后模式不使用研究生规范式封面与独创性声明页；
+\texttt{\string\maketitle} 会依次排出\textbf{封面}与\textbf{题名页}。元信息请在导言区用 \texttt{\string\swusetup} 集中填写，
+其中 \texttt{postdoc-*} 键对应《博士后研究报告编写规则》封面与题名页常见字段；\texttt{postdoc-report-date} 留空时，
+封面与题名页上的报告提交日期可由 \texttt{defense-date} 的年、月字段兜底。
+
+正文为中文并依赖 \texttt{ctex}，须使用 \hologo{XeLaTeX} 编译；参考文献使用 \texttt{biblatex}，须运行 \hologo{biber}。
+工程根目录可执行 \texttt{make postdoc}（与 \texttt{make graduate} 相同流程）。
+
+按规则附录所列装订顺序，致谢一般在参考文献之前；本示例采用
+「致谢 $\rightarrow$ 参考文献 $\rightarrow$ 科研成果 $\rightarrow$ 附录（个人简历、永久通信地址）」，
+便于与模板已有 \texttt{acknowledgements}、\texttt{publications} 环境对接；
+\texttt{publications} 在 |postdoc| 下章题为「在站期间取得的科研成果」（学位论文仍为「在读期间取得的科研成果」）。
+附录中的个人简历正文置于 \texttt{resume} 环境内，并用 \texttt{\string\swucvsubsection}、\texttt{\string\swucvdatedline} 分栏小标题与经历条。
+
+\chapter{正文与引用示例}\label{ch:postdoc-body}
+
+\section{插图示意}\label{sec:postdoc-figures}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{example-image-a}
+  \caption{单幅插图示例（\texttt{example-image-a}）}
+  \label{fig:postdoc-single}
+\end{figure}
+
+\section{参考文献标注}\label{sec:postdoc-bib}
+
+\begingroup\sloppy
+\noindent 正文引用示例：工具链说明见 \cite{ctex2022}，著录规则见 \cite{gbt7714}，西文专著示例见 \cite{knuth1984texbook}。
+进出站工作流程网页示例见 \cite{swufe2025postdocworkflow}。
+《博士后研究报告编写规则》院校转发文档见 \cite{tsinghua2021postdocrulesdoc}；规则全文纯文本见附录 \ref{app:postdoc-rules}。\par
+\endgroup
+
+\begin{acknowledgements}
+岁月不居，时节如流。余自入站以来，倏忽数载，今将出站，感怀良多。
+
+\par\medskip
+{\centering\bfseries 师恩深重\par}
+\medskip
+
+蒙导师不弃，收余于门下。先生学贯中西，德馨业精，于学术之途，循循善诱；于为人之道，言传身教。每遇疑难，必悉心指授；偶得微进，辄嘉勉有加。师恩如海，衔环难报。
+
+\par\medskip
+{\centering\bfseries 同侪之谊\par}
+\medskip
+
+同窗诸子，皆一时之选。或切磋于案牍之侧，或辩难于灯火之下。疑义相析，奇文共赏。虽性情各异，然志同道合，相与有成。此段光阴，弥足珍贵。
+
+\par\medskip
+{\centering\bfseries 家人之助\par}
+\medskip
+
+椿萱之恩，未敢或忘。双亲劬劳，抚育成人，使余无后顾之忧，得以专心向学。拙荆贤淑，持家有方，于余困顿之际，温言慰藉，默默支持。稚子绕膝，亦为余之慰藉与动力。
+
+\par\medskip
+{\centering\bfseries 机构之惠\par}
+\medskip
+
+幸得设站单位鼎力扶持，实验之资、图书之便、交流之机，皆赖于此。诸行政同仁，事务繁杂，而应对有方，使余得以潜心研究，免受杂务之扰。
+
+\par\medskip
+{\centering\bfseries 结语\par}
+\medskip
+
+学问之道，漫漫修远。博士后之阶段，不过其中一程。今虽暂告段落，然深知学无止境，前路尚长。愿以此阶段为基，益加奋勉，不负诸君之望，不负平生之志。
+
+\vspace{2em}
+
+\begin{flushright}
+    某某某\ 谨识\\
+    岁在丙午\ 孟夏\\
+    于某某大学
+\end{flushright}
+\end{acknowledgements}
+
+\backmatter
+\printbibliography[heading=bibintoc,title={参考文献}]
+
+\begin{publications}
+以下条目为\textbf{虚构示例}，与示例论文题目「新型有机非线性光学材料」大致同领域，仅演示常见著录要素；
+定稿请按《博士后研究报告编写规则》及流动站当年要求替换为本人真实成果（含接收函、卷期、DOI、专利号等）。
+
+\swupublicationsubsection{博士生期间发表的学术论文、专著：}
+\begin{swupubenum}
+  \item 张三, 李四. 极化分子晶体二阶非线性光学系数的温度依赖. 中国科学: 化学, 2022, 52(6): 901--912.
+  \item Zhang S, Li S, Chen X. Polymorphism and second-harmonic generation in an organic acentric crystal.
+    CrystEngComm, 2023, 25(11): 1523--1531.
+  \item 张三. 有机非线性光学材料研究进展. 见: 全国光化学学术讨论会论文摘要集. 合肥, 2021: 45.
+\end{swupubenum}
+
+\swupublicationsubsection{博士后期间发表的学术论文、专著：}
+\begin{swupubenum}
+  \item 张三, 李四, 赵六. 氢键调控下有机晶体二次谐波效率的实验与理论. 光学学报, 2026, 46(4): 0400001-1--8.
+    （示例：已录用待刊时可写「已录用，拟发表于××年第×期」并附编辑部证明.）
+  \item Zhang S, Li S. Solution-processed molecular glasses for nonlinear optics: a mini-review.
+    Frontiers of Chemistry (invited), 2025, 13: Article 000. DOI: 10.1007/s00000-000-00000-0.
+\end{swupubenum}
+
+\swupublicationsubsection{获授权专利与软件著作权（如有）：}
+\begin{swupubenum}
+  \item 李四, 张三. 一种有机非线性光学单晶的生长装置及方法. 中国: CN118000000B, 2025-02-01.
+  \item 张三. 晶体非线性光学参数计算软件 V1.0. 登记号: 2025SR0000000, 2025-03-01.
+\end{swupubenum}
+
+\swupublicationsubsection{主持或参加的科研项目（在站及进站前与本报告相关者）：}
+\begin{swupubenum}
+  \item 中国博士后科学基金面上资助「××有机晶体××性能研究」（编号 2024M7xxxxx），2024--2026，主持.
+  \item 国家自然科学基金面上项目「××材料××机理」（编号 12xxxxxx），2022--2025，参加（排序 4/9）.
+\end{swupubenum}
+\end{publications}
+
+\appendix
+\chapter{博士后个人简历}\label{app:postdoc-cv}
+\begin{resume}
+
+\swucvsubsection{一、基本信息}
+\noindent
+\begingroup
+\setlength{\tabcolsep}{0.55em}%
+\renewcommand{\arraystretch}{1.22}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}>{\bfseries}p{6\ccwd}p{10.5\ccwd}>{\bfseries}p{4.5\ccwd}p{10.5\ccwd}@{}}%
+\toprule
+姓名 & \swuAuthorText & 性别 & 男（据实填写） \\
+\midrule
+民族 & 汉族（据实填写） & 出生年月 & 19××年×月 \\
+\midrule
+籍贯 & ××省××市（县） & 政治面貌 & 中共党员（据实填写） \\
+\midrule
+\multicolumn{4}{@{}l@{}}%
+  {\textbf{最后学历学位:~} ××学博士（据实填写）} \\
+\bottomrule
+\end{tabular*}%
+\endgroup
+
+\swucvsubsection{二、教育经历}
+\swucvnote{（按时间倒序书写：自最高学历写至本科。）}
+\noindent
+\begingroup
+\setlength{\tabcolsep}{0.5em}%
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.28\linewidth}p{0.19\linewidth}p{0.19\linewidth}p{0.19\linewidth}@{}}%
+\toprule
+\textbf{起止年月} & \textbf{学校} & \textbf{专业} & \textbf{所获学位} \\
+\midrule
+20××年9月—20××年7月 & ××大学 & ××专业 & ××学博士学位 \\
+\midrule
+20××年9月—20××年7月 & ××大学 & ××专业 & ××学硕士学位 \\
+\midrule
+20××年9月—20××年7月 & ××大学 & ××专业 & 学士学位 \\
+\bottomrule
+\end{tabular*}%
+\endgroup
+
+\swucvsubsection{三、工作经历（含博士后）}
+\swucvnote{（按时间倒序书写：含在站博士后、以往工作单位及职务。）}
+\noindent
+\begingroup
+\setlength{\tabcolsep}{0.45em}%
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.3\linewidth}p{0.15\linewidth}p{0.26\linewidth}p{0.28\linewidth}@{}}%
+\toprule
+\textbf{起止年月} & \textbf{工作单位} & \textbf{职务/职称} & \textbf{备注} \\
+\midrule
+20××年×月—至今 & 西南大学\swuPostdocStationText 博士后流动站 & 博士后研究人员 & 合作导师：\swuSupervisorText \\
+\midrule
+20××年×月—20××年×月 & ××单位 & ××（职务、职称据实填写） & \\
+\bottomrule
+\end{tabular*}%
+\endgroup \par
+\swucvnote{注：出国（境）学习、合作研究可并入本条或单列。}
+
+\swucvsubsection{四、与本研究报告相关的主要科研工作}
+简要综述在站期间与本研究报告直接相关的研究方向、任务来源、主要结论与创新点；若无单独要求，可与「在站期间取得的科研成果」部分呼应，避免大段重复粘贴。
+
+\end{resume}
+
+\chapter{永久通信地址}\label{app:postdoc-address}
+\swuPostdocPrintPermanentAddressSheet
+
+\chapter{博士后研究报告编写规则（全文参考）}\label{app:postdoc-rules}
+\phantomsection
+\begingroup
+{\small
+\noindent
+下列条文据《博士后研究报告编写规则》整理录入；定稿请以设站单位及全国博士后管理委员会办公室印发的最新版为准。
+清华大学博士后网站曾转发相关 Word 文档（参考文献表 \texttt{tsinghua2021postdocrulesdoc}）；
+西南财经大学人事处网站载有进出站工作流程说明（参考文献表 \texttt{swufe2025postdocworkflow}），供对照。\par
+\vspace{\baselineskip}
+}
+研究报告是描述一项科学技术研究的结果或进展；或一项技术研制试验和评价的结果；或是论述某项科学技术问题的现状和发展的文件。
+
+研究报告是为了呈送科学技术工作主管机构或科学基金会等组织或主持研究的人等。研究报告中一般应该提供系统的或按工作进程的充分信息，可以包括正反两方面的结果和经验，以便有关人员和读者判断和评价，以及对报告中的结论和建议提出修正意见。
+
+研究报告的质量不仅取决于它的内容，而且有赖于它的书写质量和编辑水平。本规则是为了建立和统一我国博士后研究报告（以下简称报告）的撰写和编辑的格式，以便于信息系统的收集与存储、开发与利用，开展国际交流与合作而制定的。
+
+本规则是根据GB7713-87《科学技术报告、学位论文和学术论文的编写格式》的原则，并结合我国博士后工作的具体情况制定的。
+
+\section{研究报告的结构}
+
+一份正式的研究报告，其基本结构应包括以下几部分：前置部分（篇前部分）、主体部分（正文部分）、参考文献部分、附录部分和结尾部分。
+
+\subsection{前置部分（篇前部分）}
+
+前置部分一般包括以下项目：封面、封二，题名页，摘要，关键词，目次页，插图和附表清单，符号、标志、缩略词、首字母缩写、单位、术语、名词等对照表。
+
+\subsubsection{封面}
+
+封面是报告的外表面，提供应有的信息，并起保护作用。它应包括下列内容：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] \textbf{分类号}：在左上角注明分类号，便于信息交换和处理。一般应注明《中国图书资料分类法》的类号，同时应尽可能注明《国际十进制分类法UDC》的类号。
+    \item[b.] \textbf{本单位编号}：一般标注在右上角。
+    \item[c.] \textbf{密级}：报告的内容，按国家规定的保密条例，在右上角注明密级。如系公开发行，不注密级。
+    \item[d.] \textbf{题名和副题名或分册题名}：用大号字标注于明显地位。
+    \item[e.] \textbf{责任者姓名}：责任者即报告作者。必要时可注明个人责任者的职务、职称、学位、所在单位名称及地址。如责任者姓名有必要附注汉语拼音时，必须遵照国家规定，即姓在名前，名连成一词，不加连字符，不缩写。
+    \item[f.] \textbf{工作完成日期}：包括报告、工作起始和完成日期。
+\end{itemize}
+
+（以上请见报告的封面标准格式和范例1）。
+
+\subsubsection{封二}
+
+报告的封二可标注送发方式，包括免费赠送或价购，以及送发单位和个人；版权规定；其他应注明事项。
+
+\subsubsection{题名页}
+
+题名页是对报告进行著录的重要依据。必须包括以下项目：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] \textbf{中英文题名}
+
+    研究报告的题名必须以最恰当、最简明的词语反映报告中最重要的特定内容的逻辑组合。题名所用每一词语必须考虑到有助于选定关键词和编制题录、索引等二次文献可以提供检索的特定实用信息。题名应该避免使用不常见的缩略词、首字母缩写字、字符、代号和公式等。题名一般不宜超过20字。英文题名一般不宜超过10个实词。
+
+    题名词意未尽，用副题名补充说明报告中的特定内容，例如：新型有机非线性光学材料的探索：从分子到晶体的材料化学过程；报告分册出版，或是一系列工作分几篇报道，或是分阶段的研究成果，各用不同副题名区别其特定内容；其他有必要用副题名作为引伸或说明者。题名在整本报告中不同地方出现时，应完全相同。
+
+    \item[b.] 博士后研究人员姓名；亦可列出职务、职称
+    \item[c.] 专业名称（或研究领域）
+    \item[d.] 流动站名称（一级学科）
+    \item[e.] 研究工作（做博士后）起始时间
+    \item[f.] 研究工作（完成博士后研究工作）期满时间
+    \item[g.] 单位名称
+    \item[h.] 报告提交日期
+\end{itemize}
+
+另外，报告如分装两册以上，每一分册均应各有其题名页。在题名页上注明分册名称和序号。题名页置于封二和衬页之后，成为另页的右页。（见题名页标准格式和范例2）
+
+\subsubsection{中英文摘要}
+
+摘要是报告的内容不加注释和评论的简短陈述。摘要的编写应遵循以下原则：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 摘要应具有独立性和自含性，即不阅读报告全文，就能获得必要的信息。
+    \item[b.] 摘要的内容应包含与报告同等量的主要信息，供读者确定有无必要阅读全文，也供文摘第二次文献采用。
+    \item[c.] 摘要一般应说明研究工作目的、实验方法、结果和最终结论等，而重点是结果和结论。
+    \item[d.] 中文摘要一般不宜超过400～500字，如果研究报告是用外国语文撰写的，中文摘要应不少于600～800字；外文摘要不宜超过300个实词。如遇特殊需要字数可以略多。
+    \item[e.] 摘要中不要用图、表、化学结构式、非公知公用的符号和术语。
+    \item[f.] 报告摘要用另页置于题名页之后。（见范例3、4）
+\end{itemize}
+
+\subsubsection{关键词}
+
+关键词是为了文献标引工作从报告中选取出来用以表示全文主题内容信息款目的单词或术语。每篇报告选取3～8个词作为关键词，以显著的字符另起一行，排在摘要的左下方，中文关键词如有可能，尽量用《汉语主题词表》等词表提供的规范词，并应标注与中文对应的英文关键词。（见范例3、4）
+
+\subsubsection{目次页}
+
+目次页是由报告篇、章、条、款、项、附录、题录等的序号和名称依报告论述的次序而排列的一览表。另页排在摘要之后。整套报告分卷编制时，每一分卷均应有全部报告内容的目次页。
+
+目次页中的标题必须与正文内的标题一致，表示篇、章、节的数字用阿拉伯数字。（见范例5）
+
+\subsubsection{插图和附表清单}
+
+报告中如图表较多，可以分别列出清单置于目次页之后。图的清单应有序号、图题和页码。表的清单应有序号、表题和页码。符号、标志、缩略词、首字母缩写、计量单位、名词、术语等的注释说明汇集表，应置于图表清单之后。（见范例6）
+
+\subsection{主体部分（正文部分）}
+
+一般研究报告皆以引言（或绪论）开始，以结论或讨论结束。主体部分必须由另页右页开始。每一篇（或部分）必须另页起。全部报告的每一章、条、款、项的格式和版面安排，要求统一，层次清楚。
+
+\subsubsection{引言（或绪论）}
+
+引言（或绪论）简要说明研究工作的目的、范围、相关领域的前人工作和知识空白、理论基础和分析、研究设想、研究方法和实验设计、预期结果和意义等。应言简意赅，不要与摘要雷同，不要成为摘要的注释。一般教科书中有的知识，在引言中不必赘述。
+
+\subsubsection{正文}
+
+报告的正文是核心部分，占主要篇幅，可以包括：调查对象、实验和观测方法、仪器设备、材料原料、实验和观测结果、计算方法和编程原理、数据材料、经过加工整理的图表、形成的论点和导出的结论等。由于研究工作涉及的学科、选题、研究方法、工作进程、结果表达式等有很大的差异。对正文内容不能作统一的规定。但是，必须实事求是，客观真切，准确完备，合乎逻辑，层次分明，简练可读。语句通顺、标点使用正确、不得生造词汇，尽量不使用缩略和简称。
+
+\subsubsection{序号}
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 如报告在一个总题下装为两卷（或分册）以上，或分为两篇（或部分）以上，各卷或篇应有序号。可以写成：第一卷，第二分册，第一篇，第二部分等。用外文撰写的报告，其卷（分册）和篇（部分）的序号，用罗马数字编码。
+    \item[b.] 报告的图、表、附注、参考文献、公式、算式等，一律用阿拉伯数字分别依序连续编排号。序号可以就全篇报告统一按出现先后顺序编码，长篇报告也可以分章依序编码。其标注形式应便于相互区别，可以分别为：图1、图2.1；表2、表3.2；附注1）；文献[4]；式（5）、式（3.5）等。
+    \item[c.] 报告一律用阿拉伯数字连续编页码。页码应由引言首页开始作为第一页，并为右页另页。封面、封二、封三和封底不编入页码。可以将题名页、序、目次页等前置部分单独编排页码。页码必须标注在每页的右下角，便于识别。如在一个总题下装成两册以上，应连续编页码。如各册有副题名，则可分别独立编页码。
+\end{itemize}
+
+\subsubsection{图}
+
+图包括曲线图、构造图、示意图、图解、框图、流程图、记录图、布置图、地图、照片、图版等。要求：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 图应具有``自明性''，即只看图、图题和图例，不阅读正文，就可理解图意。图应编排序号。
+    \item[b.] 每一图应有简短确切的题名，连同图号置于图下。必要时，应将图上的符号、标记、代码，以及实验条件等，用最简练的文字横排于图题下方，作为图例说明。
+    \item[c.] 曲线图的纵横坐标必须标注``量、标准规定符号、单位''。此三者只有在不必要标明（如无量纲等）的情况下方可省略。坐标上标注的量的符号和缩略词必须与正文中一致。
+    \item[d.] 照片图要求主题和主要显示部分的轮廓鲜明，便于制版。如用放大缩小的复制品，必须清晰，反差适中。照片上应该有表示目的物尺寸的标度。
+\end{itemize}
+
+\subsubsection{表}
+
+表的编排，一般是内容和测试项目由左至右横读，数据依序竖排。表应有自明性。要求：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 表应编排序号。
+    \item[b.] 每一表应有简短确切的题名，连同表号置于表上居中。必要时，应将表中的符号、标记、代码，以及需要说明事项，以最简练的文字横排于表下，作为表注。表内附注的序号宜用小号阿拉伯数字并加圆括号置于被标注对象的右上角，如：×××$^{(1)}$，不宜用星号``*''，以免与数学上共轭和物质转移的符号相混。
+    \item[c.] 表的各栏均应标明``量或测试项目、标准规定符号、单位''，只有在无必要标注的情况下方可省略。表中的缩略词和符号，必须与正文一致。
+    \item[d.] 表内同一栏的数字必须上下对齐。表内不宜用``同上''、``同左''、``"''和类似词，一律填入具体数字或文字。表内``空白''代表未测或无此项，``—''或``…''（因``—''可能与代表阴性反应相混）代表未发现，``0''代表实测结果确为零。
+\end{itemize}
+
+\subsubsection{数学、物理和化学式}
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 正文中的公式、算式或方程式等应编排序号，序号标注于该式所在行（当有续行时，应标注于最后一行）的最右边。
+    \item[b.] 较长的式，另行居中横排。如式必须转行时，只能在+，—，×，÷，$<$，$>$处转行。上下式尽可能在等号``=''处对齐。
+\end{itemize}
+
+小数点用``.''表示。大于999的整数和多于三位数的小数，一律用半个阿拉伯数字符的小间隔分开，不用千位撇。小于1的数应将0列于小数点之前。
+
+如例：应该写成94\ 652.023\ 567；\qquad 0.314\ 325
+
+不应写成94，652.023，567；\qquad 0.314，425
+
+应注意区别各种字符，如：拉丁文、希腊文、俄文、德文花体、草体；罗马数字和阿拉伯数字；字符的正斜体、黑白体、大小写、上下角标（特别是多层次，如``三踏步''）、上下偏差等。
+
+例如：I，l，1，i；C，c；K，k；O，o，0。
+
+\subsubsection{计量单位}
+
+报告必须采用1984年2月27日国务院发布的《中华人民共和国法定计量单位》，并遵照《中华人民共和国法定计量单位使用方法》执行。使用各种量、单位和符号，必须遵照国家标准的规定执行。单位名称和符号的书写方式一律采用国际通用符号。
+
+\subsubsection{符号和缩略词}
+
+符号和缩略词应遵照国家标准的有关规定执行。如无标准可循，可采纳本学科或本专业的权威性机构或学术团体所公布的规定；也可采用全国自然科学名词审定委员会编印的各学科词汇的用词。如不得不引用某些不是公知公用的、且又不易为同行读者所理解的、或系作者自定的符号、记号、缩略词、首字母缩写字等时，均应一一在第一次出现时加以说明，给以明确的定义。
+
+\subsubsection{结论}
+
+报告的结论是最终的、总体的结论，不是正文中各段的小结的简单重复。结论应该准确、完整、明确、精练。如果不可能导出应有的结论，也可以没有结论而进行必要的讨论。可以在结论或讨论中提出建议、研究设想、仪器设备改进意见、尚待解决的问题等。
+
+\subsubsection{致谢}
+
+可以在正文后对下列方面致谢：
+
+国家科学基金、资助研究工作的奖学金基金、合同单位、资助或支持的企业、组织或个人；协助完成研究工作和提供便利条件的组织或个人；在研究工作中提出建议和提供帮助的人；给予转载和引用权的资料、图片、文献、研究思想和设想的所有者；其他应感谢的组织或个人。
+
+\subsection{参考文献部分}
+
+参考文献部分在研究报告中具有重要作用，表明该报告参考了某些有关资料，从而作为评价该报告的依据之一。
+
+参考文献部分必须另页右页开始，并标明顺序号。参考文献的书写格式请按GB/T 7714-1987《文后参考文献著录规则》的规定执行。（见本规则的附录A）
+
+\subsection{附录}
+
+附录是作为报告主体的补充项目，并不是必需的。下列内容可以作为附录编于报告后，也可以另编成册：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 为了使整篇报告材料更加完整，但编入正文又有损于编排的条理和逻辑性，且这一类材料包括比正文更详尽的信息、研究方法和技术更深入的叙述，建议可以阅读的参考文献题录，对了解正文内容有用的补充信息等；
+    \item[b.] 由于篇幅过大或取材于复制品而不便于编入正文的材料；
+    \item[c.] 不便于编入正文的罕见珍贵资料；
+    \item[d.] 对于一般读者并非必要阅读，但对本专业同行有参考价值的资料；
+    \item[e.] 某些重要的原始数据、数学推导、计算程序、框图、结构图、注释、统计表、计算机打印输出件等。
+\end{itemize}
+
+附录与正文连续编页码。每一附录的各种序号的编排，依序用大写正体A,B,C…编序号。如附图A。附录中的图、表、式、参考文献等另行编序号，与正文分开，也一律用阿拉伯数字编码，但在数码前冠以附录序码，如图A1；表B2；式（B3）；文献[A5]等。每一附录均另页起。如报告分装几册，凡属于某一册的附录应置于该册正文之后。
+
+\subsection{结尾部分}
+
+结尾部分主要包括以下内容：
+
+\begin{itemize}[leftmargin=2em]
+    \item[a.] 博士后个人简历
+    \item[b.] 博士生期间发表的学术论文、专著、重要科研成果
+    \item[c.] 博士后期间发表的学术论文、专著、重要科研成果
+    \item[d.] 永久通信地址
+    \item[e.] 书脊厚度大于或等于5mm的研究报告，应将题名及作者设计在书脊上，书脊名称应与其封面、书名页上的题名作者一致。
+    \item[f.] 封三、封底（包括版权页）
+\end{itemize}
+
+\section{研究报告的编写要求}
+
+\begin{itemize}[leftmargin=2em]
+    \item[2.1] 报告的中英文稿必须用白色纸单面打字
+    \item[2.2] 报告宜用A4（210×297mm）标准大小的白纸，应便于阅读、复制和拍摄缩微制品。
+    \item[2.3] 报告在打字或印刷时，要求纸的四周留足空白边缘，以便装订、复制和读者批注。每一面的上方（天头）留30mm，左侧（订口）留边35mm以上，下方（地脚）应留25mm，右侧（切口）应留边20mm以上。
+    \item[2.4] 报告的正文一般采用4号宋体字，中文题名、篇题、章题可适当增大并采用黑体。
+    \item[2.5] 封面、书名页的字应采用黑体字。
+    \item[2.6] 报告的装订顺序参考本规则的附录C。
+\end{itemize}
+
+\vspace{2em}
+
+\begin{center}
+    \textbf{附录A\quad GB7714-87《文后参考文献著录规则》}
+
+    \textbf{附录B\quad GB6447-87《文摘编写规则》}
+
+    \textbf{附录C\quad 博士后研究报告装订顺序}
+\end{center}
+
+\vspace{1em}
+
+\begin{flushright}
+    \textbf{说明}
+
+    本规则是由北京图书馆学位学术论文收藏中心、全国博士后管委会办公室共同制定。
+\end{flushright}
+\endgroup
+
+\end{document}
+
+\endinput
+%%
+%% End of file `swuthesis-postdoc-main.tex'.
