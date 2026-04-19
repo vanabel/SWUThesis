@@ -61,6 +61,7 @@ jobs:
             swuthesis-graduate-main.bib \
             swuthesis-postdoc-main.bib \
             examples \
+            figures \
             codes \
             Makefile \
             README.md \

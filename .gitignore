@@ -22,8 +22,10 @@
 *-blx.bib
 *.hd
 
-# Generated documents
+# Generated documents（编译生成的论文 PDF；封面资源见 figures/ 例外）
 *.pdf
+!figures/
+!figures/**/*.pdf
 swuthesis-main.bib
 swuthesis-graduate-main.bib
 swuthesis-postdoc-main.bib
