@@ -7,7 +7,8 @@ biber
 fandol
 ctex
 biblatex
-biblatex-gb7714
+# 提供 style=gb7714-2025（.bbx/.cbx）；CTAN/TL 包名含 2015，勿写成 biblatex-gb7714
+biblatex-gb7714-2015
 l3keys2e
 kvoptions
 xparse

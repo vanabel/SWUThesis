@@ -16,6 +16,7 @@
 
 ### Changed
 
+- GitHub Actions：`.github/texlive-packages.txt` 将错误的 `biblatex-gb7714` 改为 **`biblatex-gb7714-2015`**（CTAN/TeX Live 中提供 `style=gb7714-2025` 的包名），修复 CI 中「Style 'gb7714-2025' not found」。
 - README：增加「方正字库（founder）与 Windows 圆体：本地安装与 CI」小节，说明本地 `fontset=founder`、Windows 字体许可约束，以及 CI 中通过 Secret 注入字体的可行性与风险。
 - `ctex` 的 **fandol**（Linux 默认）未提供 `\lishu`/`\youyuan` 时，由类文件回退为 `\kaishu`/`\heiti`，避免封面等使用 `\youyuan` 时未定义；与 Windows / macnew / founder 专用隶书、圆体字形可能有差异。
 - macOS：在载入 `ctex` 前若检测到系统 `Menlo.ttc`（与 `ctex` 的 macOS 判定一致），则显式传入 `fontset=macnew`，使 `\songti`/`\kaishu` 与 `\bfseries` 的联动与手动指定 `fontset=macnew` 一致；Linux / Windows 不受影响。
