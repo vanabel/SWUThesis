@@ -49,6 +49,14 @@ jobs:
           version: 2025
           package-file: .github/texlive-packages.txt
 
+      # 勿在 with.packages 与 package-file 并列（实现上可能只取其一，导致仅装少量包）。
+      # 此处对易在缓存/解析间隙缺失的包再执行 tlmgr；已安装时几乎瞬时跳过。
+      - name: TeX Live — ensure lineno + csquotes
+        run: |
+          set -euo pipefail
+          tlmgr --version
+          tlmgr install lineno csquotes
+
       - name: Build (make cls && make all)
         run: |
           set -euo pipefail

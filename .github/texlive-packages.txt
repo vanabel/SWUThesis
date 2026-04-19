@@ -17,6 +17,7 @@ biblatex
 biblatex-gb7714-2015
 csquotes
 lineno
+# 以上二者亦在 build-dist.yml 的 tlmgr 兜底步骤显式安装，避免 CI 缓存或解析遗漏
 xstring
 l3keys2e
 kvoptions
