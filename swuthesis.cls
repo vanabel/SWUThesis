@@ -1444,7 +1444,7 @@ thesis-label-sub-en .code:n = {
 }
 \newcommand{\swu@maketitle@postdoc@title}{%
   \begingroup
-  \thispagestyle{plain}%
+  \thispagestyle{empty}%
   \songti
   \vspace{2\baselineskip}
   \phantomsection
@@ -1521,7 +1521,7 @@ thesis-label-sub-en .code:n = {
   \clearpage
 }
 \NewDocumentCommand{\maketitlepage}{}{
-\ifswu@postdoc\thispagestyle{plain}\else\thispagestyle{empty}\fi
+\thispagestyle{empty}%
 \phantomsection
 \pdfbookmark[0]{封面}{swu-cover}
 \ifswu@bachelor

@@ -1102,7 +1102,7 @@
 % |\pagenumbering{roman}|（小写 \texttt{i}、\texttt{ii}……）。
 % 研究生：目录及之后至 |\mainmatter| 前见下面对 |\tableofcontents| 的改写
 % （大写罗马 I、II……，自目录页重计）。
-% 博士后（|postdoc|）：封面与题名页排小写罗马 |i、ii|（|\thispagestyle{plain}|）；
+% 博士后（|postdoc|）：封面与题名页（含英文题名）均不印页码（|\thispagestyle{empty}|）；%
 % 自 |\makeabstract| 起大写罗马 |I、II| 并从 |I| 重计；
 % |\tableofcontents| 不再调用 |\pagenumbering|，以免打断摘要起的编号。
 \let\swuoldmainmatter\mainmatter
@@ -2160,7 +2160,7 @@
 }
 \newcommand{\swu@maketitle@postdoc@title}{%
   \begingroup
-  \thispagestyle{plain}%
+  \thispagestyle{empty}%
   \songti
   \vspace{2\baselineskip}
   \phantomsection
@@ -2238,7 +2238,7 @@
 }
 %
 \NewDocumentCommand{\maketitlepage}{}{
-	\ifswu@postdoc\thispagestyle{plain}\else\thispagestyle{empty}\fi
+	\thispagestyle{empty}%
 	\phantomsection
 	\pdfbookmark[0]{封面}{swu-cover}
 	\ifswu@bachelor
