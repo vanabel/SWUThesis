@@ -84,6 +84,10 @@ make doc
 | `make postdoc` | 博士后报告示例 |
 | `make doc` | 生成手册 `swuthesis-doc.pdf` |
 | `make all` | 上述组合（耗时较长） |
+| `make install` | 按 **TDS** 写入用户 TEX 树 `TEXMFHOME`：`tex/latex/swuthesis/`（类与 sty）、`source/latex/swuthesis/`（`dtx`、`ins`）、`doc/latex/swuthesis/`（`swuthesis-doc.pdf`，需已 `make doc`）、`doc/latex/swuthesis/examples/`（`examples/*.tex` 与抽取的 `*-main.tex`）；并刷新文件名数据库 |
+| `make uninstall` | 移除上述路径中由本规则安装的文件 |
+
+**系统说明**：`install` / `uninstall` 依赖 `sh`、`cp`、`mkdir`、`rm` 以及 TeX 自带的 `kpsewhich`（及 `mktexlsr` / `texhash` / MiKTeX 的 `initexmf`）。在 **Windows** 上请使用 **Git Bash、MSYS2 或 WSL**，并保证 TeX 的 `bin` 在 `PATH` 中。可选覆盖：`make install TEXMFHOME=/path/to/texmf`。目录名 **`source/`** 为 TeX 目录结构惯例（与口语中的「sources」对应）；**`doc/examples`** 即手册树下的示例子目录。
 
 各示例主文件对应的 `swuthesis-*-main.bib` 一旦存在（含由 `filecontents*` 首次写出），`Makefile` 会将其作为 `*.pdf` 的依赖：**修改 `.bib` 后再 `make` 会重跑 XeLaTeX + biber**。若你在主文件中改用其它 `\addbibresource{…}` 文件名，请同步把该 `.bib` 写进 `Makefile` 里对应 `*.pdf` 规则的依赖列表。
 
