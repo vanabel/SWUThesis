@@ -38,8 +38,17 @@
 \makeatletter
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}
+\IfFileExists{/System/Library/Fonts/Menlo.ttc}{%
+  \PassOptionsToPackage{fontset=macnew}{ctex}%
+}{}%
 \RequirePackage[heading=true,zihao=-4]{ctex}
 \setmainfont{Times New Roman}
+\@ifundefined{lishu}{%
+  \NewDocumentCommand \lishu { } { \kaishu }%
+}{}%
+\@ifundefined{youyuan}{%
+  \NewDocumentCommand \youyuan { } { \heiti }%
+}{}%
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{amsthm}
 \RequirePackage{aliascnt}

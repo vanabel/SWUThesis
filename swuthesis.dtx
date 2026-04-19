@@ -633,8 +633,24 @@
 %
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}
+% macOS：仅写「空 fontset」时 ctex 会得到 fontset=mac，再经 mac.def 载入 macnew；
+% 与直接指定 fontset=macnew 相比，部分环境下 \songti/\kaishu 与 \bfseries 的联动不一致。
+% 此处与 ctex 的 \ctex_if_platform_macos 使用同一检测（/System/Library/Fonts/Menlo.ttc），
+% 显式向 ctex 传入 fontset=macnew。Linux / Windows 无此文件，仍走 ctex 自动检测。
+\IfFileExists{/System/Library/Fonts/Menlo.ttc}{%
+  \PassOptionsToPackage{fontset=macnew}{ctex}%
+}{}%
 \RequirePackage[heading=true,zihao=-4]{ctex}
 \setmainfont{Times New Roman}
+% |ctex| 的 |fandol|（Linux 默认）仅定义 \songti/\heiti/\fangsong/\kaishu，未提供
+% |zhli|/|zhyou|，故无 \lishu/\youyuan。Windows/macnew/founder 等字库则通常有。
+% 封面等处使用 \youyuan；缺省时以楷体、黑体作近似，避免「未定义控制序列」。
+\@ifundefined{lishu}{%
+  \NewDocumentCommand \lishu { } { \kaishu }%
+}{}%
+\@ifundefined{youyuan}{%
+  \NewDocumentCommand \youyuan { } { \heiti }%
+}{}%
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{amsthm}
 \RequirePackage{aliascnt}
@@ -2915,7 +2931,8 @@
 }
 \end{filecontents*}
 
-\documentclass[bachelor,fontset=macnew, punct=banjiao]{swuthesis}
+% fontset 省略时由 ctex 按系统自动选择（Windows→windows，macOS→华文，其它→fandol）；需固定时再写 fontset=…
+\documentclass[bachelor,punct=banjiao]{swuthesis}
 
 \usepackage{subcaption}
 \usepackage{longtable}
@@ -3742,7 +3759,7 @@ Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；%
 }
 \end{filecontents*}
 
-\documentclass[master,fontset=macnew,punct=banjiao]{swuthesis}
+\documentclass[master,punct=banjiao]{swuthesis}
 
 \usepackage{subcaption}
 \usepackage{longtable}
@@ -4517,7 +4534,7 @@ Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；%
 }
 \end{filecontents*}
 
-\documentclass[postdoc,fontset=macnew,punct=banjiao]{swuthesis}
+\documentclass[postdoc,punct=banjiao]{swuthesis}
 
 \usepackage{subcaption}
 \usepackage{mwe}

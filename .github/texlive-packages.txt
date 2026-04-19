@@ -4,6 +4,7 @@ scheme-basic
 latex-tools
 xetex
 biber
+fandol
 ctex
 biblatex
 biblatex-gb7714

@@ -61,6 +61,32 @@ make doc
 
 产物为 `swuthesis-doc.pdf`。
 
+### 中文与 `fontset`（跨平台）
+
+示例主文件**不写** `\documentclass` 的 `fontset` 时，由 **`ctex` 自动按环境选择**：Windows 为 `windows`，**其它环境（含 Linux、GitHub Actions）为 Fandol**（随 TeX Live 的 `fandol` 包）。在 **macOS** 上，`swuthesis` 类会在载入 `ctex` 前检测系统字体 `Menlo.ttc`（与 `ctex` 一致），并**显式传入 `fontset=macnew`**，使 `\songti`/`\kaishu` 与 `\bfseries` 的组合与手动写 `fontset=macnew` 一致；若仅依赖 `ctex` 的 `fontset=mac` 间接载入，部分环境下粗体联动可能异常。若写死 `fontset=macnew`，在无「华文宋体」等字体的机器上会报错。需要其它方案时可显式指定，例如 `fontset=windows`、`fontset=founder`（需本机已装方正字库）。
+
+**Fandol 与隶书/圆体**：`ctex` 的 **fandol** 字库（Linux 常见默认）不含 `\lishu`、`\youyuan`。本模板在二者未由 `ctex` 定义时，将 **`\lishu` 回退为 `\kaishu`**、**`\youyuan` 回退为 `\heiti`**，以便封面等在 Linux 上可编译；与 Windows / macOS / founder 下的专用隶书、圆体字形会有视觉差异。
+
+### 方正字库（`founder`）与 Windows 圆体：本地安装与 CI
+
+**本地使用 `fontset=founder`（方正）**
+
+1. 通过**正规授权**取得方正字库（随产品附带的 `.ttf` / `.ttc` 等）。
+2. **Linux / WSL**：将字体文件放入用户目录，例如 `~/.local/share/fonts/founder/`，执行 `fc-cache -fv`；可用 `fc-list | rg -i fangzheng`（或 `FZ`）确认系统已识别。
+3. **macOS**：双击安装到「字体册」，或复制到 `~/Library/Fonts/` 后视需要刷新缓存。
+4. 主文件中写 `\documentclass[...,fontset=founder]{swuthesis}`（与其它类选项并列）。若 `ctex` 仍报字库不可用，请对照 TeX Live 中 `ctex-fontset-founder.def` 所期望的**字体文件名/字族名**是否与本机安装一致。
+
+**Windows 上的「圆体」等**
+
+- 在 **Windows** 上编译时，使用 `\documentclass[...,fontset=windows]{swuthesis}` 即可依赖系统中的中易/微软正黑等配置；圆体、隶书等随系统或 Office 安装，**路径通常在** `C:\Windows\Fonts\`。
+- 这些字体受**微软等许可协议**约束，**不得**复制进本开源仓库或随发行版再分发；仅在你已合法取得使用权的机器上使用。
+
+**CI（如 GitHub Actions）里能否安装「Windows 圆体」或方正？**
+
+- **默认做法**：本仓库的公开工作流**不**附带任何商业或微软受限字体，Linux runner 上仍用 **Fandol** + 模板对 `\youyuan` 等的回退，避免许可风险。
+- **技术上可行，但许可自负**：若你**确有权利**在自动化构建环境中使用某套字体，可在 workflow 里增加步骤：例如用 [Encrypted secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) 存放经 base64 编码的字体压缩包（**切勿**把字体文件提交进 git），在 job 中解码并解压到 `~/.fonts` 或 `/usr/share/fonts`，再 `fc-cache -fv`，必要时设置 `fontset=founder` 或配合 `ctex` 的 Windows 字集（需自行确认 `fontspec` 能解析到的字体名）。**公开仓库**若将 Secret 用于受控字体，仍须保证使用场景符合字体授权；**无法**从微软服务器在 CI 里「合法自动下载」完整 Windows 中文字体集。
+- **务实建议**：公开项目以 **Fandol + 回退** 作为 CI 结果即可；与最终 Word/校内印刷稿一致时，在**本地 Windows / 已装方正的 Linux** 上出最终 PDF。
+
 ### `\swusetup` 示例片段（复制到导言区）
 
 在编辑器中打开后**全选复制**，粘贴到导言区；**勿单独编译**该文件：
