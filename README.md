@@ -132,6 +132,7 @@ make doc
 
 ## 仓库主要文件
 
+- `LICENSE` — 使用、二次开发与机构采纳相关权利说明（SWUThesis License）
 - `swuthesis.dtx` — 类实现、示例与手册源码
 - `swuthesis.ins` — DocStrip 控制文件（生成 `swuthesis.cls`、`swuthesis-doc-patch.sty`、各示例主文件等）
 - `swuthesis-doc-patch.sty` — 手册 **driver** 专用补丁（由 `swuthesis.ins` 抽取；勿手改）
@@ -141,4 +142,8 @@ make doc
 
 ## 许可证与作者
 
-详见 `swuthesis.dtx` 内声明与历史记录；若仓库根目录后续增加 `LICENSE`，以该文件为准。
+版权：Van Abel。完整条款见仓库根目录 **[LICENSE](LICENSE)**（**SWUThesis License**：非商业学术使用、署名与二次开发义务、**机构采纳不转让著作权**、作者保留申请科研项目/建设经费等支持的权利等）。
+
+**重要**：上述文件便于理解与合作安排，**不构成法律意见**；正式校内采纳或对外合作前，建议咨询本校法务或专业律师。
+
+手册与源码中的作者、版本信息仍见 `swuthesis.dtx` 与 `swuthesis.cls` 的 `\ProvidesFile` / `\ProvidesClass`。

@@ -8,6 +8,7 @@
 
 ### Added
 
+- 根目录 `LICENSE`（SWUThesis License）：限制商业使用；要求二次开发与分发时署名并说明修改；明确**学校官方采纳不导致著作权转让**，作者保留申请校内/机构科研项目与支持的权利。
 - 根目录本文件（`CHANGELOG.md`），便于在 GitHub 上直接查看历史。
 - `examples/swusetup-bachelor.tex` 及 `swusetup-master.tex`、`swusetup-doctor.tex`、`swusetup-postdoc.tex`：各文档类选项下 `\swusetup{...}` 最小示例片段，便于在编辑器中整段复制。
 - `swuthesis-doc-patch.sty`（手册 driver 专用）：`\DescribeOpt`、`\DescribeEnvs`、旁注与 `marginnote`、`theglossary` 单栏等。须单独加载，勿内联进 `.dtx` 的 `driver`：`\DocInput` 二次读入时 `\iffalse` 跳过分支仍会扫描源码，内联补丁中的 `#`、`\@…` 等与 preamble 词法不一致易触发隐蔽错误。

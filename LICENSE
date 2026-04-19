@@ -1,0 +1,71 @@
+SWUThesis License
+=================
+
+Copyright (c) 2024–2026 Van Abel.  All rights reserved.
+
+中文摘要（便于理解；具体权利义务以英文条款为准）
+--------------------------------------------
+本作品指本仓库中的 swuthesis 模板源码与文档（含 swuthesis.dtx、swuthesis.cls、
+手册及示例等）。在遵守下列条件的前提下，允许为学位论文排版、教学与非商业学术目的
+使用、复制与修改。任何单位（含西南大学或其他高校）将本作品列为「官方」或「推荐」
+模板，**不导致著作权转让**，亦**不视为**权利人放弃就本作品向有关单位申请科研项目、
+建设经费、教改项目或其他形式支持的资格。他人基于本作品进行二次开发并公开发布时，
+须保留原作者署名与本许可证，并显著说明修改内容；不得暗示原作者为您单位的修改版本
+背书。
+
+---
+
+English terms
+-------------
+
+1. **Definitions.**  “Software” means the swuthesis LaTeX class, DocStrip sources,
+   documentation, examples, and build scripts distributed in this repository.
+   “Author” means the copyright holder named above.  “You” means any licensee.
+
+2. **Grant of rights (limited).**  Subject to the conditions below, the Author grants
+   You a worldwide, royalty-free, non-exclusive license to:
+   (a) use the Software to prepare theses, dissertations, and other non-commercial
+       academic documents;
+   (b) reproduce and modify the Software for Your own academic use or for Your
+       institution’s internal deployment;
+   (c) redistribute verbatim or modified copies of the Software **provided** that You
+       meet all conditions in sections 3–5.
+
+3. **Attribution and notices.**  You must retain all copyright notices, this license
+   text, and a clear pointer to the upstream repository
+   <https://github.com/vanabel/swuthesis> (or successor URL stated by the Author) in
+   any distribution of source or substantial excerpts.  You must not remove or alter
+   any existing copyright or license notice in the files.
+
+4. **Derivative works (including 二次开发 by other universities).**  If You publicly
+   distribute a modified version (including forks adapted for another university):
+   (i) You must prominently state that the work is derived from swuthesis and name
+       the Author;
+   (ii) You must document the nature of Your changes (e.g. README or changelog);
+   (iii) You must not represent Your derivative as the original swuthesis without
+        distinction; use a distinct project name when the product is no longer
+        substantially the same template;
+   (iv) This license does **not** grant any trademark or university-name rights beyond
+        what is required for honest attribution.
+
+5. **Institutional adoption and author’s funding rights.**  Adoption or endorsement
+   of the Software as an official or recommended thesis template by Southwest University
+   or any other institution **does not** transfer copyright or other exclusive rights
+   to that institution.  The Author **explicitly reserves** the right to apply for
+   and receive research funding, teaching-reform grants, laboratory or project support,
+   or any other institutional support programs related to the Software or its
+   maintenance, without such adoption constituting a waiver of these rights.
+
+6. **Commercial use.**  Use of the Software for commercial publishing services,
+   paid consulting, or proprietary products **outside** personal/institutional academic
+   thesis typesetting requires **prior written permission** from the Author.
+
+7. **Disclaimer.**  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+   AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF
+   THE SOFTWARE.
+
+8. **Miscellaneous.**  If any provision is held invalid, the remainder remains in
+   effect.  This license may be updated for future releases; each release may state
+   which license version applies.
