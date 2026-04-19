@@ -32,8 +32,17 @@ jobs:
           echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
           sudo apt-get install -y ttf-mscorefonts-installer fonts-noto-cjk
 
-      # teatimeguest/setup-texlive-action 已删除，使用 TeX-Live 官方替代：
+      # TeX-Live/setup-texlive-action@v4（替代已删除的 teatimeguest）：
       # https://github.com/TeX-Live/setup-texlive-action
+      #
+      # 缓存行为（与「分阶段 / 只下新增包」相关）：
+      # - 默认 cache: true：post 阶段保存**整棵** TEXDIR；命中条件为「版本 + package-file
+      #   所列包集合」与缓存键**完全一致**（见 action 文档 cache-hit）。
+      # - 因此修改 .github/texlive-packages.txt 任意一行 → 新键 → 通常**整次重装**所列包，
+      #   并非「只增量下载新加的那几个 CTAN 包」；action **不提供**「scheme-basic 与追加包
+      #   分两个缓存键」的官方分阶段。
+      # - 若需长期固定键、每次仅 tlmgr 补差：须 cache: false 后自管 install-tl + actions/cache
+      #   （维护成本高）；或改用预装依赖的 **Docker 镜像**（推荐在包很多时）。
       - name: Install TeX Live (scheme-basic + package-file)
         uses: TeX-Live/setup-texlive-action@v4
         with:

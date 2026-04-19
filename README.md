@@ -87,6 +87,12 @@ make doc
 - **技术上可行，但许可自负**：若你**确有权利**在自动化构建环境中使用某套字体，可在 workflow 里增加步骤：例如用 [Encrypted secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) 存放经 base64 编码的字体压缩包（**切勿**把字体文件提交进 git），在 job 中解码并解压到 `~/.fonts` 或 `/usr/share/fonts`，再 `fc-cache -fv`，必要时设置 `fontset=founder` 或配合 `ctex` 的 Windows 字集（需自行确认 `fontspec` 能解析到的字体名）。**公开仓库**若将 Secret 用于受控字体，仍须保证使用场景符合字体授权；**无法**从微软服务器在 CI 里「合法自动下载」完整 Windows 中文字体集。
 - **务实建议**：公开项目以 **Fandol + 回退** 作为 CI 结果即可；与最终 Word/校内印刷稿一致时，在**本地 Windows / 已装方正的 Linux** 上出最终 PDF。
 
+### CI：`TeX Live` 缓存（为何不能「分阶段只下新包」）
+
+本仓库的 **`.github/workflows/build-dist.yml`** 使用 **`TeX-Live/setup-texlive-action@v4`**（默认 `cache: true`）：会把**整棵** `TEXDIR` 存进 Actions 缓存；**缓存键含 TeX 版本与 `package-file` 的完整包列表**。因此一旦修改 **`.github/texlive-packages.txt`**（哪怕只加一行），通常视为**新键** → **整次按列表重装**，**不是**官方支持的「先缓存 `scheme-basic`、再单独缓存追加包、且只对新增包联网下载」两段式。
+
+若你确实需要**固定缓存键 + 每次仅 `tlmgr` 补差**，需要自管 `install-tl` / `tlmgr` 与 `actions/cache`（`cache: false` 关掉本 action 自带缓存），或改用预装依赖的 **Docker 镜像**；详见 workflow 内注释。
+
 ### `\swusetup` 示例片段（复制到导言区）
 
 在编辑器中打开后**全选复制**，粘贴到导言区；**勿单独编译**该文件：

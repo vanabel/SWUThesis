@@ -16,6 +16,7 @@
 
 ### Changed
 
+- `.github/workflows/build-dist.yml` 与 README：说明 `setup-texlive-action` **整树缓存**、键随完整包列表变化，**不支持**官方「分阶段 / 仅增量下新包」。
 - 类文件在载入 `biblatex` 之前增加 **`\RequirePackage{csquotes}`**（与 `biblatex` 推荐顺序一致；CI 包列表已含 `csquotes`）。
 - **`figures/`**：纳入版本库（`.gitignore` 对 `*.pdf` 增加 `figures/**/*.pdf` 例外），含封面用 `swu-badge.pdf`、`swu-name-stxingkai.pdf`（当前为可编译占位页，可自行替换为正式校徽/校名稿）；并跟踪 `swu-logo-source.pdf`。GitHub Actions 分发 ZIP 同步打包 `figures/`。
 - GitHub Actions：`.github/texlive-packages.txt` 补充 **`csquotes`**、**`lineno`**（`csquotes`/`fvextra`/手册等依赖，`lineno.sty` 属独立包）；补充 **`upquote`**；文件头增加用 `\listoffiles` / `tlmgr search --file` 查漏的说明。
