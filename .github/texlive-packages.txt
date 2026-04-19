@@ -1,5 +1,11 @@
 # TeX Live 包列表（供 setup-texlive-action 的 package-file；# 为注释）
-# 先装最小 scheme，再列出本项目额外依赖（tlmgr 不自动解析传递依赖，缺包时再往这里补）
+# 先装最小 scheme，再列出本项目额外依赖（tlmgr 不自动解析传递依赖，缺包时再往这里补）。
+#
+# 查漏补缺：可在某主文件 preamble 临时加 \listoffiles，完整编译后在 .log 末尾查看
+# 「File list」里载入的 .sty/.cls；.sty 文件名多数与 tlmgr 包名一致，例外请执行
+#   tlmgr search --global --file 某文件.sty
+# 亦可使用 CTAN 的 depp / texliveonfly 等工具辅助；无法由 \listoffiles 一条命令自动生成
+# 本列表（文件≠发行版包，且一包多 .sty）。
 scheme-basic
 latex-tools
 xetex
@@ -9,6 +15,7 @@ ctex
 biblatex
 # 提供 style=gb7714-2025（.bbx/.cbx）；CTAN/TL 包名含 2015，勿写成 biblatex-gb7714
 biblatex-gb7714-2015
+csquotes
 xstring
 l3keys2e
 kvoptions

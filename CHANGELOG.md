@@ -17,7 +17,7 @@
 ### Changed
 
 - **`figures/`**：纳入版本库（`.gitignore` 对 `*.pdf` 增加 `figures/**/*.pdf` 例外），含封面用 `swu-badge.pdf`、`swu-name-stxingkai.pdf`（当前为可编译占位页，可自行替换为正式校徽/校名稿）；并跟踪 `swu-logo-source.pdf`。GitHub Actions 分发 ZIP 同步打包 `figures/`。
-- GitHub Actions：`.github/texlive-packages.txt` 补充 **`upquote`**（`listings`/`fvextra` 等依赖，最小安装下需显式列出）。
+- GitHub Actions：`.github/texlive-packages.txt` 补充 **`csquotes`**（`biblatex` 推荐、与 GB 样式等搭配常见）；补充 **`upquote`**；文件头增加用 `\listoffiles` / `tlmgr search --file` 查漏的说明。
 - GitHub Actions：`.github/texlive-packages.txt` 将错误的 `biblatex-gb7714` 改为 **`biblatex-gb7714-2015`**（CTAN/TeX Live 中提供 `style=gb7714-2025` 的包名），修复 CI 中「Style 'gb7714-2025' not found」；并补充 **`xstring`**（`biblatex-gb7714-2015` 等依赖，最小安装下需显式列出）。
 - README：增加「方正字库（founder）与 Windows 圆体：本地安装与 CI」小节，说明本地 `fontset=founder`、Windows 字体许可约束，以及 CI 中通过 Secret 注入字体的可行性与风险。
 - `ctex` 的 **fandol**（Linux 默认）未提供 `\lishu`/`\youyuan` 时，由类文件回退为 `\kaishu`/`\heiti`，避免封面等使用 `\youyuan` 时未定义；与 Windows / macnew / founder 专用隶书、圆体字形可能有差异。
