@@ -9,10 +9,12 @@
 %% 
 %% It was extracted from swuthesis.dtx.
 
+
 \begin{filecontents*}[overwrite]{swuthesis-main.bib}
 @standard{gbt7714,
   title        = {信息与文献 参考文献著录规则},
-  organization = {国家市场监督管理总局、国家标准化管理委员会},
+  organization = {国家市场监督管理总局、
+    国家标准化管理委员会},
   number       = {GB/T 7714---2025},
   year         = {2025},
   address      = {北京},
@@ -39,7 +41,8 @@
 }
 
 @book{mittelbach2004companion,
-  author    = {Frank Mittelbach and Michel Goossens and Johannes Braams and David Carlisle},
+  author    = {Frank Mittelbach and Michel Goossens and Johannes Braams
+    and David Carlisle},
   title     = {The {\LaTeX} Companion},
   edition   = {2},
   publisher = {Addison-Wesley},
@@ -68,7 +71,8 @@
 
 @article{liguojie2012bigdata,
   author       = {李国杰 and 程学旗},
-  title        = {大数据研究: 未来科技及经济社会发展的重大战略领域——大数据的研究现状与科学思考},
+  title        = {大数据研究: 未来科技及经济社会发展的重大战略领域——
+    大数据的研究现状与科学思考},
   journaltitle = {中国科学院院刊},
   year         = {2012},
   volume       = {27},
@@ -80,7 +84,8 @@
 
 @article{WalpuskiZhang2021DMJ,
   author       = {Walpuski, Thomas and Zhang, Boyu},
-  title        = {On the Compactness Problem for a Family of Generalized {Seiberg--Witten} Equations in Dimension 3},
+  title        = {On the Compactness Problem for a Family of Generalized
+    {Seiberg--Witten} Equations in Dimension 3},
   journaltitle = {Duke Mathematical Journal},
   shortjournal = {Duke Math. J.},
   volume       = {170},
@@ -94,7 +99,8 @@
 
 @misc{taubes2020compactness,
   author     = {Taubes, Clifford Henry},
-  title      = {{Compactness theorems for $\mathrm{SL}(2;\mathbb{C})$ generalizations of the 4-dimensional anti-self dual equations}},
+  title      = {{Compactness for $\mathrm{SL}(2;\mathbb{C})$ and 4D anti-self dual
+    equations}},
   year       = {2020},
   eprinttype = {arxiv},
   eprint     = {1307.6447},
@@ -102,9 +108,11 @@
 }
 
 @inproceedings{vaswani2017attention,
-  author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, {\L}ukasz and Polosukhin, Illia},
+  author    = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob
+    and Jones, Llion and Gomez, Aidan N. and Kaiser, {\L}ukasz and Polosukhin, Illia},
   title     = {Attention Is All You Need},
-  booktitle = {Advances in Neural Information Processing Systems 30: Proceedings of the 31st Conference on Neural Information Processing Systems},
+  booktitle = {Advances in Neural Information Processing Systems 30:
+    Proceedings of the 31st Conference on Neural Information Processing Systems},
   year      = {2017},
   pages     = {5998--6008},
   publisher = {Curran Associates, Inc.},
@@ -125,8 +133,9 @@
 @online{swuUndergradThesisSpecWeb,
   author    = {{西南大学}},
   title     = {西南大学本科毕业论文（设计）规范},
-  url       = {https://ceie.swu.edu.cn/__local/B/91/38/9FF7435A5836B7EB071487AD731_A201FE06_1F75D.docx?e=.docx},
+  url       = {https://ceie.swu.edu.cn/info/1125/3918.htm},
   urldate   = {2026-04-18},
+  note      = {门户亦可能发布 \texttt{.docx} 直链；以当期页面为准。},
   langid    = {chinese}
 }
 
@@ -193,52 +202,122 @@
 西南大学；毕业论文模板；\LaTeX；本科论文；排版示例
 \end{cnkeywords}
 \begin{enabstract}
-This document presents an undergraduate thesis example for Southwest University
-based on \LaTeX. It demonstrates the generation of the cover page and bilingual abstract,
-chapter organization, figures and aligned subfigures, three-line tables and long tables,
-equation numbering and cross-referencing, theorem-like environments, and bibliography formatting.
-The example also incorporates the current undergraduate thesis specification of the university,
-so that formal writing requirements can be translated into a reusable template structure.
-It is intended both as a regression test for the class file and as a starting point for a unified
+This document presents an undergraduate thesis example for Southwest University%
+based on \LaTeX.%
+It demonstrates the generation of the cover page and bilingual abstract,%
+chapter organization, figures and aligned subfigures,%
+three-line tables and long tables,%
+equation numbering and cross-referencing,%
+theorem-like environments, and bibliography formatting.%
+The example also incorporates the current undergraduate thesis specification%
+of the university,%
+so that formal writing requirements can be translated%
+into a reusable template structure.%
+It is intended both as a regression test for the class file%
+and as a starting point for a unified%
 document system covering undergraduate, master's, and doctoral theses.
 \end{enabstract}
 \begin{enkeywords}
-Southwest University; thesis template; \LaTeX; undergraduate thesis; typesetting example
+Southwest University; thesis template; \LaTeX; undergraduate thesis;%
+typesetting example
 \end{enkeywords}
 \makeabstract
 
 \mainmatter
 \chapter{模板制作说明}\label{ch:guide}
 
-本章说明本示例文档的用途，以及模板与学校正式规范之间的关系。《西南大学本科毕业论文（设计）规范》为统一本科毕业论文（设计）的撰写和编辑格式，保证本科毕业论文（设计）的质量，便利信息系统的收集加工、检索利用和交流传播，在《西南大学全日制本科学生毕业论文（设计）工作管理办法》（西校〔2021〕4号）基础上制定\cite{swu2021thesisManageNotice,swuUndergradThesisSpecWeb}。\textbf{该规范的完整条文已收录于附录~\ref{app:swu-undergrad-spec}}，写作与提交时请以学校最新发布的文件为准；若规范修订，请相应更新附录文本或改附说明。博士、硕士学位论文的撰写与排版另有《西南大学博士硕士学位论文规范》\cite{swu2022gradThesisSpecDoc}（页面提供 \texttt{.doc} 文档下载，以学校及学院最新发布为准）。
+本章说明本示例文档的用途，以及模板与学校正式规范之间的关系。%
+《西南大学本科毕业论文（设计）规范》为统一本科毕业论文（设计）的撰写和编辑格式，%
+保证本科毕业论文（设计）的质量，便利信息系统的收集加工、检索利用和交流传播，%
+在《西南大学全日制本科学生毕业论文（设计）工作管理办法》（西校〔2021〕4号）基础上制定%
+\cite{swu2021thesisManageNotice,swuUndergradThesisSpecWeb}。%
+\textbf{该规范的完整条文已收录于附录~\ref{app:swu-undergrad-spec}}，%
+写作与提交时请以学校最新发布的文件为准；若规范修订，请相应更新附录文本或改附说明。%
+博士、硕士学位论文的撰写与排版另有《西南大学博士硕士学位论文规范》%
+\cite{swu2022gradThesisSpecDoc}（页面提供 \texttt{.doc} 文档下载，以学校及学院最新发布为准）。
 
 \section{编译与工具链}\label{sec:compile}
 \subsection{引擎与参考文献后端}
-正文为中文并依赖字体与 \texttt{ctex}，\textbf{须使用 \hologo{XeLaTeX}} 编译。参考文献使用 \texttt{biblatex}，\textbf{须运行 \hologo{biber}}（随 TeX~Live、MiKTeX 等发行版安装，版本号随发行版更新；与 \texttt{biblatex} 配套的是名为 \hologo{biber} 的程序，在编辑器中配置「参考文献处理器」时选 \hologo{biber} 即可）。\textbf{不要使用}以 \hologo{pdfLaTeX} 为默认的一键流程（例如 WinEdt 中常见的 PDF\TeX{}ify），否则无法正确排版中文与参考文献。
+\begingroup\sloppy
+正文为中文并依赖字体与 \texttt{ctex}，\textbf{须使用 \hologo{XeLaTeX}} 编译。
+参考文献使用 \texttt{biblatex}，\textbf{须运行 \hologo{biber}}（随 TeX~Live、MiKTeX 等发行版安装，版本号随发行版更新；与 \texttt{biblatex} 配套的是名为 \hologo{biber} 的程序，在编辑器中配置「参考文献处理器」时选 \hologo{biber} 即可）。
+\textbf{不要使用}以 \hologo{pdfLaTeX} 为默认的一键流程（例如 WinEdt 中常见的 PDF\TeX{}ify），否则无法正确排版中文与参考文献。
+\par\endgroup
 
 \subsection{Windows（含 WinEdt）}
 \begin{itemize}
-  \item \textbf{Biber 与 WinEdt}：WinEdt 不单独「支持某个 biber 版本号」，而是调用发行版已安装的 \hologo{biber}（Windows 下可执行文件名为 \texttt{biber.exe}）。在 \texttt{TeX} $\rightarrow$ \texttt{Execution Modes}（或同类菜单）中，将主流程设为 \textbf{\hologo{XeLaTeX}}，并在需要时增加一步 \hologo{biber}，再多次 \hologo{XeLaTeX}，顺序与下文 Makefile 一致即可。
+  \item \textbf{Biber 与 WinEdt}：WinEdt 不单独「支持某个 biber 版本号」，%
+  而是调用发行版已安装的 \hologo{biber}（Windows 下可执行文件名为 \texttt{biber.exe}）。%
+  在 \texttt{TeX} $\rightarrow$ \texttt{Execution Modes}（或同类菜单）中，将主流程设为 \textbf{\hologo{XeLaTeX}}，%
+  并在需要时增加一步 \hologo{biber}，再多次 \hologo{XeLaTeX}，顺序与下文 Makefile 一致即可。
   \item \textbf{避免 PDF\TeX{}ify}：该快捷方式通常绑定 \hologo{pdfLaTeX}，与本模板不兼容。请改用「\hologo{XeLaTeX} + \hologo{biber} + \hologo{XeLaTeX}」或下文 \texttt{latexmk}。
   \item 若已安装 TeX~Live 并将 \texttt{bin} 加入系统 \texttt{PATH}，也可在「命令提示符」或 PowerShell 中进入工程目录，手动执行与 \cref{sec:compile-make} 相同的命令。
 \end{itemize}
 
 \subsection{macOS / Linux 与 \texttt{Makefile}}\label{sec:compile-make}
-工程根目录的 \path{Makefile} 会依次执行：\hologo{XeLaTeX} $\rightarrow$ \hologo{biber} $\rightarrow$ \hologo{XeLaTeX} $\rightarrow$ \hologo{XeLaTeX}（与参考文献、交叉引用完全刷新所需次数一致）。在终端进入工程目录后执行 \texttt{make} 或 \texttt{make main} 即可。\textbf{\texttt{make} 为系统自带或随「构建工具」安装}：macOS 若提示无此命令，可安装 Xcode Command Line Tools（终端执行 \texttt{xcode-select --install}）；Linux 可通过包管理器安装 \texttt{make} 或 \texttt{build-essential}。无需单独「安装 Makefile」这一软件——只需 \texttt{make} 程序与已安装的 \TeX{} 发行版。
+工程根目录的 \path{Makefile} 会依次执行：%
+\hologo{XeLaTeX} $\rightarrow$ \hologo{biber} $\rightarrow$ \hologo{XeLaTeX}%
+  $\rightarrow$ \hologo{XeLaTeX}%
+（与参考文献、交叉引用完全刷新所需次数一致）。%
+在终端进入工程目录后执行 \texttt{make} 或 \texttt{make main} 即可。%
+\textbf{\texttt{make} 为系统自带或随「构建工具」安装}：%
+macOS 若提示无此命令，可安装 Xcode Command Line Tools；%
+终端执行 \texttt{xcode-select --install}。%
+Linux 可通过包管理器安装 \texttt{make} 或 \texttt{build-essential}。%
+Windows 本身不自带 \texttt{make}，可使用 MSYS2、Git for Windows 附带环境，或在 WSL 中安装 GNU \texttt{make}。%
+无需单独「安装 Makefile」这一文件——仓库中的 \path{Makefile} 随项目提供；须安装的是 \texttt{make} \textbf{程序}与已配置的 \TeX{} 发行版。
 
 \subsection{持续编译（\texttt{latexmk}）}
 TeX~Live 等发行版自带 \texttt{latexmk}，可根据辅助文件自动决定运行次数及是否调用 \hologo{biber}。写作时可在工程目录使用「监视文件并反复编译」：
 \begin{verbatim}
 latexmk -pvc -xelatex swuthesis-main.tex
 \end{verbatim}
-选项 \texttt{-pvc} 表示持续预览（源文件保存后自动重新编译）。若工程根目录提供 \path{.latexmkrc}（本仓库已含），其中已将引擎设为 \hologo{XeLaTeX}，亦可简写为 \texttt{latexmk -pvc swuthesis-main.tex}。首次编译前请已生成 \path{swuthesis.cls}（例如运行 \texttt{latex swuthesis.ins} 或 \texttt{make cls}）。
+选项 \texttt{-pvc} 表示持续预览（源文件保存后自动重新编译）。%
+若工程根目录提供 \path{.latexmkrc}（本仓库已含），其中已将引擎设为 \hologo{XeLaTeX}，%
+亦可简写为%
+\texttt{latexmk -pvc} \texttt{swuthesis-main.tex}。%
+首次编译前请已生成 \path{swuthesis.cls}%
+（例如运行 \texttt{latex swuthesis.ins} 或 \texttt{make cls}）。%
+
+\subsection{编译质量检查（含 Overfull/Underfull）}\label{sec:compile-quality-check}
+为保证成稿可印刷、可归档，建议在每次完整编译后执行一次日志巡检。
+命令 \texttt{rg} 属于 \textbf{ripgrep}，须单独安装（\TeX{} Live 不自带）；%
+若终端提示找不到该命令，macOS 常用 \texttt{brew install ripgrep}，%
+Windows 可用 \texttt{winget install BurntSushi.ripgrep}，%
+Linux 可用发行版包管理器安装 \texttt{ripgrep}。%
+若未安装 \texttt{rg}，可改用系统自带的 \texttt{grep}，例如%
+\texttt{grep Overfull swuthesis-main.log}。
+\begin{verbatim}
+rg Overfull swuthesis-main.log
+rg Underfull swuthesis-main.log
+rg "Missing character" swuthesis-main.log
+\end{verbatim}
+常见告警与处理优先级如下：
+\begin{itemize}[leftmargin=2em]
+  \item \textbf{Overfull \textbackslash hbox（优先处理）}：正文、表格、代码段发生超出版心；可通过手动断行、缩短不可断字符串、调整列宽或改为可换行排版解决。
+  \item \textbf{Missing character（必须确认）}：当前字体缺少所需字符；应替换字符、改用支持字形的字体，或在该处改用兼容写法。
+  \item \textbf{Underfull \textbackslash hbox（按场景判断）}：窄列/封面字段中的适度松散通常可接受；若出现在正文大段，建议优化措辞或断行策略。
+\end{itemize}
+若希望一次构建全部示例并统一检查，可先运行 \texttt{make all}，再在工程目录执行：
+\begin{verbatim}
+rg Overfull *.log
+rg Underfull *.log
+rg "Missing character" *.log
+\end{verbatim}
 
 \section{与既有本科毕业论文模板的关系及本模板的必要性}
-西南大学本科论文写作中长期流传着一类以 \textsf{ctexbook} 为主文档类、以 \path{SWUthesis.sty} 为版式与宏包集合、用 \texttt{\textbackslash include} 分文件组织封面、声明、摘要与正文的模板（例如目录中常出现 \path{myTemplate.tex}、\path{preample/coverpage.tex} 等结构，坊间多称「本科毕业论文模板\_新」一类资源；可参考文献\cite{bao2024swuthesisLegacy}）。
+西南大学本科论文写作中长期流传着一类以 \textsf{ctexbook} 为主文档类、%
+以 \path{SWUthesis.sty} 为版式与宏包集合、%
+用 \texttt{\textbackslash include} 分文件组织封面、声明、摘要与正文的模板%
+（例如目录中常出现 \path{myTemplate.tex}、\path{preample/coverpage.tex} 等结构，%
+坊间多称「本科毕业论文模板\_新」一类资源；可参考文献\cite{bao2024swuthesisLegacy}）。
 
 其在\textbf{工作流程}（封面—声明—目录—中英文摘要—分章正文—参考文献—附录）与\textbf{版式目标}（本科论文常见章节划分）上，为本项目提供了\textbf{部分经验参考}。
 
-本仓库中的 \texttt{swuthesis} 并非在上述 \texttt{.sty} 源码上逐行修补，而是\textbf{全新设计}的文档类：以 \path{swuthesis.dtx} 生成 \path{swuthesis.cls}，用 \LaTeX3 键值接口集中论文元信息，参考文献采用 \texttt{biblatex} 与 GB/T~7714 系列样式，定理与交叉引用等与当前 \TeX{} Live 生态对齐。这样做的必要性在于：
+本仓库中的 \texttt{swuthesis} 并非在上述 \texttt{.sty} 源码上逐行修补，%
+而是\textbf{全新设计}的文档类：以 \path{swuthesis.dtx} 生成 \path{swuthesis.cls}，%
+用 \LaTeX3 键值接口集中论文元信息，参考文献采用 \texttt{biblatex} 与 GB/T~7714 系列样式，%
+定理与交叉引用等与当前 \TeX{} Live 生态对齐。这样做的必要性在于：
 \begin{enumerate}[label=\arabic*., leftmargin=2em]
   \item \textbf{可维护性与可重复构建}：单一类文件 + 主文档，版本信息清晰，便于随学校规范修订而更新；减少「个人魔改 sty、他人环境无法编译」的风险。
   \item \textbf{与现代工具链一致}：避免依赖已弱化或停更的宏包组合（如部分早期插图、表格与中文下划线方案），降低在新系统上的故障率。
@@ -247,7 +326,9 @@ latexmk -pvc -xelatex swuthesis-main.tex
 因此：旧模板可作为\textbf{使用习惯与目录结构}的参照；本模板则面向\textbf{长期维护、规范对齐与协作}，二者是\textbf{继承目标、重新实现}的关系，而非简单的「换皮」或补丁升级。
 
 \section{示例文档的定位}
-\texttt{swuthesis} 示例用于检验类文件与主文档能否正确生成封面、中英文摘要、目录、章节、图表、公式、定理环境与参考文献列表等。\LaTeX{} 负责版式与自动化，\textbf{不能替代}对选题、方法与学术规范的理解。
+\texttt{swuthesis} 示例用于检验类文件与主文档能否正确生成封面、中英文摘要、目录、章节、%
+图表、公式、定理环境与参考文献列表等。%
+\LaTeX{} 负责版式与自动化，\textbf{不能替代}对选题、方法与学术规范的理解。
 
 \section{与学校规范的关系}
 学校对字数、结构、参考文献、装袋材料等有统一要求。正文各章演示排版命令的用法；\textbf{条文级全文}见附录~\ref{app:swu-undergrad-spec}。学院若有补充规定，以学院通知为准。
@@ -256,7 +337,9 @@ latexmk -pvc -xelatex swuthesis-main.tex
 撰写真实论文时，建议先通读附录中的规范，再按学院模板整理材料；使用本模板时，可在导言区按需载入宏包，但不宜改动学校规定的封面与声明页要素。
 
 \section{程序代码与 \texttt{listings}}\label{sec:code-inclusion}
-\texttt{swuthesis} 已载入 \texttt{listings} 并定义代码样式。正文中可使用 \texttt{\textbackslash lstinline}、\texttt{lstlisting} 环境或 \texttt{\textbackslash lstinputlisting} 从子目录引入源码。
+\texttt{swuthesis} 已载入 \texttt{listings} 并定义代码样式。%
+正文中可使用 \texttt{\textbackslash lstinline}、\texttt{lstlisting} 环境或%
+\texttt{\textbackslash lstinputlisting} 从子目录引入源码。%
 Matlab、Wolfram 语言（\texttt{listings} 中标识为 \texttt{Mathematica}）、Python、R、C++ 等示例见附录~\ref{app:code-matlab}--\ref{app:code-cpp}。
 
 \paragraph{附录示例来源说明}
@@ -265,8 +348,12 @@ Matlab、Wolfram 语言（\texttt{listings} 中标识为 \texttt{Mathematica}）
 \chapter{插图}\label{ch:figures}
 
 \section{使用 \texttt{graphicx} 插入外部图片}
-日常插图可将图形文件（如 \path{.pdf}、\path{.png}、\path{.jpg}）置于工程目录下，用 \texttt{\textbackslash includegraphics} 插入。
-以下使用 \TeX{} Live 等发行版自带的示例图 \path{example-image-a}、\path{example-image-b}、\path{example-image-c}（由 \textsf{mwe} 宏包提供，无需复制到工程目录），便于在无自备图片时也能编译通过；实际写作时替换为自有文件名即可。
+\begingroup\sloppy
+日常插图可将图形文件置于工程目录下，用 \texttt{\textbackslash includegraphics} 插入（常见格式如 \path{.pdf}、\path{.png}、\path{.jpg}）。
+\par
+以下使用 \TeX~Live 等发行版自带的示例图（\textsf{mwe} 宏包中的 \texttt{example-image-a}、\texttt{example-image-b} 与 \texttt{example-image-c}）。
+这些资源随发行版安装，无需复制到工程目录即可编译；实际写作时替换为自有文件名即可。
+\par\endgroup
 
 \subsection{单幅图}
 \begin{figure}[htbp]
@@ -306,8 +393,10 @@ Matlab、Wolfram 语言（\texttt{listings} 中标识为 \texttt{Mathematica}）
   \centering
   \begin{tikzpicture}[node distance=18mm,>=Latex]
     \node[draw,rounded corners,minimum width=25mm,minimum height=10mm] (spec) {学校规范};
-    \node[draw,rounded corners,right=of spec,minimum width=25mm,minimum height=10mm] (class) {类文件};
-    \node[draw,rounded corners,right=of class,minimum width=25mm,minimum height=10mm] (main) {主文档};
+    \node[draw,rounded corners,right=of spec,%
+      minimum width=25mm,minimum height=10mm] (class) {类文件};
+    \node[draw,rounded corners,right=of class,%
+      minimum width=25mm,minimum height=10mm] (main) {主文档};
     \draw[->,thick] (spec) -- (class);
     \draw[->,thick] (class) -- (main);
   \end{tikzpicture}
@@ -399,7 +488,8 @@ Matlab、Wolfram 语言（\texttt{listings} 中标识为 \texttt{Mathematica}）
 \chapter{数学公式}\label{ch:math}
 
 \section{编号与对齐}
-模板已按章对公式编号，且可直接使用 \texttt{\textbackslash label} 与 \texttt{\textbackslash cref} 进行交叉引用。
+模板已按章对公式编号，且可直接使用 \texttt{\textbackslash label} 与%
+\texttt{\textbackslash cref} 进行交叉引用。%
 例如，线性回归的最小二乘目标函数可写为
 \begin{equation}
   J(\boldsymbol{\beta})=\lVert \mathbf{y}-\mathbf{X}\boldsymbol{\beta} \rVert_2^2.
@@ -408,7 +498,8 @@ Matlab、Wolfram 语言（\texttt{listings} 中标识为 \texttt{Mathematica}）
 对参数求导并令其为零，可得正规方程
 \begin{align}
   \frac{\partial J}{\partial \boldsymbol{\beta}}
-  &= -2\mathbf{X}^{\mathsf T}\left(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}\right)=0, \label{eq:gradient}\\
+  &= -2\mathbf{X}^{\mathsf T}\left(\mathbf{y}-\mathbf{X}\boldsymbol{\beta}\right)=0,%
+  \label{eq:gradient}\\
   \mathbf{X}^{\mathsf T}\mathbf{X}\boldsymbol{\beta}
   &= \mathbf{X}^{\mathsf T}\mathbf{y}. \label{eq:normal}
 \end{align}
@@ -483,23 +574,28 @@ f\!\left(\sum_{i=1}^{n}\lambda_i x_i\right)\le \sum_{i=1}^{n}\lambda_i f(x_i).
 \end{cor}
 
 \begin{rmk}
-在模板中，\texttt{thm}、\texttt{defn}、\texttt{cor} 等缩写环境与全称
-（\texttt{theorem}、\texttt{definition}、\texttt{corollary} 等）共享计数器，按章编号，
-并可通过 \texttt{\textbackslash cref} 直接引用，如 \cref{def:convex,thm:jensen,cor:amgm}。
+在模板中，\texttt{thm}、\texttt{defn}、\texttt{cor} 等缩写环境与全称%
+（\texttt{theorem}、\texttt{definition}、\texttt{corollary} 等）共享计数器，按章编号，%
+并可通过 \texttt{\textbackslash cref} 直接引用，%
+如 \cref{def:convex,thm:jensen,cor:amgm}。%
 \end{rmk}
 
 \chapter{参考文献引用示例}\label{ch:bib}
 
-\noindent 本示例的 \texttt{swuthesis-main.bib} 由主文件内 \texttt{filecontents*} 环境生成；条目著录与公开书目一致，
-类型涵盖 GB/T~国标、西文专著、\texttt{CTeX} 手册、中文专著与期刊（可在 CNKI 等检索）、
-MathSciNet 著录的数学期刊论文、arXiv 预印本与 NeurIPS 会议论文等；键名与 \texttt{references.bib} 中部分条目对齐，便于对照维护。
+\noindent 本示例的 \texttt{swuthesis-main.bib} 由主文件内 \texttt{filecontents*} 环境生成；%
+条目著录与公开书目一致，%
+类型涵盖 GB/T~国标、西文专著、\texttt{CTeX} 手册、中文专著与期刊（可在 CNKI 等检索）、%
+MathSciNet 著录的数学期刊论文、arXiv 预印本与 NeurIPS 会议论文等；%
+键名与 \texttt{references.bib} 中部分条目对齐，便于对照维护。
 
 \section{正文中的引用}
 学术写作中，正文引用应与文后参考文献表一致。使用 \texttt{biblatex} 配合
-GB/T 7714 样式后，可在正文中混合著录西文专著\cite{knuth1984texbook,lamport1994latex,mittelbach2004companion}、
-中文专著（如可在 CNKI 检索的教材）\cite{zhouzhihua2016ml}、中文期刊论文\cite{liguojie2012bigdata}、
-英文数学期刊（可在 MathSciNet 按 MR 号或 DOI 核对）\cite{WalpuskiZhang2021DMJ}、
-arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017attention}；
+GB/T 7714 样式后，可在正文中混合著录西文专著%
+\cite{knuth1984texbook,lamport1994latex,mittelbach2004companion}、%
+中文专著（如可在 CNKI 检索的教材）\cite{zhouzhihua2016ml}、%
+中文期刊论文\cite{liguojie2012bigdata}、%
+英文数学期刊（可在 MathSciNet 按 MR 号或 DOI 核对）\cite{WalpuskiZhang2021DMJ}、%
+arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017attention}；%
 排版工具说明见 \cite{ctex2022}，著录格式见国家标准 \cite{gbt7714}。
 
 \section{文后文献表}
@@ -509,7 +605,7 @@ arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017atten
 \backmatter
 \printbibliography[heading=bibintoc,title={参考文献}]
 
-\begin{acknowledgements}
+\begin{ack}
 行文至此，落笔为终。四载求学，倏忽而逝。回首往昔，感慨系之矣。
 
 首谢吾师。先生治学严谨，诲人不倦。自选题立意，至谋篇布局，皆蒙悉心指点。每遇疑难，必引经据典，条分缕析，使吾豁然开朗。师恩如山，没齿难忘。今虽学业初成，然深知学海无涯，唯愿日后勤勉，不负师望。
@@ -532,7 +628,7 @@ arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017atten
 于西南大学\textbullet 李园宿舍
 \end{tabular}
 \end{flushright}
-\end{acknowledgements}
+\end{ack}
 
 \appendix
 \chapter{西南大学本科毕业论文（设计）规范}\label{app:swu-undergrad-spec}
@@ -543,7 +639,13 @@ arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017atten
 \begin{enumerate}
   \item 本科毕业论文（设计）应在导师指导下，由学生本人独立完成，严禁抄袭和剽窃。
   \item 本科毕业论文（设计）应能表明学生确已在本专业学习上掌握了专门知识，并对所研究问题有新的认识或理解，在导师的指导下具备独立解决问题的能力。论文工作时间一般不得少于半年。
-  \item 原则上人文社科类专业毕业论文的字数不少于8000字，理工农医类专业毕业论文不少于6000字，艺体类专业毕业论文不少于5000字；毕业论文一般应采用简体中文进行（外语专业、古汉语研究中涉及的古文字和参考文献中引用的外文文献除外）；如学生申请用外语进行书写，需提交申请书，由指导教师同意、系主任和学院（部）主管教学领导审批，且不少于5000个单词；艺术类毕业设计说明书不少于3000字；计算机软件类设计或论文，一般源程序行数不少于2000条，并写出5000字以上的软件说明书或论文。各专业可根据自身特点，在学校基础上提出本专业毕业论文的具体工作量要求。
+  \item 原则上人文社科类专业毕业论文的字数不少于8000字，理工农医类专业毕业论文不少于6000字，%
+  艺体类专业毕业论文不少于5000字；毕业论文一般应采用简体中文进行%
+  （外语专业、古汉语研究中涉及的古文字和参考文献中引用的外文文献除外）；%
+  如学生申请用外语进行书写，需提交申请书，由指导教师同意、系主任和学院（部）主管教学领导审批，%
+  且不少于5000个单词；艺术类毕业设计说明书不少于3000字；%
+  计算机软件类设计或论文，一般源程序行数不少于2000条，并写出5000字以上的软件说明书或论文。%
+  各专业可根据自身特点，在学校基础上提出本专业毕业论文的具体工作量要求。
   \item 凡是不符合上述要求的，一律不接受其毕业论文（设计）答辩申请。
 \end{enumerate}
 
@@ -566,7 +668,7 @@ arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017atten
   签署《毕业论文（设计）独创性声明和版权使用授权书》，其格式和内容见附件2。要求每本论文必不可缺，并有亲笔手写体签名。
   \item 目录
 
-  目录包括论文的篇、章、条、款、项、附录等的序号、名称和页码，一般只列到二级标题。目录中文字体采用宋体小四号字，目录中的页码采用Times New Roman，小四号，1.5倍行距。目录本身的页码另编，页码在页下方居中排列，使用罗马数字（Ⅰ、Ⅱ……），编写格式见附件3。
+  目录包括论文的篇、章、条、款、项、附录等的序号、名称和页码，一般只列到二级标题。目录中文字体采用宋体小四号字，目录中的页码采用Times New Roman，小四号，1.5倍行距。目录本身的页码另编，页码在页下方居中排列，使用罗马数字（I、II……），编写格式见附件3。
   \item 中英文标题、作者信息、摘要和关键词
 
   另页置于目录之后，中文排在英文之前，格式见附件4，具体包含以下内容：中文标题、中文作者姓名和单位、中文内容摘要及关键词（中文摘要在300字以内，关键词3--5个）；英文标题、英文作者姓名和单位、英文摘要及关键词（英文摘要以250个实词左右为宜，关键词与中文关键词对应）。
@@ -687,10 +789,20 @@ Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；\
 
 \chapter*{附录示例来源说明}
 \phantomsection\label{app:source-note}
-下列程序附录的例题与源码文件改编自包小敏老师长期维护的西南大学本科毕业论文\LaTeX{}模板\cite{bao2024swuthesisLegacy}（坊间常称「本科毕业论文模板\_新」等），原模板面向数学与统计学院本科毕业论文，版心尺寸按学校要求设置；其首版可追溯至 2006 年，经多年修订，近年已随学校格式调整与 \hologo{XeLaTeX} 编译方式更新。
+下列程序附录的例题与源码文件改编自包小敏老师长期维护的%
+西南大学本科毕业论文%
+\LaTeX{}模板\cite{bao2024swuthesisLegacy}（坊间常称「本科毕业论文模板\_新」等），%
+原模板面向数学与统计学院本科毕业论文，版心尺寸按学校要求设置；%
+其首版可追溯至 2006 年，经多年修订，近年已随学校格式调整与 \hologo{XeLaTeX} 编译方式更新。
 
-本仓库 \texttt{swuthesis} 并非在该模板源码上直接修改，而是全新类文件与主文档结构；此处仅保留经典代码示例，便于对照 \texttt{listings} 用法。
-首次使用请先阅读\cref{ch:guide}；公式环境见\cref{ch:math}，定理类环境见\cref{ch:theorem}；插图与表格分别见\cref{ch:figures}、\cref{ch:tables}；参考文献著录示例见\cref{ch:bib}；程序代码引入方式见\cref{sec:code-inclusion}，各语言完整示例见附录\ref{app:code-matlab}--\ref{app:code-cpp}。
+本仓库 \texttt{swuthesis} 并非在该模板源码上直接修改，%
+而是全新类文件与主文档结构；%
+此处仅保留经典代码示例，便于对照 \texttt{listings} 用法。
+首次使用请先阅读\cref{ch:guide}；%
+公式环境见\cref{ch:math}，定理类环境见\cref{ch:theorem}；%
+插图与表格分别见\cref{ch:figures}、\cref{ch:tables}；参考文献著录示例见\cref{ch:bib}；%
+程序代码引入方式见\cref{sec:code-inclusion}，各语言完整示例见附录%
+\ref{app:code-matlab}--\ref{app:code-cpp}。
 
 \end{document}
 

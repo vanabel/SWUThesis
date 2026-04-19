@@ -1,0 +1,87 @@
+%%
+%% This is file `swuthesis-doc-patch.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% swuthesis.dtx  (with options: `docpatch')
+%% This is a generated file.
+%% 
+%% It was extracted from swuthesis.dtx.
+
+
+
+\ProvidesPackage{swuthesis-doc-patch}[2026/04/19]
+\RequirePackage{etoolbox}
+\NewDocElement[macrolike = false ,
+                idxtype   = opt.  ,
+                idxgroup  = options ,
+                printtype = \textit{opt.}
+               ]{Opt}{cloption}
+\makeatletter
+\NewDocumentCommand \DescribeEnvs { m }
+  {%
+    \leavevmode \@bsphack
+    \ifdoc@noprint\else\swu@doc@describe@envs@margin{#1}\fi
+    \ifdoc@noindex\else\forcsvlist{\SpecialEnvIndex}{#1}\fi
+    \@esphack
+  }%
+\DeclareDocumentCommand \swu@doc@describe@envs@margin { m }
+  {%
+    \marginpar{%
+      \parbox[t]{\marginparwidth}{%
+        \begingroup
+        \@ifundefined{HD@maketarget}{}{%
+          \let\HD@target\HD@maketarget
+        }%
+        \raggedleft
+        \forcsvlist{\swu@doc@describe@one}{#1}%
+        \endgroup
+      }%
+    }%
+  }%
+\DeclareDocumentCommand \swu@doc@describe@one { m }
+  {%
+    \doc@providetarget\PrintDescribeEnv{#1}\par
+  }%
+\def\@doc@describe#1#2{%
+  \ifdoc@noprint\else
+    \marginnote{%
+      \parbox[t]{\marginparwidth}{%
+      \begingroup
+      \@ifundefined{HD@maketarget}{}{%
+        \let\HD@target\HD@maketarget
+      }%
+      \raggedleft
+      \def\swu@doc@de@kind{#1}%
+      \def\swu@doc@de@Env{Env}%
+      \def\swu@doc@de@Opt{Opt}%
+      \ifx\swu@doc@de@kind\swu@doc@de@Env
+      \else\ifx\swu@doc@de@kind\swu@doc@de@Opt
+      \else
+        \strut
+      \fi\fi
+      \doc@providetarget
+      \@nameuse{PrintDescribe#1}{#2}%
+      \endgroup
+      }%
+    }%
+  \fi
+  \ifdoc@noindex\else
+    \@nameuse{Special#1Index}{#2}%
+  \fi
+  \@esphack
+  \endgroup
+  \ignorespaces}%
+\renewenvironment{theglossary}{%
+  \glossary@prologue
+  \GlossaryParms
+  \let\item\@idxitem
+  \ignorespaces
+}{%
+  \par
+}%
+\makeatother
+\endinput
+%%
+%% End of file `swuthesis-doc-patch.sty'.

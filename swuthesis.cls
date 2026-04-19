@@ -8,8 +8,9 @@
 %% This is a generated file.
 %% 
 %% It was extracted from swuthesis.dtx.
+
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{swuthesis}[2026/04/17 v0.1 Southwest University thesis template]
+\ProvidesClass{swuthesis}[2026/04/19 v0.2 Southwest University thesis template]
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{family=swu,prefix=swu@}
 \DeclareBoolOption[false]{postdoc}
@@ -70,7 +71,10 @@
   \iffieldundef{eprintclass}{}{\space\mkbibbrackets{\thefield{eprintclass}}}%
 }
 \AtEveryBibitem{%
-  \ifboolexpr{ test {\iffieldequalstr{eprinttype}{arxiv}} or test {\iffieldequalstr{eprinttype}{arXiv}} }%
+  \ifboolexpr{%
+    test {\iffieldequalstr{eprinttype}{arxiv}} or
+    test {\iffieldequalstr{eprinttype}{arXiv}}%
+  }%
     {%
       \clearfield{url}%
       \clearfield{urlraw}%
@@ -79,7 +83,10 @@
     }{}%
 }
 \renewbibmacro*{modifydate}{%
-  \ifboolexpr{ test {\iffieldequalstr{eprinttype}{arxiv}} or test {\iffieldequalstr{eprinttype}{arXiv}} }%
+  \ifboolexpr{%
+    test {\iffieldequalstr{eprinttype}{arxiv}} or
+    test {\iffieldequalstr{eprinttype}{arXiv}}%
+  }%
     {\usebibmacro{newsdate}}
     {%
       \iffieldundef{eventday}%
@@ -223,8 +230,9 @@
   \def\equationautorefname{式}%
   \def\figureautorefname{图}%
   \def\tableautorefname{表}%
-  % cleveref 在 |\begin{document}| 之初已按当时定义生成 |\cref@…@format|；此后才执行的
-  % |\creflabelformat| 不会自动重算外层引用格式，会导致 |\cref| 仅显示阿拉伯数字。
+  % cleveref 在 |\begin{document}| 之初已按当时定义生成 |\cref@…@format|；
+  % 此后才执行的 |\creflabelformat| 不会自动重算外层引用格式，
+  % 会导致 |\cref| 仅显示阿拉伯数字。
   \@crefdefineallformats{chapter}%
   \@crefdefineallformats{section}%
   \@crefdefineallformats{subsection}%
@@ -321,7 +329,7 @@
   \phantomsection
   \pdfbookmark[0]{目录}{swu-toc}%
 }{}{%
-  \PackageWarning{swuthesis}{Could not patch @cftmaketoctitle for PDF bookmark (tocloft)}%
+  \PackageWarning{swuthesis}{tocloft:~@cftmaketoctitle~patch~failed~for~bookmark}%
 }
 \newcommand{\swu@thesisheadertext}{%
   \ifswu@doctor 西南大学博士学位论文\else
@@ -545,7 +553,7 @@
 {
 \PackageError { swuthesis }
 { Invalid~YYYY/MM/DD~date~`\tl_to_str:N \l__swu_date_input_tl'. }
-{ Dates~must~have~three~non-empty~parts~separated~by~slashes,~e.g.,~2026/3/15~or~2026/03/15. }
+{ Use~YYYY/MM/DD~with~three~non-empty~parts,~e.g.~2026/3/15. }
 }
 }
 \cs_new_protected:Npn \__swu_thesis_label_sub_normalise:N #1
@@ -680,7 +688,8 @@ thesis-label-sub-en .code:n = {
 \tl_gset_eq:NN \g_swu_postdoc_report_date_tl \l_swu_k_postdoc_report_date_tl
 \tl_gset_eq:NN \g_swu_postdoc_publisher_tl \l_swu_k_postdoc_publisher_tl
 \tl_gset_eq:NN \g_swu_postdoc_publish_address_tl \l_swu_k_postdoc_publish_address_tl
-\tl_gset_eq:NN \g_swu_postdoc_cover_bottom_date_tl \l_swu_k_postdoc_cover_bottom_date_tl
+\tl_gset_eq:NN \g_swu_postdoc_cover_bottom_date_tl
+  \l_swu_k_postdoc_cover_bottom_date_tl
 \tl_gset_eq:NN \g_swu_postdoc_mailing_postcode_tl \l_swu_k_postdoc_mailing_postcode_tl
 \tl_gset_eq:NN \g_swu_postdoc_mailing_address_tl \l_swu_k_postdoc_mailing_address_tl
 \tl_gset_eq:NN \g_swu_postdoc_mailing_phone_tl \l_swu_k_postdoc_mailing_phone_tl
@@ -741,16 +750,21 @@ thesis-label-sub-en .code:n = {
   }
 \cs_new:Npn \swuCoverThesisLabelSubText { \tl_use:N \g_swu_thesis_label_sub_tl }
 \cs_new:Npn \swuCoverThesisLabelSubEnText { \tl_use:N \g_swu_thesis_label_sub_en_tl }
-\cs_new:Npn \swuPostdocClassificationText { \tl_use:N \g_swu_postdoc_classification_tl }
+\cs_new:Npn \swuPostdocClassificationText { \tl_use:N
+  \g_swu_postdoc_classification_tl }
 \cs_new:Npn \swuPostdocUDCText { \tl_use:N \g_swu_postdoc_udc_tl }
 \cs_new:Npn \swuPostdocIdText { \tl_use:N \g_swu_postdoc_id_tl }
-\cs_new:Npn \swuPostdocConfidentialityText { \tl_use:N \g_swu_postdoc_confidentiality_tl }
+\cs_new:Npn \swuPostdocConfidentialityText { \tl_use:N
+  \g_swu_postdoc_confidentiality_tl }
 \cs_new:Npn \swuPostdocStationText { \tl_use:N \g_swu_postdoc_station_tl }
 \cs_new:Npn \swuPostdocUnitText {
-  \tl_if_blank:VTF \g_swu_postdoc_unit_tl {西南大学} { \tl_use:N \g_swu_postdoc_unit_tl }
+  \tl_if_blank:VTF \g_swu_postdoc_unit_tl {西南大学}
+    { \tl_use:N \g_swu_postdoc_unit_tl }
 }
-\cs_new:Npn \swuPostdocWorkStartText { \tl_use:N \g_swu_postdoc_work_start_tl }
-\cs_new:Npn \swuPostdocWorkEndText { \tl_use:N \g_swu_postdoc_work_end_tl }
+\cs_new:Npn \swuPostdocWorkStartText { \tl_use:N
+  \g_swu_postdoc_work_start_tl }
+\cs_new:Npn \swuPostdocWorkEndText { \tl_use:N
+  \g_swu_postdoc_work_end_tl }
 \cs_new_protected:Npn \__swu_postdoc_cover_year_month_from:N #1
 {
   \tl_set:Nx \l__swu_postdoc_ym_scratch_tl { \tl_trim_spaces:V #1 }
@@ -770,8 +784,10 @@ thesis-label-sub-en .code:n = {
   { \swuDefenseYearText 年\swuDefenseMonthText 月 }
   { \tl_use:N \g_swu_postdoc_report_date_tl }
 }
-\cs_new:Npn \swuPostdocPublisherText { \tl_use:N \g_swu_postdoc_publisher_tl }
-\cs_new:Npn \swuPostdocPublishAddressText { \tl_use:N \g_swu_postdoc_publish_address_tl }
+\cs_new:Npn \swuPostdocPublisherText { \tl_use:N
+  \g_swu_postdoc_publisher_tl }
+\cs_new:Npn \swuPostdocPublishAddressText { \tl_use:N
+  \g_swu_postdoc_publish_address_tl }
 \cs_new:Npn \swuPostdocPublisherLineText {
   \tl_if_blank:VTF \g_swu_postdoc_publisher_tl
     {西南大学\ （重庆）}
@@ -782,13 +798,18 @@ thesis-label-sub-en .code:n = {
     { \swuPostdocReportDateText }
     { \tl_use:N \g_swu_postdoc_cover_bottom_date_tl }
 }
-\cs_new:Npn \swuPostdocMailingPostcodeText { \tl_use:N \g_swu_postdoc_mailing_postcode_tl }
-\cs_new:Npn \swuPostdocMailingAddressText { \tl_use:N \g_swu_postdoc_mailing_address_tl }
-\cs_new:Npn \swuPostdocMailingPhoneText { \tl_use:N \g_swu_postdoc_mailing_phone_tl }
-\cs_new:Npn \swuPostdocMailingEmailText { \tl_use:N \g_swu_postdoc_mailing_email_tl }
+\cs_new:Npn \swuPostdocMailingPostcodeText { \tl_use:N
+  \g_swu_postdoc_mailing_postcode_tl }
+\cs_new:Npn \swuPostdocMailingAddressText { \tl_use:N
+  \g_swu_postdoc_mailing_address_tl }
+\cs_new:Npn \swuPostdocMailingPhoneText { \tl_use:N
+  \g_swu_postdoc_mailing_phone_tl }
+\cs_new:Npn \swuPostdocMailingEmailText { \tl_use:N
+  \g_swu_postdoc_mailing_email_tl }
 \cs_new_protected:Npn \__swu_degree_sub_en_display:
 {
-\seq_set_split:NnV \l__swu_degree_sub_en_lines_seq { \par } \g_swu_thesis_label_sub_en_tl
+\seq_set_split:NnV \l__swu_degree_sub_en_lines_seq { \par }
+  \g_swu_thesis_label_sub_en_tl
 \bool_set_false:N \l__swu_degree_sub_en_need_sep_bool
 \seq_map_inline:Nn \l__swu_degree_sub_en_lines_seq
 {
@@ -1045,7 +1066,12 @@ thesis-label-sub-en .code:n = {
     {\heiti\zihao{3}\swuCJKStretchText{1.5}{独创声明}\par}
   \end{center}
   \vspace{0.5\baselineskip}
-  \noindent\hspace*{2\ccwd}本人郑重声明：所呈交的毕业论文（设计），是本人在指导老师的指导下，独立进行研究工作所取得的成果，成果不存在知识产权争议。尽我所知，除文中已经注明引用的内容外，本论文（设计）不含任何其他个人或集体已经发表或撰写过的作品成果。对本文的研究做出重要贡献的个人和集体均已在文中以明确方式标明。\par
+  \noindent\hspace*{2\ccwd}本人郑重声明：所呈交的毕业论文（设计），%
+  是本人在指导老师的指导下，%
+  独立进行研究工作所取得的成果，成果不存在知识产权争议。%
+  尽我所知，除文中已经注明引用的内容外，%
+  本论文（设计）不含任何其他个人或集体已经发表或撰写过的作品成果。%
+  对本文的研究做出重要贡献的个人和集体均已在文中以明确方式标明。\par
   声明的法律后果由本人承担。\par
   \vspace{\baselineskip}
   \swuDeclarationSignatureBlock
@@ -1056,8 +1082,13 @@ thesis-label-sub-en .code:n = {
     {\heiti\zihao{3}毕业论文（设计）使用授权声明\par}
   \end{center}
   \vspace{0.5\baselineskip}
-  \noindent\hspace*{2\ccwd}本人完全了解西南大学关于收集、保存、使用毕业论文（设计）的规定。\par
-  本人愿意按照学校要求提交论文（设计）的印刷本和电子版，同意学校保存论文（设计）的印刷本和电子版，或采用影印、数字化或其它复制手段保存论文（设计）；同意学校在不以营利为目的的前提下，建立目录检索与阅览服务系统，公布论文（设计）的部分或全部内容，允许他人依法合理使用。\par
+  \noindent\hspace*{2\ccwd}本人完全了解西南大学关于收集、保存、使用毕业论文（设计）的规定。%
+  \par
+  本人愿意按照学校要求提交论文（设计）的印刷本和电子版，%
+  同意学校保存论文（设计）的印刷本和电子版，%
+  或采用影印、数字化或其它复制手段保存论文（设计）；%
+  同意学校在不以营利为目的的前提下，建立目录检索与阅览服务系统，%
+  公布论文（设计）的部分或全部内容，允许他人依法合理使用。\par
   （保密论文在解密后遵守此规定）\par
   \vspace{\baselineskip}
   \swuDeclarationSignatureBlock
@@ -1114,39 +1145,52 @@ thesis-label-sub-en .code:n = {
   }%
 }
 \newcommand{\swu@graduate@supervisors@en}{%
-  \expandafter\ifstrempty\expandafter{\swuSupervisorEnText}{\swuSupervisorText}{\swuSupervisorEnText}%
+  \expandafter\ifstrempty\expandafter{\swuSupervisorEnText}%
+  {\swuSupervisorText}{\swuSupervisorEnText}%
 }
 \newcommand{\swu@en@five@signature@lines}{%
   \begingroup
   \rmfamily\zihao{-4}%
   \vspace{0.22\baselineskip}%
-  \noindent\makebox[\linewidth][c]{\rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
-  \noindent\makebox[\linewidth][c]{\rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
-  \noindent\makebox[\linewidth][c]{\rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
-  \noindent\makebox[\linewidth][c]{\rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
-  \noindent\makebox[\linewidth][c]{\rule{0.55\linewidth}{0.4pt}}\par
+  \noindent\makebox[\linewidth][c]{%
+    \rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
+  \noindent\makebox[\linewidth][c]{%
+    \rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
+  \noindent\makebox[\linewidth][c]{%
+    \rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
+  \noindent\makebox[\linewidth][c]{%
+    \rule{0.55\linewidth}{0.4pt}}\par\vspace{0.36\baselineskip}%
+  \noindent\makebox[\linewidth][c]{%
+    \rule{0.55\linewidth}{0.4pt}}\par
   \endgroup
 }
 \newcommand{\swu@monthname@en}[1]{%
-  \ifcase\numexpr#1\relax\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December\fi
+  \ifcase\numexpr#1\relax
+    \or January\or February\or March\or April\or May\or June\or
+    July\or August\or September\or October\or November\or December\fi
 }
 \newcommand{\swu@en@submitted@school}{%
-  \expandafter\ifstrempty\expandafter{\swuSubmittedSchoolEnText}{Graduate School}{\swuSubmittedSchoolEnText}%
+  \expandafter\ifstrempty\expandafter{\swuSubmittedSchoolEnText}%
+  {Graduate School}{\swuSubmittedSchoolEnText}%
 }
 \newcommand{\swu@en@university}{%
-  \expandafter\ifstrempty\expandafter{\swuUniversityEnText}{Southwest University}{\swuUniversityEnText}%
+  \expandafter\ifstrempty\expandafter{\swuUniversityEnText}%
+  {Southwest University}{\swuUniversityEnText}%
 }
 \newcommand{\swu@en@defense@location}{%
-  \expandafter\ifstrempty\expandafter{\swuDefenseLocationEnText}{Chongqing, P.R. China}{\swuDefenseLocationEnText}%
+  \expandafter\ifstrempty\expandafter{\swuDefenseLocationEnText}%
+  {Chongqing, P.R. China}{\swuDefenseLocationEnText}%
 }
 \newcommand{\swu@en@defense@monthyear}{%
   \swu@monthname@en{\number\numexpr\swuDefenseMonthText\relax} \swuDefenseYearText
 }
 \newcommand{\swu@cover@schoolname@graphics}{%
-  \includegraphics[width=0.88\textwidth,height=1.9cm,keepaspectratio]{figures/swu-name-stxingkai.pdf}\par
+  \includegraphics[width=0.88\textwidth,%
+    height=1.9cm,keepaspectratio]{figures/swu-name-stxingkai.pdf}\par
   \IfFileExists{figures/swu-name.pdf}{%
     \vspace{0.18\baselineskip}%
-    \includegraphics[width=0.78\textwidth,height=0.7cm,keepaspectratio]{figures/swu-name.pdf}\par
+    \includegraphics[width=0.78\textwidth,%
+      height=0.7cm,keepaspectratio]{figures/swu-name.pdf}\par
   }{}%
 }
 \newcommand{\swu@ifprofessionaldoctorTF}[2]{%
@@ -1196,7 +1240,8 @@ thesis-label-sub-en .code:n = {
   \noindent
   \begin{minipage}[t]{0.56\textwidth}
     \vspace{0pt}
-    \includegraphics[width=\linewidth,height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
+    \includegraphics[width=\linewidth,%
+      height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
   \end{minipage}
   \begin{minipage}[t]{0.44\textwidth}
     \vspace{0pt}
@@ -1204,8 +1249,10 @@ thesis-label-sub-en .code:n = {
     \null\hfill
     {\zihao{4}%
     \begin{tabular}{@{}r@{\hspace{0.35em}}l@{}}%
-      \makebox[4\ccwd][s]{\songti 单位代码}： & \songti\underline{\makebox[8\ccwd][c]{10635}} \\[0.42\baselineskip]
-      \makebox[4\ccwd][s]{\songti 学　　号}： & \ttfamily\underline{\makebox[8\ccwd][c]{\swuStudentIdText}} \\
+      \makebox[4\ccwd][s]{\songti 单位代码}： & \songti\underline{%
+        \makebox[8\ccwd][c]{10635}} \\[0.42\baselineskip]
+      \makebox[4\ccwd][s]{\songti 学　　号}： & \ttfamily\underline{%
+        \makebox[8\ccwd][c]{\swuStudentIdText}} \\
     \end{tabular}}%
     \end{flushright}
   \end{minipage}\par
@@ -1224,9 +1271,11 @@ thesis-label-sub-en .code:n = {
     \swuCoverField{\swu@graduate@major@label}{\swu@graduate@major@value}
     \swu@graduate@maybe@research@field
     \swu@graduate@cover@date@single{提交日期}{%
-      \swu@zh@date@inline{\swuSubmitYearText}{\swuSubmitMonthText}{\swuSubmitDayText}}%
+      \swu@zh@date@inline%
+        {\swuSubmitYearText}{\swuSubmitMonthText}{\swuSubmitDayText}}%
     \swu@graduate@cover@date@single{答辩日期}{%
-      \swu@zh@date@inline{\swuDefenseYearText}{\swuDefenseMonthText}{\swuDefenseDayText}}%
+      \swu@zh@date@inline%
+        {\swuDefenseYearText}{\swuDefenseMonthText}{\swuDefenseDayText}}%
     \noindent\makebox[5\ccwd][s]{\bfseries 授予单位}：%
     \underline{\makebox[16\ccwd][c]{\kaishu 西南大学}}\par
     \vspace{0.6em}%
@@ -1298,18 +1347,22 @@ thesis-label-sub-en .code:n = {
   \begin{minipage}[t]{0.5\textwidth}
     \vspace{\baselineskip}
     {\zihao{4}
-      \makebox[3\ccwd][s]{分类号}\underline{\makebox[7.5\ccwd][c]{\swuPostdocClassificationText}}\par
+      \makebox[3\ccwd][s]{分类号}\underline{%
+        \makebox[7.5\ccwd][c]{\swuPostdocClassificationText}}\par
       \vspace{0.5\baselineskip}
-      \makebox[3\ccwd][s]{U D C}\underline{\makebox[7.5\ccwd][c]{\swuPostdocUDCText}}\par
+      \makebox[3\ccwd][s]{U D C}\underline{%
+        \makebox[7.5\ccwd][c]{\swuPostdocUDCText}}\par
     }
   \end{minipage}
   \begin{minipage}[t]{0.5\textwidth}
     \vspace{\baselineskip}
     \begin{flushright}
       {\zihao{4}
-      \makebox[2\ccwd][s]{密级}\underline{\makebox[7.5\ccwd][c]{\swuPostdocConfidentialityText}}\par
+      \makebox[2\ccwd][s]{密级}\underline{%
+        \makebox[7.5\ccwd][c]{\swuPostdocConfidentialityText}}\par
       \vspace{0.5\baselineskip}
-      \makebox[2\ccwd][s]{编号}\underline{\makebox[7.5\ccwd][c]{\swuPostdocIdText}}\par
+      \makebox[2\ccwd][s]{编号}\underline{%
+        \makebox[7.5\ccwd][c]{\swuPostdocIdText}}\par
       }
     \end{flushright}
   \end{minipage}\par
@@ -1340,9 +1393,12 @@ thesis-label-sub-en .code:n = {
     \renewcommand{\arraystretch}{2}
       \begin{tabular}{@{}r@{\hspace{0.5\ccwd}}c@{}}%
         \makebox[7\ccwd][s]{工作完成日期} &
-          \underline{\makebox[12\ccwd][c]{\swuPostdocWorkStartYearMonthText\ --\ \swuPostdocWorkEndYearMonthText}}\\
+          \underline{%
+            \makebox[12\ccwd][c]{%
+              \swuPostdocWorkStartYearMonthText\ --\ \swuPostdocWorkEndYearMonthText}}\\
         \makebox[7\ccwd][s]{报告提交日期} &
-          \underline{\makebox[12\ccwd][c]{\swuPostdocReportDateText}} \\
+          \underline{%
+            \makebox[12\ccwd][c]{\swuPostdocReportDateText}} \\
       \end{tabular}%
     }\par
   }%
@@ -1417,14 +1473,21 @@ thesis-label-sub-en .code:n = {
   \ignorespaces\swuGraduateTitleUnderlined
   \vspace{0.45\baselineskip}
   % 宋体四号（外层 |\songti\zihao{4}|），首行空两格（|\parindent=2\ccwd|）。
-  本学位论文是作者在导师指导下独立完成的研究工作及取得的研究成果，恪守学术诚信，遵守学术准则。对本研究及学位论文撰写曾做出贡献的老师、朋友、同仁在文中作了明确说明并表示衷心感谢。\par
+  本学位论文是作者在导师指导下独立完成的研究工作及取得的研究成果，%
+  恪守学术诚信，遵守学术准则。%
+  对本研究及学位论文撰写曾做出贡献的老师、朋友、同仁在文中作了明确说明%
+  并表示衷心感谢。\par
   \swuGraduateTwoPartySignatures
   \vspace{4\baselineskip}
   \begin{center}
     {\songti\bfseries\zihao{2}\swuCJKStretchText{1}{学位论文版权使用授权书}\par}
   \end{center}
   \vspace{0.4\baselineskip}
-  \noindent\hspace*{2\ccwd}本学位论文作者完全了解西南大学有关保留、使用学位论文的规定，有权保留并向国家有关部门或机构送交论文的复印件和磁盘，允许论文被查阅和借阅。本人授权西南大学研究生院可以将学位论文的全部或部分内容编入有关数据库进行检索，可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。\par
+  \noindent\hspace*{2\ccwd}本学位论文作者完全了解西南大学有关保留、使用学位论文的规定，%
+  有权保留并向国家有关部门或机构送交论文的复印件和磁盘，%
+  允许论文被查阅和借阅。%
+  本人授权西南大学研究生院可以将学位论文的全部或部分内容编入有关数据库进行检索，%
+  可以采用影印、缩印或扫描等复制手段保存、汇编学位论文。\par
   \vspace{0.4\baselineskip}
   {\fangsong\zihao{4}\setlength{\parindent}{2\ccwd}%
   本论文公开时间：~ \swu@checkbox{}获学位当年； \swu@checkbox{}推迟1年； \swu@checkbox{}推迟2年。\par}%
@@ -1442,7 +1505,8 @@ thesis-label-sub-en .code:n = {
   \noindent
   \begin{minipage}[t]{0.56\textwidth}
     \vspace{0pt}
-    \includegraphics[width=\linewidth,height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
+    \includegraphics[width=\linewidth,%
+      height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
   \end{minipage}
   \begin{minipage}[t]{0.44\textwidth}
     \vspace{0pt}
@@ -1580,7 +1644,7 @@ thesis-label-sub-en .code:n = {
 {\rmfamily\zihao{5}\noindent\textbf{Key words: } \swuKeywordsEnText\par}
 \fi
 }
-\NewDocumentEnvironment{acknowledgements}{}{
+\NewDocumentEnvironment{ack}{}{
 \clearpage
 \phantomsection
 \addcontentsline{toc}{chapter}{致\hspace{1\ccwd}谢}
@@ -1596,6 +1660,7 @@ thesis-label-sub-en .code:n = {
 \zihao{5}%
 \hspace{2\ccwd}\ignorespaces
 }{\par\vspace{0.5\baselineskip}\endgroup}
+\NewDocumentEnvironment{acknowledgements}{}{\begin{ack}}{\end{ack}}
 \NewDocumentEnvironment{resume}{}{
 \begingroup
 \songti
@@ -1812,7 +1877,10 @@ topsep=0.2\baselineskip
 \noindent
 \setlength{\tabcolsep}{0pt}
 \renewcommand{\arraystretch}{2.05}
-\begin{tabular*}{\linewidth}{@{}>{\bfseries}p{6\ccwd}@{\hspace{1.1em}}p{\dimexpr\linewidth-6\ccwd-1.1em}@{}}%
+\begin{tabular*}{\linewidth}{%
+  @{}>{\bfseries}p{6\ccwd}%
+  @{\hspace{1.1em}}%
+  p{\dimexpr\linewidth-6\ccwd-1.1em}@{}}%
 \toprule
 邮政编码 & \swu_postdoc_typeset_postcode_cell: \\
 通信地址 & \swu_postdoc_typeset_address_cell: \\
@@ -1825,7 +1893,19 @@ topsep=0.2\baselineskip
 }
 \NewDocumentCommand{\swuPostdocPrintPermanentAddressSheet}{}
 { \swu_postdoc_print_permanent_address_sheet: }
+\cs_new_protected:Npn \swu_postdoc_maybe_after_chapter_head:n #1
+  {
+    \tl_if_eq:nnT {#1} { 永久通信地址 }
+      { \swu_postdoc_print_permanent_address_sheet: }
+  }
 \ExplSyntaxOff
+\makeatletter
+\ifswu@postdoc
+\newcommand{\swu@postdoc@afterchapterhead}[1]{%
+  \csname swu_postdoc_maybe_after_chapter_head:n\endcsname{#1}%
+}%
+\apptocmd{\@makechapterhead}{\swu@postdoc@afterchapterhead{#1}}{}{}%
+\fi
 \makeatother
 
 
