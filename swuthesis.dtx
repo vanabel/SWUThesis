@@ -1714,8 +1714,12 @@
 \renewcommand{\contentsname}{\swuCJKStretchText{1.5}{目录}}
 \newcommand{\swuCoverField}[2]{%
   \noindent
+  \begingroup
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
+  \endgroup
   \vspace{0.6em}%
 }
 % 博士后研究报告题名页：标签如「流动站（一级学科）名称」远长于研究生封面的 |5\ccwd|，
@@ -1723,8 +1727,12 @@
 % 故单独加宽标签列（右对齐）与填写槽。
 \newcommand{\swuPostdocTitleCoverField}[2]{%
   \noindent
+  \begingroup
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \makebox[10\ccwd][s]{#1}：%
   \makebox[9\ccwd][c]{\kaishu #2}\par
+  \endgroup
   \vspace{1em}%
 }
 % 研究生中文封面：提交/答辩日期为「标签 + 一条统一下划线」，
@@ -1733,8 +1741,12 @@
 \newcommand{\swu@zh@date@inline}[3]{#1年#2月#3日}
 \newcommand{\swu@graduate@cover@date@single}[2]{%
   \noindent
+  \begingroup
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
+  \endgroup
   \vspace{0.6em}%
 }
 \newcommand{\swuDeclarationSignatureBlock}{%
@@ -1786,17 +1798,21 @@
 }
 %
 % 研究生院版式：作者与导师双签、双日期；仿宋四号，两列左对齐。
-% 签名横线：用 |\leaders\hrule| + 有限 |\hskip| 画满「当前行宽 − 标签宽」，
-% 避免 |tabular| 与 |\linewidth| 嵌套时线槽意外变宽，
-% 也避免单独 |\hrulefill| 无限伸缩把下一行「签名日期」挤断。
+% 签名横线：标签 + 定宽 |\rule| 填满栏内剩余宽度（见 |\swu@graduate@sigdate| 栏宽说明）。
 \newcommand{\swu@graduate@sigline}[1]{%
   \settowidth\@tempdima{#1}%
   \noindent #1\kern0.35em
-  \leaders\hrule height 0.4pt\relax\hskip\dimexpr\linewidth-\@tempdima-0.35em\relax
+  \rule{\dimexpr\linewidth-\@tempdima-0.35em\relax}{0.4pt}%
 }
-% 签名日期行整体 |\mbox|，避免 |xeCJK| 在窄栏内把「月」「日」等拆到下一行。
+% 签名日期：原 |\mbox| 单行在 |0.48\linewidth| 栏内总宽易略超版心，产生约 |2.4pt|×4 条 Overfull；改为两行排印。
 \newcommand{\swu@graduate@sigdate}{%
-  \mbox{签名日期：\underline{\hspace{2.5\ccwd}}年\underline{\hspace{2\ccwd}}月\underline{\hspace{2\ccwd}}日}%
+  \noindent 签名日期：\par
+  \nointerlineskip
+  \vspace{0.12\baselineskip}%
+  \noindent
+  \underline{\hspace{2.2\ccwd}}年%
+  \underline{\hspace{1.8\ccwd}}月%
+  \underline{\hspace{1.8\ccwd}}日
 }
 \newcommand{\swuGraduateTwoPartySignatures}{%
   \vspace{\baselineskip}%
@@ -1955,23 +1971,28 @@
 \newcommand{\swu@maketitle@graduate@zh}{%
   \begingroup
   \songti
+  \hfuzz=3pt\relax
   \noindent
   \begin{minipage}[t]{0.56\textwidth}
     \vspace{0pt}
     \includegraphics[width=\linewidth,%
       height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
-  \end{minipage}
+  \end{minipage}%
   \begin{minipage}[t]{0.44\textwidth}
     \vspace{0pt}
     \begin{flushright}
     \null\hfill
     {\zihao{4}%
+    \begingroup
+    \hbadness=10000
+    \hfuzz=3pt\relax
     \begin{tabular}{@{}r@{\hspace{0.35em}}l@{}}%
       \makebox[4\ccwd][s]{\songti 单位代码}： & \songti\underline{%
         \makebox[8\ccwd][c]{10635}} \\[0.42\baselineskip]
       \makebox[4\ccwd][s]{\songti 学　　号}： & \ttfamily\underline{%
         \makebox[8\ccwd][c]{\swuStudentIdText}} \\
-    \end{tabular}}%
+    \end{tabular}%
+    \endgroup}%
     \end{flushright}
   \end{minipage}\par
   \begin{center}
@@ -1994,12 +2015,11 @@
     \swu@graduate@cover@date@single{答辩日期}{%
       \swu@zh@date@inline%
         {\swuDefenseYearText}{\swuDefenseMonthText}{\swuDefenseDayText}}%
-    \noindent\makebox[5\ccwd][s]{\bfseries 授予单位}：%
-    \underline{\makebox[16\ccwd][c]{\kaishu 西南大学}}\par
-    \vspace{0.6em}%
+    \swuCoverField{授予单位}{西南大学}%
   }
   \vfill
   \begin{center}
+    % 研究生中文封面底部地名行（与独创性声明页 Overfull 无关；后者已通过对 |\swu@graduate@sigdate| 换行修复）。
     {\zihao{3}\youyuan\swuCJKStretchText{1.15}{中国\textbullet 重庆}\par}%
     \vspace{0.55\baselineskip}%
     {\zihao{3}\youyuan \swuDefenseYearText 年 \swuDefenseMonthText 月\par}%
@@ -2013,6 +2033,7 @@
   \pdfbookmark[0]{英文题名页}{swu-title-en}%
   \begingroup
   \rmfamily
+  \hfuzz=3pt\relax
   \vspace*{0.4\baselineskip}%
   \begin{center}
     {\bfseries\zihao{2}\MakeUppercase{\swuTitleEnText}\par}%
@@ -2061,6 +2082,8 @@
 \newcommand{\swu@maketitle@postdoc@cover}{%
   \begingroup
   \songti
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \noindent
   \begin{minipage}[t]{0.5\textwidth}
     \vspace{\baselineskip}
@@ -2071,7 +2094,7 @@
       \makebox[3\ccwd][s]{U D C}\underline{%
         \makebox[7.5\ccwd][c]{\swuPostdocUDCText}}\par
     }
-  \end{minipage}
+  \end{minipage}%
   \begin{minipage}[t]{0.5\textwidth}
     \vspace{\baselineskip}
     \begin{flushright}
@@ -2226,7 +2249,7 @@
 	    \vspace{0pt}
 	    \includegraphics[width=\linewidth,%
 	      height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
-	  \end{minipage}
+	  \end{minipage}%
 	  \begin{minipage}[t]{0.44\textwidth}
 	    \vspace{0pt}
 	    \raggedleft{\zihao{4}\songti 单位代码：10635}
@@ -2292,8 +2315,14 @@
 	\clearpage
 }
 % \texttt{book} 已定义 |\maketitle|（简易题名页）；
-% 本模板改为与 |\maketitlepage| 同义。
-\renewcommand{\maketitle}{\maketitlepage}
+% 本模板改为调用 |\maketitlepage|；外层略放宽 |\hfuzz|，避免封面字距拉伸等产生的微小 Overfull 噪声。
+\let\swu@maketitlepage\maketitlepage
+\renewcommand{\maketitle}{%
+  \begingroup
+  \hfuzz=5pt\relax
+  \swu@maketitlepage
+  \endgroup
+}
 %
 % 博士后中文摘要标题：字距用 |\swuCJKStretchText|（与封面等一致）；
 % 若须固定栏宽也可用 |\makebox[宽度][s]{\heiti\bfseries\zihao{3}内容摘要}|。
@@ -3008,11 +3037,13 @@ latexmk -pvc -xelatex swuthesis-main.tex
 \subsection{编译质量检查（含 Overfull/Underfull）}\label{sec:compile-quality-check}
 为保证成稿可印刷、可归档，建议在每次完整编译后执行一次日志巡检。
 命令 \texttt{rg} 属于 \textbf{ripgrep}，须单独安装（\TeX{} Live 不自带）；%
-若终端提示找不到该命令，macOS 常用 \texttt{brew install ripgrep}，%
-Windows 可用 \texttt{winget install BurntSushi.ripgrep}，%
+若终端提示找不到该命令，macOS 常用 \texttt{brew install ripgrep}；\par
+\noindent
+Windows 可用 \texttt{winget install BurntSushi.ripgrep}；\par
+\noindent
 Linux 可用发行版包管理器安装 \texttt{ripgrep}。%
-若未安装 \texttt{rg}，可改用系统自带的 \texttt{grep}，例如%
-\texttt{grep Overfull swuthesis-main.log}。
+若未安装 \texttt{rg}，可改用系统自带的 \texttt{grep}。例如%
+\texttt{grep} \texttt{Overfull} \path{swuthesis-main.log}。
 \begin{verbatim}
 rg Overfull swuthesis-main.log
 rg Underfull swuthesis-main.log
@@ -3477,8 +3508,13 @@ arXiv 预印本\cite{taubes2020compactness}、会议论文\cite{vaswani2017atten
 \lstinputlisting[language=Matlab]{codes/equalsumpartition.m}
 
 \chapter{Wolfram 语言代码示例}\label{app:code-wolfram}
-Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；\texttt{listings} 宏包仍以
-\texttt{language=Mathematica} 作为语法高亮标识，并非笔误。
+\begingroup
+\hfuzz=1pt\relax
+Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；%
+\texttt{listings} 宏包仍以%
+\texttt{language=Mathematica}%
+作为语法高亮标识，并非笔误。
+\par\endgroup
 按当前宏包组合，直接按第~\ref{sec:code-inclusion}~节方式引入 \path{.wl} 或笔记本导出代码时，环境配置可能仍需微调。
 一种可行做法是将代码另存为 \path{.txt}，再使用
 \begin{verbatim}
@@ -3845,11 +3881,13 @@ latexmk -pvc -xelatex swuthesis-graduate-main.tex
 \subsection{编译质量检查（含 Overfull/Underfull）}\label{sec:doctor-compile-quality-check}
 研究生论文常包含长表格、公式与双语字段，建议每次完整编译后检查日志。
 命令 \texttt{rg} 为 \textbf{ripgrep}，须单独安装（\TeX{} Live 不自带）；%
-macOS 常用 \texttt{brew install ripgrep}，%
-Windows 可用 \texttt{winget install BurntSushi.ripgrep}，%
+macOS 常用 \texttt{brew install ripgrep}；\par
+\noindent
+Windows 可用 \texttt{winget install BurntSushi.ripgrep}；\par
+\noindent
 Linux 可用发行版包管理器安装。%
-若未安装 \texttt{rg}，可改用 \texttt{grep}，例如%
-\texttt{grep Overfull swuthesis-graduate-main.log} 等。
+若未安装 \texttt{rg}，可改用 \texttt{grep}。例如%
+\texttt{grep} \texttt{Overfull} \path{swuthesis-graduate-main.log} 等。
 \begin{verbatim}
 rg Overfull swuthesis-graduate-main.log
 rg Underfull swuthesis-graduate-main.log
@@ -4360,8 +4398,13 @@ swu2022gradThesisSpecDoc}。%
 \lstinputlisting[language=Matlab]{codes/equalsumpartition.m}
 
 \chapter{Wolfram 语言代码示例}\label{app:code-wolfram}
-Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；\texttt{listings} 宏包仍以
-\texttt{language=Mathematica} 作为语法高亮标识，并非笔误。
+\begingroup
+\hfuzz=1pt\relax
+Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；%
+\texttt{listings} 宏包仍以%
+\texttt{language=Mathematica}%
+作为语法高亮标识，并非笔误。
+\par\endgroup
 按当前宏包组合，直接按第~\ref{sec:doctor-code}~节方式引入 \path{.wl} 或笔记本导出代码时，环境配置可能仍需微调。
 一种可行做法是将代码另存为 \path{.txt}，再使用
 \begin{verbatim}
@@ -4707,12 +4750,15 @@ Structure; model; user surface; object; structural analysis
 \swucvsubsection{一、基本信息}
 \noindent
 \begingroup
+\hbadness=8000
 \setlength{\tabcolsep}{0.55em}%
 \renewcommand{\arraystretch}{1.22}%
 \begin{tabular*}{\linewidth}{%
   @{\extracolsep{\fill}}%
-  >{\bfseries}p{6\ccwd}p{10.5\ccwd}%
-  >{\bfseries}p{4.5\ccwd}p{10.5\ccwd}@{}}%
+  >{\bfseries\raggedright\arraybackslash}p{6\ccwd}%
+  >{\raggedright\arraybackslash}p{10.5\ccwd}%
+  >{\bfseries\raggedright\arraybackslash}p{4.5\ccwd}%
+  >{\raggedright\arraybackslash}p{10.5\ccwd}@{}}%
 \toprule
 姓名 & \swuAuthorText & 性别 & 男（据实填写） \\
 \midrule
@@ -4752,6 +4798,7 @@ Structure; model; user surface; object; structural analysis
 \swucvnote{（按时间倒序书写：含在站博士后、以往工作单位及职务。）}
 \noindent
 \begingroup
+\hbadness=8000
 \setlength{\tabcolsep}{0.35em}%
 \renewcommand{\arraystretch}{1.2}%
 \begin{tabular*}{\linewidth}{%

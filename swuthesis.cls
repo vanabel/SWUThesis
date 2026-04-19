@@ -1031,21 +1031,33 @@ thesis-label-sub-en .code:n = {
 \renewcommand{\contentsname}{\swuCJKStretchText{1.5}{目录}}
 \newcommand{\swuCoverField}[2]{%
   \noindent
+  \begingroup
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
+  \endgroup
   \vspace{0.6em}%
 }
 \newcommand{\swuPostdocTitleCoverField}[2]{%
   \noindent
+  \begingroup
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \makebox[10\ccwd][s]{#1}：%
   \makebox[9\ccwd][c]{\kaishu #2}\par
+  \endgroup
   \vspace{1em}%
 }
 \newcommand{\swu@zh@date@inline}[3]{#1年#2月#3日}
 \newcommand{\swu@graduate@cover@date@single}[2]{%
   \noindent
+  \begingroup
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \makebox[5\ccwd][s]{\bfseries #1}：%
   \underline{\makebox[16\ccwd][c]{\kaishu #2}}\par
+  \endgroup
   \vspace{0.6em}%
 }
 \newcommand{\swuDeclarationSignatureBlock}{%
@@ -1098,10 +1110,16 @@ thesis-label-sub-en .code:n = {
 \newcommand{\swu@graduate@sigline}[1]{%
   \settowidth\@tempdima{#1}%
   \noindent #1\kern0.35em
-  \leaders\hrule height 0.4pt\relax\hskip\dimexpr\linewidth-\@tempdima-0.35em\relax
+  \rule{\dimexpr\linewidth-\@tempdima-0.35em\relax}{0.4pt}%
 }
 \newcommand{\swu@graduate@sigdate}{%
-  \mbox{签名日期：\underline{\hspace{2.5\ccwd}}年\underline{\hspace{2\ccwd}}月\underline{\hspace{2\ccwd}}日}%
+  \noindent 签名日期：\par
+  \nointerlineskip
+  \vspace{0.12\baselineskip}%
+  \noindent
+  \underline{\hspace{2.2\ccwd}}年%
+  \underline{\hspace{1.8\ccwd}}月%
+  \underline{\hspace{1.8\ccwd}}日
 }
 \newcommand{\swuGraduateTwoPartySignatures}{%
   \vspace{\baselineskip}%
@@ -1237,23 +1255,28 @@ thesis-label-sub-en .code:n = {
 \newcommand{\swu@maketitle@graduate@zh}{%
   \begingroup
   \songti
+  \hfuzz=3pt\relax
   \noindent
   \begin{minipage}[t]{0.56\textwidth}
     \vspace{0pt}
     \includegraphics[width=\linewidth,%
       height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
-  \end{minipage}
+  \end{minipage}%
   \begin{minipage}[t]{0.44\textwidth}
     \vspace{0pt}
     \begin{flushright}
     \null\hfill
     {\zihao{4}%
+    \begingroup
+    \hbadness=10000
+    \hfuzz=3pt\relax
     \begin{tabular}{@{}r@{\hspace{0.35em}}l@{}}%
       \makebox[4\ccwd][s]{\songti 单位代码}： & \songti\underline{%
         \makebox[8\ccwd][c]{10635}} \\[0.42\baselineskip]
       \makebox[4\ccwd][s]{\songti 学　　号}： & \ttfamily\underline{%
         \makebox[8\ccwd][c]{\swuStudentIdText}} \\
-    \end{tabular}}%
+    \end{tabular}%
+    \endgroup}%
     \end{flushright}
   \end{minipage}\par
   \begin{center}
@@ -1276,12 +1299,11 @@ thesis-label-sub-en .code:n = {
     \swu@graduate@cover@date@single{答辩日期}{%
       \swu@zh@date@inline%
         {\swuDefenseYearText}{\swuDefenseMonthText}{\swuDefenseDayText}}%
-    \noindent\makebox[5\ccwd][s]{\bfseries 授予单位}：%
-    \underline{\makebox[16\ccwd][c]{\kaishu 西南大学}}\par
-    \vspace{0.6em}%
+    \swuCoverField{授予单位}{西南大学}%
   }
   \vfill
   \begin{center}
+    % 研究生中文封面底部地名行（与独创性声明页 Overfull 无关；后者已通过对 |\swu@graduate@sigdate| 换行修复）。
     {\zihao{3}\youyuan\swuCJKStretchText{1.15}{中国\textbullet 重庆}\par}%
     \vspace{0.55\baselineskip}%
     {\zihao{3}\youyuan \swuDefenseYearText 年 \swuDefenseMonthText 月\par}%
@@ -1295,6 +1317,7 @@ thesis-label-sub-en .code:n = {
   \pdfbookmark[0]{英文题名页}{swu-title-en}%
   \begingroup
   \rmfamily
+  \hfuzz=3pt\relax
   \vspace*{0.4\baselineskip}%
   \begin{center}
     {\bfseries\zihao{2}\MakeUppercase{\swuTitleEnText}\par}%
@@ -1343,6 +1366,8 @@ thesis-label-sub-en .code:n = {
 \newcommand{\swu@maketitle@postdoc@cover}{%
   \begingroup
   \songti
+  \hbadness=10000
+  \hfuzz=3pt\relax
   \noindent
   \begin{minipage}[t]{0.5\textwidth}
     \vspace{\baselineskip}
@@ -1353,7 +1378,7 @@ thesis-label-sub-en .code:n = {
       \makebox[3\ccwd][s]{U D C}\underline{%
         \makebox[7.5\ccwd][c]{\swuPostdocUDCText}}\par
     }
-  \end{minipage}
+  \end{minipage}%
   \begin{minipage}[t]{0.5\textwidth}
     \vspace{\baselineskip}
     \begin{flushright}
@@ -1507,7 +1532,7 @@ thesis-label-sub-en .code:n = {
     \vspace{0pt}
     \includegraphics[width=\linewidth,%
       height=3.5cm,keepaspectratio]{figures/swu-badge.pdf}%
-  \end{minipage}
+  \end{minipage}%
   \begin{minipage}[t]{0.44\textwidth}
     \vspace{0pt}
     \raggedleft{\zihao{4}\songti 单位代码：10635}
@@ -1572,7 +1597,13 @@ thesis-label-sub-en .code:n = {
 \fi
 \clearpage
 }
-\renewcommand{\maketitle}{\maketitlepage}
+\let\swu@maketitlepage\maketitlepage
+\renewcommand{\maketitle}{%
+  \begingroup
+  \hfuzz=5pt\relax
+  \swu@maketitlepage
+  \endgroup
+}
 \newcommand{\swu@makeabstract@postdoc}{%
 \phantomsection
 \addcontentsline{toc}{chapter}{摘要}%

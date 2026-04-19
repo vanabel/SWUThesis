@@ -317,11 +317,13 @@ latexmk -pvc -xelatex swuthesis-graduate-main.tex
 \subsection{编译质量检查（含 Overfull/Underfull）}\label{sec:doctor-compile-quality-check}
 研究生论文常包含长表格、公式与双语字段，建议每次完整编译后检查日志。
 命令 \texttt{rg} 为 \textbf{ripgrep}，须单独安装（\TeX{} Live 不自带）；%
-macOS 常用 \texttt{brew install ripgrep}，%
-Windows 可用 \texttt{winget install BurntSushi.ripgrep}，%
+macOS 常用 \texttt{brew install ripgrep}；\par
+\noindent
+Windows 可用 \texttt{winget install BurntSushi.ripgrep}；\par
+\noindent
 Linux 可用发行版包管理器安装。%
-若未安装 \texttt{rg}，可改用 \texttt{grep}，例如%
-\texttt{grep Overfull swuthesis-graduate-main.log} 等。
+若未安装 \texttt{rg}，可改用 \texttt{grep}。例如%
+\texttt{grep} \texttt{Overfull} \path{swuthesis-graduate-main.log} 等。
 \begin{verbatim}
 rg Overfull swuthesis-graduate-main.log
 rg Underfull swuthesis-graduate-main.log
@@ -832,8 +834,13 @@ swu2022gradThesisSpecDoc}。%
 \lstinputlisting[language=Matlab]{codes/equalsumpartition.m}
 
 \chapter{Wolfram 语言代码示例}\label{app:code-wolfram}
-Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；\texttt{listings} 宏包仍以
-\texttt{language=Mathematica} 作为语法高亮标识，并非笔误。
+\begingroup
+\hfuzz=1pt\relax
+Wolfram 语言（Wolfram Language）为 Mathematica 所采用的标准名称；%
+\texttt{listings} 宏包仍以%
+\texttt{language=Mathematica}%
+作为语法高亮标识，并非笔误。
+\par\endgroup
 按当前宏包组合，直接按第~\ref{sec:doctor-code}~节方式引入 \path{.wl} 或笔记本导出代码时，环境配置可能仍需微调。
 一种可行做法是将代码另存为 \path{.txt}，再使用
 \begin{verbatim}
