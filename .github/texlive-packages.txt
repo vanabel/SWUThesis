@@ -21,6 +21,7 @@ setspace
 enumitem
 fancyhdr
 listings
+upquote
 caption
 booktabs
 tocloft
