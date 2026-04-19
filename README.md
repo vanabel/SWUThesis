@@ -1,15 +1,36 @@
+<div align="center">
+
 # swuthesis
 
-西南大学博士后 / 博士 / 硕士 / 本科毕业论文 **LaTeX 文档类** `swuthesis`：源码与手册集中在 `swuthesis.dtx`，由 `swuthesis.ins` 经 DocStrip 抽取 `swuthesis.cls` 与各示例主文件。
+**西南大学** 博士后 / 博士 / 硕士 / 本科毕业论文 **LaTeX 文档类**  
+源码与手册集中在 `swuthesis.dtx`，由 `swuthesis.ins`（DocStrip）抽取 `swuthesis.cls` 与各示例主文件。
 
-**官方仓库（请以此为准下载与提 issue）**：<https://github.com/vanabel/swuthesis>  
-版本号见 `swuthesis.cls` 中 `\ProvidesClass{swuthesis}[...]`，或运行 `make doc` 查看 `swuthesis-doc.pdf` 扉页。请勿只依赖他人转发的压缩包，以免版本混杂、难以对照文档排错。
+[![GitHub stars](https://img.shields.io/github/stars/vanabel/SWUThesis?style=flat-square&logo=github&label=Stars)](https://github.com/vanabel/SWUThesis/stargazers)
+[![License](https://img.shields.io/badge/license-SWUThesis-5c4ee5?style=flat-square)](LICENSE)
+[![XeLaTeX](https://img.shields.io/badge/engine-XeLaTeX-008080?style=flat-square&logo=latex&logoColor=white)](https://tug.org/xetex/)
+[![Changelog](https://img.shields.io/badge/changelog-CHANGELOG-6e7681?style=flat-square)](CHANGELOG.md)
 
-**变更记录**：[CHANGELOG.md](CHANGELOG.md)（与手册末尾「变更记录」及版本号对照）。
+[**官方仓库**](https://github.com/vanabel/SWUThesis) · [**变更记录**](CHANGELOG.md) · 完整手册：运行 `make doc` 得到 `swuthesis-doc.pdf`（见下文「发布级手册与文档」）
+
+<br/>
+
+[![Star History Chart](https://api.star-history.com/svg?repos=vanabel/SWUThesis&type=Date)](https://star-history.com/#vanabel/SWUThesis&Date)
+
+<sub>星标趋势由 <a href="https://star-history.com">Star History</a> 提供；点击图片可打开交互页面。</sub>
+
+</div>
 
 ---
 
-## 30 秒快速上手（最短命令）
+## 概览
+
+**请以此官方仓库为准下载与提 issue**：<https://github.com/vanabel/SWUThesis>  
+
+版本号见 `swuthesis.cls` 中 `\ProvidesClass{swuthesis}[...]`，或运行 `make doc` 查看 `swuthesis-doc.pdf` 扉页。请勿只依赖他人转发的压缩包，以免版本混杂、难以对照文档排错。
+
+---
+
+## 30 秒快速上手
 
 在仓库根目录执行：
 
@@ -18,9 +39,12 @@ latex swuthesis.ins
 make main
 ```
 
-- 第一步生成 `swuthesis.cls` 与示例 `swuthesis-main.tex` 等。
-- 第二步用 **XeLaTeX + biber** 完整编译本科示例（与 `Makefile` 中 `main` 目标一致）。
-- **`make` 需单独安装**（不随 TeX 发行版提供）：macOS 可装 Xcode Command Line Tools（`xcode-select --install`）；Linux 用包管理器安装 `make` 或 `build-essential`；Windows 可用 MSYS2、Git Bash 环境或 WSL。未安装时可对照仓库内 `Makefile` 在终端手动执行相同命令。
+| 步骤 | 说明 |
+|------|------|
+| `latex swuthesis.ins` | 生成 `swuthesis.cls` 与示例 `swuthesis-main.tex` 等 |
+| `make main` | 用 **XeLaTeX + biber** 完整编译本科示例（与 `Makefile` 的 `main` 目标一致） |
+
+**`make` 需单独安装**（不随 TeX 发行版提供）：macOS 可装 Xcode Command Line Tools（`xcode-select --install`）；Linux 用包管理器安装 `make` 或 `build-essential`；Windows 可用 MSYS2、Git Bash 或 WSL。未安装时可对照仓库内 `Makefile` 在终端手动执行相同命令。
 
 研究生、博士后示例：
 
@@ -37,12 +61,16 @@ make doc
 
 产物为 `swuthesis-doc.pdf`。
 
-可复制 **`\swusetup` 示例片段**（在编辑器中打开后全选复制，粘贴到导言区；勿单独编译该文件）：
+### `\swusetup` 示例片段（复制到导言区）
 
-- [`examples/swusetup-bachelor.tex`](examples/swusetup-bachelor.tex) — 本科（`bachelor`）最小键集  
-- [`examples/swusetup-master.tex`](examples/swusetup-master.tex) — 硕士（`master`）  
-- [`examples/swusetup-doctor.tex`](examples/swusetup-doctor.tex) — 博士（`doctor`）  
-- [`examples/swusetup-postdoc.tex`](examples/swusetup-postdoc.tex) — 博士后（`postdoc`）
+在编辑器中打开后**全选复制**，粘贴到导言区；**勿单独编译**该文件：
+
+| 文件 | 模式 |
+|------|------|
+| [`examples/swusetup-bachelor.tex`](examples/swusetup-bachelor.tex) | 本科 `bachelor` |
+| [`examples/swusetup-master.tex`](examples/swusetup-master.tex) | 硕士 `master` |
+| [`examples/swusetup-doctor.tex`](examples/swusetup-doctor.tex) | 博士 `doctor` |
+| [`examples/swusetup-postdoc.tex`](examples/swusetup-postdoc.tex) | 博士后 `postdoc` |
 
 ---
 
@@ -93,7 +121,7 @@ make doc
    多为当前西文字体不含某字符（例如特殊罗马数字等）。应替换字符、换字体或在局部改用兼容写法。
 
 8. **手册与示例不同步**  
-   接口与正文说明以 **`swuthesis-doc.pdf`（`make doc`）** 与 **`swuthesis.dtx` 注释**为准；`README` 只保留最短路径与排错要点。
+   接口与正文说明以 **`swuthesis-doc.pdf`（`make doc`）** 与 **`swuthesis.dtx` 注释**为准；本 README 只保留最短路径与排错要点。
 
 ---
 
@@ -118,7 +146,7 @@ make doc
 
 ---
 
-## 发布级手册（路线图）
+## 发布级手册与文档
 
 若将手册做成「发布级」结构，建议在 **`swuthesis.dtx` 的手册部分**（非本 README）中保持：
 
@@ -132,11 +160,13 @@ make doc
 
 ## 仓库主要文件
 
-- `LICENSE` — 使用、二次开发与机构采纳相关权利说明（SWUThesis License）
-- `swuthesis.dtx` — 类实现、示例与手册源码
-- `swuthesis.ins` — DocStrip 控制文件（生成 `swuthesis.cls`、`swuthesis-doc-patch.sty`、各示例主文件等）
-- `swuthesis-doc-patch.sty` — 手册 **driver** 专用补丁（由 `swuthesis.ins` 抽取；勿手改）
-- `Makefile` — 抽取与编译命令封装
+| 文件 | 说明 |
+|------|------|
+| `LICENSE` | 使用、二次开发与机构采纳相关权利说明（SWUThesis License） |
+| `swuthesis.dtx` | 类实现、示例与手册源码 |
+| `swuthesis.ins` | DocStrip 控制文件（生成 `swuthesis.cls`、`swuthesis-doc-patch.sty`、各示例主文件等） |
+| `swuthesis-doc-patch.sty` | 手册 **driver** 专用补丁（由 `swuthesis.ins` 抽取；勿手改） |
+| `Makefile` | 抽取与编译命令封装 |
 
 ---
 
