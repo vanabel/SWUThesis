@@ -1,0 +1,87 @@
+# 在云端用「scheme-basic + tlmgr 补包」完整编译，并打包分发。
+# 触发：push 到 main；推送 v* 标签（同时上传 Release 资源）。
+
+name: Build distribution
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-dist-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system fonts (Times New Roman + CJK)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fontconfig
+          echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+          sudo apt-get install -y ttf-mscorefonts-installer fonts-noto-cjk
+
+      # teatimeguest/setup-texlive-action 已删除，使用 TeX-Live 官方替代：
+      # https://github.com/TeX-Live/setup-texlive-action
+      - name: Install TeX Live (scheme-basic + package-file)
+        uses: TeX-Live/setup-texlive-action@v4
+        with:
+          version: 2025
+          package-file: .github/texlive-packages.txt
+
+      - name: Build (make cls && make all)
+        run: |
+          set -euo pipefail
+          make cls
+          make all
+
+      - name: Create ZIP archive
+        run: |
+          set -euo pipefail
+          zip -r swuthesis-dist.zip \
+            swuthesis.cls \
+            swuthesis-doc-patch.sty \
+            swuthesis.dtx \
+            swuthesis.ins \
+            swuthesis-main.tex \
+            swuthesis-graduate-main.tex \
+            swuthesis-postdoc-main.tex \
+            swuthesis-main.bib \
+            swuthesis-graduate-main.bib \
+            swuthesis-postdoc-main.bib \
+            examples \
+            codes \
+            Makefile \
+            README.md \
+            LICENSE \
+            CHANGELOG.md \
+            .latexmkrc \
+            swuthesis-main.pdf \
+            swuthesis-graduate-main.pdf \
+            swuthesis-postdoc-main.pdf \
+            swuthesis-doc.pdf
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: swuthesis-dist-${{ github.sha }}
+          path: swuthesis-dist.zip
+          if-no-files-found: error
+
+      - name: Upload release asset (tags only)
+        if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: swuthesis-dist.zip
+          generate_release_notes: true

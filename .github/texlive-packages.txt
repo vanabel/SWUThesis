@@ -1,0 +1,36 @@
+# TeX Live 包列表（供 setup-texlive-action 的 package-file；# 为注释）
+# 先装最小 scheme，再列出本项目额外依赖（tlmgr 不自动解析传递依赖，缺包时再往这里补）
+scheme-basic
+latex-tools
+xetex
+biber
+ctex
+biblatex
+biblatex-gb7714
+l3keys2e
+kvoptions
+xparse
+etoolbox
+amsthm
+aliascnt
+geometry
+setspace
+enumitem
+fancyhdr
+listings
+caption
+booktabs
+tocloft
+hologo
+xurl
+bookmark
+cleveref
+fvextra
+microtype
+marginfix
+marginnote
+hypdoc
+pgf
+siunitx
+subcaption
+mwe
