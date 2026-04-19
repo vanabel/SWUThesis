@@ -39,7 +39,10 @@ make doc
 
 可复制 **`\swusetup` 示例片段**（在编辑器中打开后全选复制，粘贴到导言区；勿单独编译该文件）：
 
-- [`examples/swusetup-bachelor.tex`](examples/swusetup-bachelor.tex) — 本科模式最小键集
+- [`examples/swusetup-bachelor.tex`](examples/swusetup-bachelor.tex) — 本科（`bachelor`）最小键集  
+- [`examples/swusetup-master.tex`](examples/swusetup-master.tex) — 硕士（`master`）  
+- [`examples/swusetup-doctor.tex`](examples/swusetup-doctor.tex) — 博士（`doctor`）  
+- [`examples/swusetup-postdoc.tex`](examples/swusetup-postdoc.tex) — 博士后（`postdoc`）
 
 ---
 

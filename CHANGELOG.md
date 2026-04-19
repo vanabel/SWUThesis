@@ -9,7 +9,7 @@
 ### Added
 
 - 根目录本文件（`CHANGELOG.md`），便于在 GitHub 上直接查看历史。
-- `examples/swusetup-bachelor.tex`：本科模式 `\swusetup{...}` 最小示例片段，便于在编辑器中整段复制。
+- `examples/swusetup-bachelor.tex` 及 `swusetup-master.tex`、`swusetup-doctor.tex`、`swusetup-postdoc.tex`：各文档类选项下 `\swusetup{...}` 最小示例片段，便于在编辑器中整段复制。
 - `swuthesis-doc-patch.sty`（手册 driver 专用）：`\DescribeOpt`、`\DescribeEnvs`、旁注与 `marginnote`、`theglossary` 单栏等。须单独加载，勿内联进 `.dtx` 的 `driver`：`\DocInput` 二次读入时 `\iffalse` 跳过分支仍会扫描源码，内联补丁中的 `#`、`\@…` 等与 preamble 词法不一致易触发隐蔽错误。
 - `\ProvidesFile{swuthesis.dtx}[...]`：与 `\ProvidesClass` 同步的版本信息，供 `\GetFileInfo` 与手册扉页 `\date{\filedate\quad\fileversion}`。
 
