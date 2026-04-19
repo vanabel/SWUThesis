@@ -67,6 +67,7 @@
 \RequirePackage{booktabs}
 \RequirePackage{array}
 \RequirePackage{listings}
+\RequirePackage{csquotes}% |biblatex| 手册推荐先于 |biblatex| 加载（引号与多语等）
 \RequirePackage[
   backend=biber,
   style=gb7714-2025,
