@@ -16,8 +16,8 @@ biblatex
 # 提供 style=gb7714-2025（.bbx/.cbx）；CTAN/TL 包名含 2015，勿写成 biblatex-gb7714
 biblatex-gb7714-2015
 csquotes
-lineno
-# 以上二者亦在 build-dist.yml 的 tlmgr 兜底步骤显式安装，避免 CI 缓存或解析遗漏
+# lineno：勿在此用 tlmgr 安装——historic 镜像上 lineno.tar.xz 常下载失败；改用语
+# 仓库内 texmf-local/tex/latex/lineno/（见 texmf-local/README.md），CI 设 TEXMFHOME。
 xstring
 l3keys2e
 kvoptions

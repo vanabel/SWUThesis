@@ -93,6 +93,8 @@ make doc
 
 若你确实需要**固定缓存键 + 每次仅 `tlmgr` 补差**，需要自管 `install-tl` / `tlmgr` 与 `actions/cache`（`cache: false` 关掉本 action 自带缓存），或改用预装依赖的 **Docker 镜像**；详见 workflow 内注释。
 
+**`lineno`（手册）**：GitHub Actions 的 historic TeX Live 镜像上，`tlmgr install lineno` 可能因 **`lineno.tar.xz` 下载失败** 无法装包。仓库内提供 **`texmf-local/tex/latex/lineno/`**（与 [CTAN lineno](https://ctan.org/pkg/lineno) 一致），CI 通过 **`TEXMFHOME`** 使用；本地完整 TeX Live 一般已含 `lineno`，无需额外设置。
+
 ### `\swusetup` 示例片段（复制到导言区）
 
 在编辑器中打开后**全选复制**，粘贴到导言区；**勿单独编译**该文件：

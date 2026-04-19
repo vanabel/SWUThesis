@@ -16,7 +16,7 @@
 
 ### Changed
 
-- GitHub Actions：`build-dist.yml` 在安装 TeX Live 后增加 **`tlmgr install lineno csquotes`**（勿与 `package-file` 并列 `packages:`，以免实现只装少量包）；缓解仍报 `lineno.sty` not found（旧缓存或解析遗漏）。
+- **`texmf-local/tex/latex/lineno/`**：纳入 [lineno](https://ctan.org/pkg/lineno) 宏包 `.sty`（LPPL），因 CI 上 `tlmgr install lineno` 常因 **historic 镜像 `lineno.tar.xz` 下载失败** 无法安装；`build-dist.yml` 设置 **`TEXMFHOME=$GITHUB_WORKSPACE/texmf-local`** 并 **`mktexlsr`**，已从 `texlive-packages.txt` **移除**对 `lineno` 的 tlmgr 安装以免装包步骤失败。
 - `.github/workflows/build-dist.yml` 与 README：说明 `setup-texlive-action` **整树缓存**、键随完整包列表变化，**不支持**官方「分阶段 / 仅增量下新包」。
 - 类文件在载入 `biblatex` 之前增加 **`\RequirePackage{csquotes}`**（与 `biblatex` 推荐顺序一致；CI 包列表已含 `csquotes`）。
 - **`figures/`**：纳入版本库（`.gitignore` 对 `*.pdf` 增加 `figures/**/*.pdf` 例外），含封面用 `swu-badge.pdf`、`swu-name-stxingkai.pdf`（当前为可编译占位页，可自行替换为正式校徽/校名稿）；并跟踪 `swu-logo-source.pdf`。GitHub Actions 分发 ZIP 同步打包 `figures/`。

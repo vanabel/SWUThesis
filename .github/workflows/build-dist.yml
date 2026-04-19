@@ -21,6 +21,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # 优先使用仓库内 texmf-local（含 vendored lineno），不依赖 tlmgr 从 historic 镜像拉取 lineno
+    env:
+      TEXMFHOME: ${{ github.workspace }}/texmf-local
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,13 +52,10 @@ jobs:
           version: 2025
           package-file: .github/texlive-packages.txt
 
-      # 勿在 with.packages 与 package-file 并列（实现上可能只取其一，导致仅装少量包）。
-      # 此处对易在缓存/解析间隙缺失的包再执行 tlmgr；已安装时几乎瞬时跳过。
-      - name: TeX Live — ensure lineno + csquotes
+      - name: Register vendored lineno (texmf-local + mktexlsr)
         run: |
           set -euo pipefail
-          tlmgr --version
-          tlmgr install lineno csquotes
+          mktexlsr "$TEXMFHOME"
 
       - name: Build (make cls && make all)
         run: |
@@ -79,6 +79,7 @@ jobs:
             swuthesis-postdoc-main.bib \
             examples \
             figures \
+            texmf-local \
             codes \
             Makefile \
             README.md \
