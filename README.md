@@ -67,6 +67,8 @@ make doc
 
 建议将在线兼容改动放在独立分支（例如 `online-texbrain`），避免与正式版（本地 XeLaTeX + biber）混淆。
 
+**分支提示**：`online-texbrain` **不保证**与 `main` 行为一致，**仅供在线临时编译**；请勿误合并到默认分支。
+
 - 在线环境通常不保证 `Times New Roman` 可用，模板已改为「存在则启用，不存在则跳过」。
 - BusyTeX 不支持 `biber`，在线分支改为 `backend=bibtex`。
 - 仅在 BusyTeX 运行时，将 `\cref/\Cref` 降级到 `\autoref`，本地引擎保持原生 `cleveref` 行为。
