@@ -63,6 +63,17 @@ make doc
 
 产物为 `swuthesis-doc.pdf`。
 
+### 在线编译（TeXbrain / BusyTeX）临时方案
+
+建议将在线兼容改动放在独立分支（例如 `online-texbrain`），避免与正式版（本地 XeLaTeX + biber）混淆。
+
+- 在线环境通常不保证 `Times New Roman` 可用，模板已改为「存在则启用，不存在则跳过」。
+- BusyTeX 不支持 `biber`，在线分支改为 `backend=bibtex`。
+- 仅在 BusyTeX 运行时，将 `\cref/\Cref` 降级到 `\autoref`，本地引擎保持原生 `cleveref` 行为。
+- 如需幼圆字体，**请将 `YouYuan.ttf` 上传到项目根目录（与主 `.tex` 文件同级）**，模板会自动将 `\youyuan` 指向该字体。
+
+在线版仅用于临时写作与应急预览；送审、归档与最终标准稿请在本地标准环境重新完整编译。
+
 ### 中文与 `fontset`（跨平台）
 
 示例主文件**不写** `\documentclass` 的 `fontset` 时，由 **`ctex` 自动按环境选择**：Windows 为 `windows`，**其它环境（含 Linux、GitHub Actions）为 Fandol**（随 TeX Live 的 `fandol` 包）。在 **macOS** 上，`swuthesis` 类会在载入 `ctex` 前检测系统字体 `Menlo.ttc`（与 `ctex` 一致），并**显式传入 `fontset=macnew`**，使 `\songti`/`\kaishu` 与 `\bfseries` 的组合与手动写 `fontset=macnew` 一致；若仅依赖 `ctex` 的 `fontset=mac` 间接载入，部分环境下粗体联动可能异常。若写死 `fontset=macnew`，在无「华文宋体」等字体的机器上会报错。需要其它方案时可显式指定，例如 `fontset=windows`、`fontset=founder`（需本机已装方正字库）。

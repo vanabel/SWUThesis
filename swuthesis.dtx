@@ -641,7 +641,9 @@
   \PassOptionsToPackage{fontset=macnew}{ctex}%
 }{}%
 \RequirePackage[heading=true,zihao=-4]{ctex}
-\setmainfont{Times New Roman}
+\IfFontExistsTF{Times New Roman}{%
+  \setmainfont{Times New Roman}%
+}{}%
 % |ctex| 的 |fandol|（Linux 默认）仅定义 \songti/\heiti/\fangsong/\kaishu，未提供
 % |zhli|/|zhyou|，故无 \lishu/\youyuan。Windows/macnew/founder 等字库则通常有。
 % 封面等处使用 \youyuan；缺省时以楷体、黑体作近似，避免「未定义控制序列」。
@@ -650,6 +652,11 @@
 }{}%
 \@ifundefined{youyuan}{%
   \NewDocumentCommand \youyuan { } { \heiti }%
+}{}%
+% 在线编译若提供与主文件同目录的 |YouYuan.ttf|，则将 |\youyuan| 显式指向该字体。
+\IfFileExists{YouYuan.ttf}{%
+  \setCJKfamilyfont{yy}{YouYuan.ttf}%
+  \RenewDocumentCommand \youyuan { } { \CJKfamily{yy} }%
 }{}%
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{amsthm}
@@ -674,7 +681,7 @@
 % 若须著者-出版年制，可改为 |style=gb7714-2025ay|，
 % 并去掉下文 |\let\cite\supercite|。
 \RequirePackage[
-  backend=biber,
+  backend=bibtex,
   style=gb7714-2025,
   sorting=none,
   doi=false,
@@ -872,6 +879,12 @@
   \@crefdefineallformats{section}%
   \@crefdefineallformats{subsection}%
   \@crefdefineallformats{subsubsection}%
+  % BusyTeX compatibility: only downgrade in BusyTeX runs.
+  % Local TeX engines keep native cleveref behavior.
+  \ifdefined\BUSYTEX
+    \let\cref\autoref
+    \let\Cref\autoref
+  \fi
 }
 % 规范：图、表题用五号黑体（本科模板沿用原宋体五号）。
 \ifswu@gradthesis

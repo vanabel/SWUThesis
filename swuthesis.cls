@@ -42,12 +42,18 @@
   \PassOptionsToPackage{fontset=macnew}{ctex}%
 }{}%
 \RequirePackage[heading=true,zihao=-4]{ctex}
-\setmainfont{Times New Roman}
+\IfFontExistsTF{Times New Roman}{%
+  \setmainfont{Times New Roman}%
+}{}%
 \@ifundefined{lishu}{%
   \NewDocumentCommand \lishu { } { \kaishu }%
 }{}%
 \@ifundefined{youyuan}{%
   \NewDocumentCommand \youyuan { } { \heiti }%
+}{}%
+\IfFileExists{YouYuan.ttf}{%
+  \setCJKfamilyfont{yy}{YouYuan.ttf}%
+  \RenewDocumentCommand \youyuan { } { \CJKfamily{yy} }%
 }{}%
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{amsthm}
@@ -69,7 +75,7 @@
 \RequirePackage{listings}
 \RequirePackage{csquotes}% |biblatex| 手册推荐先于 |biblatex| 加载（引号与多语等）
 \RequirePackage[
-  backend=biber,
+  backend=bibtex,
   style=gb7714-2025,
   sorting=none,
   doi=false,
@@ -247,6 +253,12 @@
   \@crefdefineallformats{section}%
   \@crefdefineallformats{subsection}%
   \@crefdefineallformats{subsubsection}%
+  % BusyTeX compatibility: only downgrade in BusyTeX runs.
+  % Local TeX engines keep native cleveref behavior.
+  \ifdefined\BUSYTEX
+    \let\cref\autoref
+    \let\Cref\autoref
+  \fi
 }
 \ifswu@gradthesis
 \DeclareCaptionFont{swucaptionfont}{\heiti\zihao{5}}
