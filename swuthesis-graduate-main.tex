@@ -25,8 +25,10 @@
 %% 印刷用纸颜色（规范附件）：博士浅灰；全日制硕士自科浅绿/社科浅黄；%
 %% 高校教师与同等学力硕士浅蓝；专业学位博士见附件说明%
 %% （印制表格上「打印时此行取消」按学校通知）。本 PDF 不设封面底色。
-%% 编译前请在目录 figures/ 下准备 swu-badge.pdf、swu-name-stxingkai.pdf；
-%% 若有英文/通用横排校名 swu-name.pdf，置于同目录（可选，类文件会自动叠排）。
+%% 本仓库已在目录 |figures/| 中跟踪 |swu-badge.pdf|、|swu-name-stxingkai.pdf| 等封面资源；
+%% 若你使用精简克隆/在线编译环境未拉取二进制文件，请将这些 |.pdf| 放到工程根目录下的 |figures/| 中
+%% （与类文件里 |\includegraphics{figures/...}| 的路径一致）。
+%% 若有英文/通用横排校名 |swu-name.pdf|，置于同目录（可选，类文件会自动叠排）。
 %%
 \begin{filecontents*}[overwrite]{swuthesis-graduate-main.bib}
 @standard{gbt7714,
@@ -237,16 +239,16 @@
 西南大学；\swuThesisTierZh 学位论文；\LaTeX；模板示例；排版
 \end{cnkeywords}
 \begin{enabstract}
-This document is a \swuThesisEnDocRole{} example for Southwest University,%
-parallel in scope to the undergraduate \texttt{swuthesis-main.tex}.%
-It demonstrates the graduate cover and English title page, bilingual abstract,%
-chapter organization, figures and subfigures,%
-three-line and long tables, numbered equations and cross-references,%
-theorem-like environments, bibliography formatting, acknowledgements (\texttt{ack}),%
-and publications during the degree.%
-Like \texttt{swuthesis-main.tex}, the appendix includes%
-the full undergraduate thesis specification text and%
-multi-language \texttt{listings} examples for regression testing.%
+This document is a \swuThesisEnDocRole{} example for Southwest University, %
+parallel in scope to the undergraduate \texttt{swuthesis-main.tex}. %
+It demonstrates the graduate cover and English title page, bilingual abstract, %
+chapter organization, figures and subfigures, %
+three-line and long tables, numbered equations and cross-references, %
+theorem-like environments, bibliography formatting, acknowledgements (\texttt{ack}), %
+and publications during the degree. %
+Like \texttt{swuthesis-main.tex}, the appendix includes %
+the full undergraduate thesis specification text and %
+multi-language \texttt{listings} examples for regression testing. %
 Formal requirements follow the university's doctoral and master's thesis specification;%
 this file focuses on typesetting and the tool chain.
 \end{enabstract}

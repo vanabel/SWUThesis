@@ -1689,7 +1689,7 @@ thesis-label-sub-en .code:n = {
   \vspace{\baselineskip}
   {\rmfamily\zihao{5}\swuAuthorEnText\par}
   \vspace{0.5\baselineskip}
-  {\rmfamily\zihao{-5}\swuCollegeEnText, Southwest University,%
+  {\rmfamily\zihao{-5}\swuCollegeEnText, Southwest University, %
     Chongqing 400715, PR China\par}
 \end{center}
 \vspace{\baselineskip}
