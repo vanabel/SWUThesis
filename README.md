@@ -70,6 +70,7 @@ make doc
 - 在线环境通常不保证 `Times New Roman` 可用，模板已改为「存在则启用，不存在则跳过」。
 - BusyTeX 不支持 `biber`，在线分支改为 `backend=bibtex`。
 - 仅在 BusyTeX 运行时，将 `\cref/\Cref` 降级到 `\autoref`，本地引擎保持原生 `cleveref` 行为。
+- 在线环境通常**未预装** `biblatex` 的 `gb7714-2025` 样式；本仓库已在**项目根目录**附带 `gb7714-2025.bbx` 与 `gb7714-2025.cbx`（来源：[hushidong/biblatex-gb7714-2025](https://github.com/hushidong/biblatex-gb7714-2025)），以便 TeXbrain 等 WASM 编译器能直接解析 `style=gb7714-2025`。
 - 如需幼圆字体，**请将 `YouYuan.ttf` 上传到项目根目录（与主 `.tex` 文件同级）**，模板会自动将 `\youyuan` 指向该字体。
 
 在线版仅用于临时写作与应急预览；送审、归档与最终标准稿请在本地标准环境重新完整编译。
