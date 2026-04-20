@@ -26,6 +26,11 @@
 *.pdf
 !figures/
 !figures/**/*.pdf
+# 可选：将示例/手册预编译 PDF 纳入版本库，便于「仅克隆」即可获得成品（需本地 make all 后提交）
+!swuthesis-main.pdf
+!swuthesis-graduate-main.pdf
+!swuthesis-postdoc-main.pdf
+!swuthesis-doc.pdf
 swuthesis-main.bib
 swuthesis-graduate-main.bib
 swuthesis-postdoc-main.bib

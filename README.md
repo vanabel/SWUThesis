@@ -28,6 +28,8 @@
 
 版本号见 `swuthesis.cls` 中 `\ProvidesClass{swuthesis}[...]`，或运行 `make doc` 查看 `swuthesis-doc.pdf` 扉页。请勿只依赖他人转发的压缩包，以免版本混杂、难以对照文档排错。
 
+**预编译 PDF 从哪来**：**GitHub Releases**（或 Actions 产物）里的 **`swuthesis-dist.zip`** 已包含根目录四个示例/手册 PDF（与 CI 中 `make all` 一致）。若仓库里也跟踪了这些 PDF（见 `.gitignore` 例外），**克隆即可**带上成品；否则克隆后需本地执行 `make main` / `make all` / `make doc` 自行编译。
+
 ---
 
 ## 30 秒快速上手

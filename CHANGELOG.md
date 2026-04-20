@@ -16,6 +16,7 @@
 
 ### Changed
 
+- `.gitignore`：对根目录四个预编译 PDF（`swuthesis-*-main.pdf`、`swuthesis-doc.pdf`）增加 **`!` 例外**，便于按需纳入版本库；未提交文件前克隆仍不含 PDF，请用 **Release 的 `swuthesis-dist.zip`** 或本地编译。
 - **`texmf-local/tex/latex/lineno/`**：纳入 [lineno](https://ctan.org/pkg/lineno) 宏包 `.sty`（LPPL），因 CI 上 `tlmgr install lineno` 常因 **historic 镜像 `lineno.tar.xz` 下载失败** 无法安装；`build-dist.yml` 设置 **`TEXMFHOME=$GITHUB_WORKSPACE/texmf-local`** 并 **`mktexlsr`**，已从 `texlive-packages.txt` **移除**对 `lineno` 的 tlmgr 安装以免装包步骤失败。
 - `.github/workflows/build-dist.yml` 与 README：说明 `setup-texlive-action` **整树缓存**、键随完整包列表变化，**不支持**官方「分阶段 / 仅增量下新包」。
 - 类文件在载入 `biblatex` 之前增加 **`\RequirePackage{csquotes}`**（与 `biblatex` 推荐顺序一致；CI 包列表已含 `csquotes`）。
