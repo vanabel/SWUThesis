@@ -616,6 +616,8 @@
 \swu@twosidefalse
 \DeclareVoidOption{oneside}{\swu@twosidefalse}
 \DeclareVoidOption{twoside}{\swu@twosidetrue}
+% Forward |\documentclass[...,punct=banjiao]| to ctex (kvoptions key=value form).
+\DeclareStringOption{punct}
 \ProcessKeyvalOptions*
 \ifswu@twoside
   \LoadClass[12pt,a4paper,twoside]{book}
@@ -640,6 +642,12 @@
 \IfFileExists{/System/Library/Fonts/Menlo.ttc}{%
   \PassOptionsToPackage{fontset=macnew}{ctex}%
 }{}%
+% Example mains pass |punct=banjiao|; forward before loading ctex.
+\ifx\swu@punct\@empty
+\else
+  \edef\swu@punct@opt{punct=\swu@punct}%
+  \expandafter\PassOptionsToPackage\expandafter{\swu@punct@opt}{ctex}%
+\fi
 \RequirePackage[heading=true,zihao=-4]{ctex}
 \IfFontExistsTF{Times New Roman}{%
   \setmainfont{Times New Roman}%
@@ -864,7 +872,8 @@
   \Crefname{subsubsection}{}{}%
   \creflabelformat{subsubsection}{第#2#1#3目}%
   \crefrangelabelformat{subsubsection}{第#3#1#4目至第#5#2#6目}%
-  \hypersetup{pdflang=zh-CN}%
+  % Do not |\hypersetup{pdflang=...}| here: ctex/hyperref already set it for Chinese,
+  % and a second set triggers “Option `pdflang' has already been used”.
   \def\chapterautorefname{章}%
   \def\sectionautorefname{节}%
   \def\subsectionautorefname{小节}%
@@ -3926,7 +3935,7 @@ rg Overfull swuthesis-graduate-main.log
 rg Underfull swuthesis-graduate-main.log
 rg "Missing character" swuthesis-graduate-main.log
 \end{verbatim}
-处理原则与 \cref{sec:compile-quality-check} 一致：优先修正 \texttt{Overfull} 与%
+处理原则与 \cref{sec:doctor-compile-quality-check} 一致：优先修正 \texttt{Overfull} 与%
 \texttt{Missing character}，%
 对 \texttt{Underfull} 结合版式位置与可读性判断。若需汇总检查全部示例，可在 \texttt{make all} 后执行：
 \begin{verbatim}

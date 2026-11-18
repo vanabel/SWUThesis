@@ -22,6 +22,7 @@
 \swu@twosidefalse
 \DeclareVoidOption{oneside}{\swu@twosidefalse}
 \DeclareVoidOption{twoside}{\swu@twosidetrue}
+\DeclareStringOption{punct}
 \ProcessKeyvalOptions*
 \ifswu@twoside
   \LoadClass[12pt,a4paper,twoside]{book}
@@ -41,6 +42,11 @@
 \IfFileExists{/System/Library/Fonts/Menlo.ttc}{%
   \PassOptionsToPackage{fontset=macnew}{ctex}%
 }{}%
+\ifx\swu@punct\@empty
+\else
+  \edef\swu@punct@opt{punct=\swu@punct}%
+  \expandafter\PassOptionsToPackage\expandafter{\swu@punct@opt}{ctex}%
+\fi
 \RequirePackage[heading=true,zihao=-4]{ctex}
 \IfFontExistsTF{Times New Roman}{%
   \setmainfont{Times New Roman}%
@@ -238,7 +244,8 @@
   \Crefname{subsubsection}{}{}%
   \creflabelformat{subsubsection}{第#2#1#3目}%
   \crefrangelabelformat{subsubsection}{第#3#1#4目至第#5#2#6目}%
-  \hypersetup{pdflang=zh-CN}%
+  % Do not |\hypersetup{pdflang=...}| here: ctex/hyperref already set it for Chinese,
+  % and a second set triggers “Option `pdflang' has already been used”.
   \def\chapterautorefname{章}%
   \def\sectionautorefname{节}%
   \def\subsectionautorefname{小节}%
